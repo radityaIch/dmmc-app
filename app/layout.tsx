@@ -21,7 +21,7 @@ export const metadata: Metadata = {
   description:
     "Denpasar’s home for maimai players — arcade meetups, high scores, and rhythm game vibes.",
   manifest: "/manifest.json",
-  themeColor: "#05050a",
+  themeColor: "#FF4FD8",
 };
 
 export default function RootLayout({

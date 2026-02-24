@@ -12,6 +12,9 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    "public/bookmarklet-*.js",
+    "webpack.scripts.config.cjs",
+    "**/webpack.scripts.config.cjs",
   ]),
 ]);
 

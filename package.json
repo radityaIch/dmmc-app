@@ -4,6 +4,9 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
+    "build:bookmarklets": "node scripts/build-bookmarklets.mjs",
+    "build:scripts": "webpack --config webpack.scripts.config.cjs",
+    "watch:scripts": "webpack --config webpack.scripts.config.cjs --env development --watch",
     "build": "next build",
     "start": "next start",
     "lint": "eslint"
@@ -21,9 +24,13 @@
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "esbuild": "^0.25.0",
     "eslint": "^9",
     "eslint-config-next": "16.1.6",
     "tailwindcss": "^4",
-    "typescript": "^5"
+    "ts-loader": "^9.5.2",
+    "typescript": "^5",
+    "webpack": "^5.98.0",
+    "webpack-cli": "^5.1.4"
   }
 }

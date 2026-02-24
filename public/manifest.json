@@ -4,8 +4,8 @@
   "description": "Denpasar’s home for maimai players — arcade meetups, high scores, and rhythm game vibes.",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#05050a",
-  "theme_color": "#05050a",
+  "background_color": "#FF4FD8",
+  "theme_color": "#FF4FD8",
   "icons": [
     {
       "src": "/icons/icon-192.svg",
