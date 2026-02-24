@@ -1,0 +1,139 @@
+#recordSummary {
+  margin-bottom: 16px;
+}
+
+.playRecordContainer {
+  background-color: #51bcf3;
+  color: white;
+  padding: 2px;
+}
+
+.playRecordTable {
+  font-size: 12px;
+  border-collapse: collapse;
+  table-layout: fixed;
+}
+
+tbody tr.recordRow {
+  border-top: 1px solid rgba(255, 255, 255, 0.5);
+}
+
+.recordCell {
+  padding: 3px 1px 1px;
+  user-select: all;
+}
+
+th.recordCell {
+  font-size: 14px;
+}
+
+.recordCell.dateCell {
+  width: 78px;
+}
+
+.recordCell.lvCell {
+  width: 45px;
+}
+
+.recordCell.achievementCell {
+  width: 75px;
+}
+
+.recordCell.marksCell {
+  width: 65px;
+}
+
+td.songTitleCell {
+  padding-left: 44px;
+  text-align: left;
+  word-break: break-all;
+}
+
+.copyBtnContainer {
+  position: relative;
+  padding: 4px;
+}
+
+.copyBtn,
+.downloadImgBtn {
+  background-color: #9f51dc;
+  border: 2px solid black;
+  border-radius: 5px;
+  color: white;
+  font-weight: 700;
+  padding: 8px 12px;
+  margin: 0 10px 10px;
+}
+
+.songImg {
+  background-position: 2px center;
+  background-size: 37px;
+  background-repeat: no-repeat;
+}
+
+.dateOptionLabel {
+  display: block;
+  margin: 0;
+  padding: 4px;
+}
+
+.newRecordLabel,
+.sortByLabel {
+  display: inline-block;
+  margin-right: 10px;
+}
+
+.newRecordRadio,
+.sortByRadio {
+  margin-right: 4px;
+  vertical-align: middle;
+}
+
+.dateCheckbox[type='checkbox']:not(#favorite) {
+  position: static;
+  opacity: 1;
+  margin-right: 6px;
+  width: 10px;
+  height: 10px;
+}
+
+.recordRow.basic {
+  background-color: #45c124;
+}
+
+.recordRow.advanced {
+  background-color: #ffba01;
+}
+
+.recordRow.expert {
+  background-color: #ff7b7b;
+}
+
+.recordRow.master {
+  background-color: #9f51dc;
+}
+
+.recordRow.remaster {
+  background-color: #dbaaff;
+}
+
+.recordRow.utage {
+  background-color: #ff6ffd;
+}
+
+.snackbarContainer {
+  position: fixed;
+  bottom: 6px;
+  width: 100%;
+}
+
+.snackbar {
+  transition: opacity 0.3s ease-in-out;
+  text-align: center;
+  background-color: #666;
+  padding: 8px 4px;
+  border-radius: 4px;
+  color: white;
+  opacity: 0;
+  user-select: none;
+}
