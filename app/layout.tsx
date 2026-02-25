@@ -20,7 +20,6 @@ export const metadata: Metadata = {
   title: "DMMC — Denpasar Maimai Community",
   description:
     "Denpasar’s home for maimai players — arcade meetups, high scores, and rhythm game vibes.",
-  manifest: "/manifest.json",
   themeColor: "#FF4FD8",
 };
 
@@ -31,6 +30,14 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <head>
+        <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96" />
+        <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+        <link rel="shortcut icon" href="/favicon.ico" />
+        <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+        <meta name="apple-mobile-web-app-title" content="DMMC" />
+        <link rel="manifest" href="/site.webmanifest" />
+      </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} min-h-dvh bg-[#05050a] text-white antialiased`}
       >
