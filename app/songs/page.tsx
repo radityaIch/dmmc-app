@@ -33,6 +33,7 @@ type BanPickMode = {
 
 type RegionFilter = "all" | "jp" | "intl" | "usa" | "cn";
 type SheetVersionFilter = "all" | string;
+const ITEMS_PER_PAGE = 12;
 
 function clamp(n: number, min: number, max: number) {
   return Math.max(min, Math.min(max, n));
@@ -94,6 +95,7 @@ export default function SongsPage() {
   const [fx, setFx] = useState<{ id: number; chars: string } | null>(null);
   const [syncing, setSyncing] = useState(false);
   const [lastSyncedAt, setLastSyncedAt] = useState<number | null>(null);
+  const [page, setPage] = useState(1);
 
   const syncSongs = useCallback(async () => {
     setSyncing(true);
@@ -237,6 +239,36 @@ export default function SongsPage() {
   }, [filtered]);
 
   const displayedEntries = mode.enabled ? visibleSheet : libraryEntries;
+
+  const totalPages = useMemo(
+    () => Math.max(1, Math.ceil(displayedEntries.length / ITEMS_PER_PAGE)),
+    [displayedEntries.length],
+  );
+
+  const currentPage = clamp(page, 1, totalPages);
+
+  const pagedEntries = useMemo(() => {
+    const start = (currentPage - 1) * ITEMS_PER_PAGE;
+    const end = start + ITEMS_PER_PAGE;
+    return displayedEntries.slice(start, end);
+  }, [displayedEntries, currentPage]);
+
+  useEffect(() => {
+    if (page !== currentPage) setPage(currentPage);
+  }, [page, currentPage]);
+
+  useEffect(() => {
+    setPage(1);
+  }, [
+    query,
+    category,
+    typeFilter,
+    regionFilter,
+    sheetVersionFilter,
+    minLevel,
+    maxLevel,
+    mode.enabled,
+  ]);
 
   const stats = useMemo(() => {
     const total = songs?.length ?? 0;
@@ -591,7 +623,14 @@ export default function SongsPage() {
           ) : null}
 
           <div className="mt-6">
-            <div className="text-xs font-bold tracking-widest text-white/60">SHEET</div>
+            <div className="flex items-center justify-between gap-3">
+              <div className="text-xs font-bold tracking-widest text-white/60">SHEET</div>
+              {displayedEntries.length > 0 ? (
+                <div className="text-xs font-semibold text-white/60">
+                  Page {currentPage} / {totalPages}
+                </div>
+              ) : null}
+            </div>
             <p className="mt-2 text-sm font-semibold text-white/80">{promptText}</p>
 
             <div className="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-2">
@@ -604,7 +643,7 @@ export default function SongsPage() {
                     : "No songs match the selected filters."}
                 </div>
               ) : (
-                displayedEntries.map((x) => (
+                pagedEntries.map((x) => (
                   <button
                     key={x.id}
                     type="button"
@@ -675,6 +714,31 @@ export default function SongsPage() {
                 ))
               )}
             </div>
+
+            {displayedEntries.length > 0 ? (
+              <div className="mt-4 flex items-center justify-between gap-3">
+                <button
+                  type="button"
+                  onClick={() => setPage((p) => clamp(p - 1, 1, totalPages))}
+                  disabled={currentPage <= 1}
+                  className="rounded-full border border-[#ff4fd8]/35 bg-white/10 px-4 py-2 text-xs font-semibold text-white/90 hover:bg-[#ff4fd8]/20 hover:text-white disabled:cursor-not-allowed disabled:opacity-50"
+                >
+                  Previous
+                </button>
+                <div className="text-xs font-semibold text-white/70">
+                  Showing {(currentPage - 1) * ITEMS_PER_PAGE + 1}–
+                  {Math.min(currentPage * ITEMS_PER_PAGE, displayedEntries.length)} of {displayedEntries.length}
+                </div>
+                <button
+                  type="button"
+                  onClick={() => setPage((p) => clamp(p + 1, 1, totalPages))}
+                  disabled={currentPage >= totalPages}
+                  className="rounded-full border border-[#ff4fd8]/35 bg-white/10 px-4 py-2 text-xs font-semibold text-white/90 hover:bg-[#ff4fd8]/20 hover:text-white disabled:cursor-not-allowed disabled:opacity-50"
+                >
+                  Next
+                </button>
+              </div>
+            ) : null}
           </div>
         </div>
 

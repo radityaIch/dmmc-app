@@ -179,14 +179,14 @@ export default function MyScorePage() {
         </p>
       </div>
 
-      <div className="rounded-2xl border border-white/10 bg-white/5 p-5 ring-1 ring-white/10">
+      <div className="rounded-2xl border border-white/10 bg-[linear-gradient(180deg,rgba(20,8,32,0.9),rgba(14,7,24,0.9))] p-5 ring-1 ring-white/10">
         <div className="text-xs font-bold tracking-widest text-white/60">STATUS</div>
         <div className="mt-2 text-sm font-semibold text-white/85">{status}</div>
       </div>
 
       {payload && summary ? (
         <div className="mt-6 grid grid-cols-1 gap-6">
-          <div className="rounded-2xl border border-white/10 bg-white/5 p-5 ring-1 ring-white/10">
+          <div className="rounded-2xl border border-white/10 bg-[linear-gradient(180deg,rgba(20,8,32,0.9),rgba(14,7,24,0.9))] p-5 ring-1 ring-white/10">
             <div className="text-xs font-bold tracking-widest text-white/60">META</div>
             <div className="mt-4 rounded-2xl border border-white/10 bg-black/20 p-4 ring-1 ring-white/10">
               <div className="text-xs font-semibold text-white/70">Schema</div>
@@ -212,7 +212,7 @@ export default function MyScorePage() {
             </div> */}
           </div>
 
-          <div className="rounded-2xl border border-white/10 bg-white/5 p-5 ring-1 ring-white/10">
+          <div className="rounded-2xl border border-white/10 bg-[linear-gradient(180deg,rgba(20,8,32,0.9),rgba(14,7,24,0.9))] p-5 ring-1 ring-white/10">
             <div className="text-xs font-bold tracking-widest text-white/60">Your Score (Highest to Lowest)</div>
             <div className="mt-4 overflow-auto rounded-2xl border border-white/10 bg-black/20 ring-1 ring-white/10 h-70 overflow-y-auto">
               <table className="min-w-full border-collapse text-left text-xs">
