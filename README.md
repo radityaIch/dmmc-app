@@ -1,36 +1,71 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# DMMC App (Denpasar Maimai Community)
 
-## Getting Started
+Web app for DMMC community activities: event hub, song library, score import tools, and tournament utilities.
 
-First, run the development server:
+## Features
+
+- Homepage with community info, arcade locations, and upcoming meetups.
+- Events page with card + calendar view.
+- Songs page (library + random sheet + ban/pick flow).
+- Song filters: search, category, chart type, region, sheet version, level range.
+- Song caching in IndexedDB (Dexie) with manual sync button.
+- Tournament bracket page (single-elimination workflow, local persistence).
+- Bookmarklets page and score import flow for DX NET integration.
+- PWA support (installable, manifest + service worker setup).
+
+## Get Started
+
+1. Install dependencies:
+
+```bash
+npm install
+```
+
+2. Run dev server:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+3. Open:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+`http://localhost:3000`
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Environment You Need
 
-## Learn More
+- Node.js 20+
+- npm 10+ (or pnpm/yarn if you prefer)
+- Modern browser (Chrome/Edge/Firefox) for IndexedDB + PWA testing
 
-To learn more about Next.js, take a look at the following resources:
+## Environment Variables
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Create `.env.local` at project root:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```bash
+NEXT_PUBLIC_MY_SCORE_URL=http://localhost:3000/my-score
+```
 
-## Deploy on Vercel
+Notes:
+- `NEXT_PUBLIC_MY_SCORE_URL` is used by bookmarklet pages as receiver target.
+- If omitted, app falls back to `http://localhost:3000/my-score`.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Beta Status (Still Beta)
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+This app is still **beta**.
+
+Why:
+- Bookmarklets are not fully completed yet.
+- Tournament bracket flow still has unfinished/buggy areas.
+
+Bookmarklet reference you can continue from:
+- https://myjian.github.io/mai-tools/
+
+Special thanks:
+- Ming-yuen Jien — https://github.com/myjian/
+
+## Next Plan
+
+- Finish bookmarklet implementation.
+- Make upcoming events dynamically manageable (CMS-backed).
+- Finish and stabilize buggy tournament features.
+
