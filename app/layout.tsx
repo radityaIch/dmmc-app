@@ -21,6 +21,20 @@ export const metadata: Metadata = {
   description:
     "Denpasar’s home for maimai players — arcade meetups, high scores, and rhythm game vibes.",
   themeColor: "#FF4FD8",
+  openGraph: {
+    title: "DMMC — Denpasar Maimai Community",
+    description:
+      "Denpasar’s home for maimai players — arcade meetups, high scores, and rhythm game vibes.",
+    images: ["/assets/images/meta-og.png"],
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "DMMC — Denpasar Maimai Community",
+    description:
+      "Denpasar’s home for maimai players — arcade meetups, high scores, and rhythm game vibes.",
+    images: ["/assets/images/meta-og.png"],
+  },
 };
 
 export default function RootLayout({
