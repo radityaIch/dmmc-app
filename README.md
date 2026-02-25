@@ -73,6 +73,9 @@ Special thanks:
 
 This project uses **Git convention + Semantic Versioning** with Husky hooks.
 
+- Please **fork this repository** first if you want to contribute.
+- If you have an idea or suggestion, please open it in **GitHub Issues**.
+
 ### Commit Convention (Conventional Commits)
 
 - Commit messages are validated by `commitlint` via Husky `commit-msg` hook.
