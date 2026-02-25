@@ -17,8 +17,9 @@ const menuLinks = [
 
 const thanksLinks = [
   { href: "https://maimai.sega.com/", label: "SEGA" },
-  { href: "https://github.com/myjian/", label: "Ming-yuen Jien" },
-  { href: "https://arcade-songs.zetaraku.dev/maimai/", label: "zetaraku.dev" },
+  { href: "https://github.com/myjian/", label: "Ming-yuen Jien (bookmarklets)" },
+  { href: "https://arcade-songs.zetaraku.dev/maimai/", label: "zetaraku.dev (arcade song list)" },
+  { href: "https://github.com/rama-adi", label: "Rama Adi (motivates)" },
 ];
 
 export function Footer() {
