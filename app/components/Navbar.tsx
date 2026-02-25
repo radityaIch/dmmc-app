@@ -37,7 +37,7 @@ export function Navbar() {
     <header className="sticky top-0 z-50 px-2 pt-3 sm:px-4">
       <div className="mx-auto flex w-full max-w-6xl items-center justify-between rounded-full border border-[#ff4fd8]/35 bg-white/88 px-4 py-3 shadow-[0_10px_28px_rgba(255,79,216,0.25)] backdrop-blur">
         <Link href="/" className="group inline-flex items-center gap-3">
-          <Image src="/assets/images/Logo 03.png" alt="DMMC" width={280} height={109} className="h-10 w-auto sm:h-11" />
+          <Image src="/assets/images/Logo 04.png" alt="DMMC" width={280} height={109} className="lg:h-10 w-auto sm:h-11" />
           <span className="hidden text-sm font-semibold tracking-wide text-[#2f2461]/85 group-hover:text-[#2f2461] sm:block">
             Denpasar Maimai Community
           </span>
