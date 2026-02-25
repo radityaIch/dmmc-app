@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 :root {
-  --background: #05050a;
+  --background: #17061f;
   --foreground: #e8e8ff;
 }
 
@@ -14,13 +14,16 @@
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #05050a;
+    --background: #17061f;
     --foreground: #e8e8ff;
   }
 }
 
 body {
-  background: var(--background);
+  background:
+    radial-gradient(circle at 18% 0%, rgba(255, 79, 216, 0.24), transparent 32%),
+    radial-gradient(circle at 90% 10%, rgba(57, 183, 255, 0.2), transparent 34%),
+    var(--background);
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
@@ -48,5 +51,26 @@ body {
   100% {
     transform: translate3d(0, -10px, 0);
     opacity: 0;
+  }
+}
+
+@keyframes slowSpin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes driftY {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+  50% {
+    transform: translate3d(0, -18px, 0);
+  }
+  100% {
+    transform: translate3d(0, 0, 0);
   }
 }

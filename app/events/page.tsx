@@ -18,12 +18,13 @@ export default function EventsPage() {
 
   return (
     <div className="mx-auto w-full max-w-6xl px-4 py-10">
-      <div className="mb-6 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+      <div className="mb-6 rounded-3xl border border-[#ff4fd8]/30 bg-[linear-gradient(180deg,rgba(20,8,32,0.9),rgba(14,7,24,0.9))] p-6 shadow-[0_0_0_1px_rgba(255,79,216,0.14),0_16px_45px_rgba(18,8,30,0.45)]">
+        <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
         <div>
           <h1 className="text-2xl font-black tracking-tight text-white sm:text-3xl">
             Upcoming Arcade Meetups
           </h1>
-          <p className="mt-2 max-w-2xl text-sm leading-6 text-white/70">
+          <p className="mt-2 max-w-2xl text-sm leading-6 text-white/80">
             Pull up for rhythm game nights, score attacks, and chill sessions. Bring gloves, bring vibes.
           </p>
         </div>
@@ -35,8 +36,8 @@ export default function EventsPage() {
             className={
               "rounded-full px-4 py-2 text-sm font-semibold ring-1 transition " +
               (view === "cards"
-                ? "bg-white/10 text-white ring-white/20"
-                : "bg-white/5 text-white/70 ring-white/10 hover:bg-white/10 hover:text-white")
+                ? "bg-[#ff4fd8]/20 text-pink-100 ring-[#ff4fd8]/40"
+                : "bg-white/8 text-white/75 ring-white/20 hover:bg-[#ff4fd8]/15 hover:text-white")
             }
           >
             Cards
@@ -47,13 +48,14 @@ export default function EventsPage() {
             className={
               "rounded-full px-4 py-2 text-sm font-semibold ring-1 transition " +
               (view === "calendar"
-                ? "bg-white/10 text-white ring-white/20"
-                : "bg-white/5 text-white/70 ring-white/10 hover:bg-white/10 hover:text-white")
+                ? "bg-[#ff4fd8]/20 text-pink-100 ring-[#ff4fd8]/40"
+                : "bg-white/8 text-white/75 ring-white/20 hover:bg-[#ff4fd8]/15 hover:text-white")
             }
           >
             Calendar
           </button>
         </div>
+      </div>
       </div>
 
       {view === "calendar" ? (

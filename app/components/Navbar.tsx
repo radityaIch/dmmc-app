@@ -1,6 +1,7 @@
 "use client";
 
 import dynamic from "next/dynamic";
+import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 
@@ -33,37 +34,32 @@ export function Navbar() {
   }, [open]);
 
   return (
-    <header className="sticky top-0 z-50 border-b border-white/10 bg-black/40 backdrop-blur supports-[backdrop-filter]:bg-black/30">
-      <div className="mx-auto flex w-full max-w-6xl items-center justify-between px-4 py-3">
+    <header className="sticky top-0 z-50 px-2 pt-3 sm:px-4">
+      <div className="mx-auto flex w-full max-w-6xl items-center justify-between rounded-full border border-[#ff4fd8]/35 bg-white/88 px-4 py-3 shadow-[0_10px_28px_rgba(255,79,216,0.25)] backdrop-blur">
         <Link href="/" className="group inline-flex items-center gap-3">
-          <div className="relative grid h-10 w-10 place-items-center rounded-full bg-white/5 ring-1 ring-white/10">
-            <div className="absolute inset-0 rounded-full shadow-[0_0_0_1px_rgba(57,183,255,0.35),0_0_18px_rgba(255,79,216,0.22)]" />
-            <span className="relative text-sm font-black tracking-widest text-white">
-              DMMC
-            </span>
-          </div>
-          <span className="hidden text-sm font-semibold tracking-wide text-white/80 group-hover:text-white sm:block">
+          <Image src="/assets/images/Logo 03.png" alt="DMMC" width={280} height={109} className="h-10 w-auto sm:h-11" />
+          <span className="hidden text-sm font-semibold tracking-wide text-[#2f2461]/85 group-hover:text-[#2f2461] sm:block">
             Denpasar Maimai Community
           </span>
         </Link>
 
-        <nav className="hidden items-center gap-5 text-sm font-semibold text-white/75 md:flex">
-          <Link className="hover:text-white" href="/">
+        <nav className="hidden items-center gap-5 text-sm font-bold text-[#2f2461]/75 md:flex">
+          <Link className="hover:text-[#ff4fd8]" href="/">
             Home
           </Link>
-          <Link className="hover:text-white" href="/events">
+          <Link className="hover:text-[#ff4fd8]" href="/events">
             Events
           </Link>
-          <Link className="hover:text-white" href="/songs">
+          <Link className="hover:text-[#ff4fd8]" href="/songs">
             Songs
           </Link>
-          <Link className="hover:text-white" href="/tournament">
+          <Link className="hover:text-[#ff4fd8]" href="/tournament">
             Tournament
           </Link>
-          <Link className="hover:text-white" href="/about">
+          <Link className="hover:text-[#ff4fd8]" href="/about">
             About
           </Link>
-          <Link className="hover:text-white" href="/rules">
+          <Link className="hover:text-[#ff4fd8]" href="/rules">
             Rules
           </Link>
         </nav>
@@ -72,7 +68,7 @@ export function Navbar() {
           <button
             type="button"
             onClick={() => setOpen((v) => !v)}
-            className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-white/10 bg-white/5 text-white/80 hover:bg-white/10 hover:text-white md:hidden"
+            className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-[#ff4fd8]/35 bg-white text-[#2f2461]/80 hover:bg-[#ffd8f3] hover:text-[#2f2461] md:hidden"
             aria-label={open ? "Close menu" : "Open menu"}
           >
             <span className="block h-4 w-5">
@@ -82,7 +78,7 @@ export function Navbar() {
             </span>
           </button>
           <InstallAppButton />
-          <GlowButton href="https://chat.whatsapp.com/KuYiYLO2OxgIY3EEQLCt7p" variant="green" className="px-4 py-2 text-sm">
+          <GlowButton href="https://chat.whatsapp.com/KuYiYLO2OxgIY3EEQLCt7p" variant="pink" className="px-4 py-2 text-sm">
             Join WhatsApp
           </GlowButton>
         </div>
@@ -97,7 +93,7 @@ export function Navbar() {
             onClick={() => setOpen(false)}
           />
 
-          <div className="relative flex h-dvh w-full flex-col bg-[#05050a]/95 shadow-[0_0_0_1px_rgba(57,183,255,0.18),0_0_50px_rgba(0,0,0,0.75)]">
+          <div className="relative flex h-dvh w-full flex-col bg-[#17061f]/95 shadow-[0_0_0_1px_rgba(255,79,216,0.25),0_0_50px_rgba(0,0,0,0.75)]">
             <div className="flex items-center justify-between gap-3 border-b border-white/10 px-5 py-4">
               <div className="text-sm font-black tracking-widest text-white">DMMC</div>
               <button
@@ -159,7 +155,7 @@ export function Navbar() {
             <div className="border-t border-white/10 px-5 py-4">
               <div className="flex flex-col gap-2">
                 <InstallAppButton />
-                <GlowButton href="https://chat.whatsapp.com/KuYiYLO2OxgIY3EEQLCt7p" variant="green" className="w-full">
+                <GlowButton href="https://chat.whatsapp.com/KuYiYLO2OxgIY3EEQLCt7p" variant="pink" className="w-full">
                   Join WhatsApp
                 </GlowButton>
               </div>

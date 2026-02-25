@@ -1,4 +1,5 @@
 import Dexie, { type Table } from "dexie";
+import type { MaimaiSong } from "./maimai";
 
 export type TournamentStateRecord = {
   id: "current";
@@ -25,13 +26,24 @@ export type TournamentStateRecord = {
   >;
 };
 
+export type SongCacheRecord = {
+  id: "maimai-songs";
+  songs: MaimaiSong[];
+  updatedAt: number;
+};
+
 class DmmcDb extends Dexie {
   tournamentStates!: Table<TournamentStateRecord, string>;
+  songCache!: Table<SongCacheRecord, string>;
 
   constructor() {
     super("dmmc");
     this.version(1).stores({
       tournamentStates: "id",
+    });
+    this.version(2).stores({
+      tournamentStates: "id",
+      songCache: "id, updatedAt",
     });
   }
 }

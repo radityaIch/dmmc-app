@@ -29,7 +29,7 @@ export function GlowButton({
       href={href}
       onClick={onClick}
       className={
-        "inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-base font-semibold tracking-wide transition-transform duration-150 hover:-translate-y-0.5 active:translate-y-0 " +
+        "inline-flex text-white items-center justify-center gap-2 rounded-full px-6 py-3 text-base font-semibold tracking-wide transition-transform duration-150 hover:-translate-y-0.5 active:translate-y-0 " +
         variantClasses[variant] +
         (className ? " " + className : "")
       }

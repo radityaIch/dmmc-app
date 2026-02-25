@@ -1,10 +1,11 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 
 import { GlowButton } from "../components/GlowButton";
 import { SongDetailModal } from "../components/SongDetailModal";
-import type { MaimaiSong } from "../lib/maimai";
+import { db } from "../lib/db";
+import type { MaimaiRegions, MaimaiSong } from "../lib/maimai";
 import { fetchMaimaiSongs, maimaiCoverUrl } from "../lib/maimai";
 import { pickN, seededRng } from "../lib/rng";
 import { useLocalStorageState } from "../lib/useLocalStorageState";
@@ -17,6 +18,8 @@ type SheetEntry = {
   bpm: number | null;
   maxLevelValue: number | null;
   imageName: string | null;
+  regions: MaimaiRegions;
+  sheetVersions: string[];
   status: "available" | "banned" | "picked";
 };
 
@@ -27,6 +30,9 @@ type BanPickMode = {
   bansPerTeam: number;
   picksPerTeam: number;
 };
+
+type RegionFilter = "all" | "jp" | "intl" | "usa" | "cn";
+type SheetVersionFilter = "all" | string;
 
 function clamp(n: number, min: number, max: number) {
   return Math.max(min, Math.min(max, n));
@@ -40,6 +46,12 @@ function includesLoose(haystack: string, needle: string) {
   return haystack.toLowerCase().includes(needle.trim().toLowerCase());
 }
 
+function regionAvailable(value: string | boolean) {
+  if (typeof value === "boolean") return value;
+  const text = value.trim().toLowerCase();
+  return text.length > 0 && text !== "false" && text !== "0";
+}
+
 export default function SongsPage() {
   const [songs, setSongs] = useState<MaimaiSong[] | null>(null);
   const [error, setError] = useState<string | null>(null);
@@ -50,6 +62,8 @@ export default function SongsPage() {
   const [query, setQuery] = useState("");
   const [category, setCategory] = useState<string>("all");
   const [typeFilter, setTypeFilter] = useState<"all" | "dx" | "std">("all");
+  const [regionFilter, setRegionFilter] = useState<RegionFilter>("all");
+  const [sheetVersionFilter, setSheetVersionFilter] = useState<SheetVersionFilter>("all");
 
   const [minLevel, setMinLevel] = useState<number>(1);
   const [maxLevel, setMaxLevel] = useState<number>(15);
@@ -78,6 +92,29 @@ export default function SongsPage() {
   const [turn, setTurn] = useLocalStorageState<number>("dmmc.sheet.turn", 0);
 
   const [fx, setFx] = useState<{ id: number; chars: string } | null>(null);
+  const [syncing, setSyncing] = useState(false);
+  const [lastSyncedAt, setLastSyncedAt] = useState<number | null>(null);
+
+  const syncSongs = useCallback(async () => {
+    setSyncing(true);
+    try {
+      const nextSongs = await fetchMaimaiSongs();
+      const updatedAt = Date.now();
+      await db.songCache.put({
+        id: "maimai-songs",
+        songs: nextSongs,
+        updatedAt,
+      });
+      setSongs(nextSongs);
+      setLastSyncedAt(updatedAt);
+      setError(null);
+    } catch (e) {
+      setError(e instanceof Error ? e.message : "Failed to sync songs");
+    } finally {
+      setSyncing(false);
+      setLoading(false);
+    }
+  }, []);
 
   useEffect(() => {
     let cancelled = false;
@@ -86,8 +123,27 @@ export default function SongsPage() {
       try {
         setLoading(true);
         setError(null);
+        const cached = await db.songCache.get("maimai-songs");
+        if (cached?.songs?.length) {
+          if (!cancelled) {
+            setSongs(cached.songs);
+            setLastSyncedAt(cached.updatedAt);
+            setLoading(false);
+          }
+          return;
+        }
+
         const s = await fetchMaimaiSongs();
-        if (!cancelled) setSongs(s);
+        if (!cancelled) {
+          setSongs(s);
+          const updatedAt = Date.now();
+          setLastSyncedAt(updatedAt);
+          await db.songCache.put({
+            id: "maimai-songs",
+            songs: s,
+            updatedAt,
+          });
+        }
       } catch (e) {
         if (!cancelled) setError(e instanceof Error ? e.message : "Failed to fetch songs");
       } finally {
@@ -107,6 +163,13 @@ export default function SongsPage() {
     return ["all", ...uniq(songs.map((s) => s.category)).sort((a, b) => a.localeCompare(b))];
   }, [songs]);
 
+  const sheetVersions = useMemo(() => {
+    if (!songs) return [];
+    return uniq(songs.flatMap((s) => s.sheets.map((sh) => sh.version))).sort((a, b) =>
+      a.localeCompare(b),
+    );
+  }, [songs]);
+
   const filtered = useMemo(() => {
     if (!songs) return [];
 
@@ -118,6 +181,17 @@ export default function SongsPage() {
       if (category !== "all" && s.category !== category) return false;
       if (typeFilter === "dx" && !s.hasDx) return false;
       if (typeFilter === "std" && !s.hasStd) return false;
+      if (regionFilter !== "all" && !regionAvailable(s.regions[regionFilter])) return false;
+      if (
+        sheetVersionFilter !== "all" &&
+        !s.sheets.some(
+          (sh) =>
+            sh.version === sheetVersionFilter &&
+            (typeFilter === "all" || sh.type === typeFilter),
+        )
+      ) {
+        return false;
+      }
 
       const lv = s.maxLevelValue;
       if (lv != null) {
@@ -126,7 +200,43 @@ export default function SongsPage() {
 
       return true;
     });
-  }, [songs, query, category, typeFilter, minLevel, maxLevel]);
+  }, [
+    songs,
+    query,
+    category,
+    typeFilter,
+    regionFilter,
+    sheetVersionFilter,
+    minLevel,
+    maxLevel,
+  ]);
+
+  const visibleSheet = useMemo(() => {
+    return sheet.filter((s) => {
+      if (regionFilter !== "all" && !regionAvailable(s.regions[regionFilter])) return false;
+      if (sheetVersionFilter !== "all" && !s.sheetVersions.includes(sheetVersionFilter)) {
+        return false;
+      }
+      return true;
+    });
+  }, [sheet, regionFilter, sheetVersionFilter]);
+
+  const libraryEntries = useMemo<SheetEntry[]>(() => {
+    return filtered.map((s) => ({
+      id: s.id,
+      title: s.title,
+      artist: s.artist,
+      category: s.category,
+      bpm: s.bpm,
+      maxLevelValue: s.maxLevelValue,
+      imageName: s.imageName,
+      regions: s.regions,
+      sheetVersions: uniq(s.sheets.map((sh) => sh.version)),
+      status: "available",
+    }));
+  }, [filtered]);
+
+  const displayedEntries = mode.enabled ? visibleSheet : libraryEntries;
 
   const stats = useMemo(() => {
     const total = songs?.length ?? 0;
@@ -170,7 +280,7 @@ export default function SongsPage() {
   }, [mode.enabled, turn, actionPlan.length]);
 
   const promptText = useMemo(() => {
-    if (!mode.enabled) return "Tap songs to preview. Generate a Random Sheet to start.";
+    if (!mode.enabled) return "Tap songs to preview from the full library.";
     if (isDone) return "Draft complete. Good luck and play clean.";
 
     switch (currentStep) {
@@ -196,7 +306,7 @@ export default function SongsPage() {
   }, [selectedSongId, sheet]);
 
   const modalActionLabel = useMemo(() => {
-    if (!mode.enabled) return null;
+    if (!mode.enabled) return "Search Song";
     if (isDone) return null;
     if (!currentStep) return null;
 
@@ -208,10 +318,10 @@ export default function SongsPage() {
   }, [mode, isDone, currentStep]);
 
   const modalActionDisabled = useMemo(() => {
-    if (!mode.enabled) return true;
+    if (!mode.enabled) return !selectedSong;
     if (!selectedEntry) return true;
     return selectedEntry.status !== "available";
-  }, [mode.enabled, selectedEntry]);
+  }, [mode.enabled, selectedEntry, selectedSong]);
 
   function generateSheet() {
     if (!songs) return;
@@ -242,6 +352,8 @@ export default function SongsPage() {
       bpm: s.bpm,
       maxLevelValue: s.maxLevelValue,
       imageName: s.imageName,
+      regions: s.regions,
+      sheetVersions: uniq(s.sheets.map((sh) => sh.version)),
       status: "available" as const,
     }));
 
@@ -252,7 +364,8 @@ export default function SongsPage() {
   }
 
   function resetDraft() {
-    setSheet((prev) => prev.map((x) => ({ ...x, status: "available" })));
+    setSheet([]);
+    setSelectedSongId(null);
     setTurn(0);
   }
 
@@ -262,7 +375,17 @@ export default function SongsPage() {
 
   function performModalAction() {
     if (!selectedSongId) return;
-    if (!mode.enabled) return;
+    if (!mode.enabled) {
+      const song = songById.get(selectedSongId);
+      if (!song) return;
+      const searchQuery = encodeURIComponent(`${song.title} ${song.artist} maimai`);
+      window.open(
+        `https://www.youtube.com/results?search_query=${searchQuery}`,
+        "_blank",
+        "noopener,noreferrer",
+      );
+      return;
+    }
     if (isDone) return;
 
     const step = currentStep;
@@ -294,16 +417,16 @@ export default function SongsPage() {
         actionDisabled={modalActionDisabled}
       />
 
-      <div className="mb-6">
-        <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-2 text-xs font-semibold tracking-wider text-white/80">
-          <span className="h-2 w-2 rounded-full bg-sky-400 shadow-[0_0_16px_rgba(57,183,255,0.55)]" />
+      <div className="mb-6 rounded-3xl border border-[#ff4fd8]/30 bg-[linear-gradient(180deg,rgba(20,8,32,0.9),rgba(14,7,24,0.9))] p-6 shadow-[0_0_0_1px_rgba(255,79,216,0.14),0_16px_45px_rgba(18,8,30,0.45)]">
+        <div className="inline-flex items-center gap-2 rounded-full border border-[#ff4fd8]/35 bg-[#ff4fd8]/16 px-4 py-2 text-xs font-semibold tracking-wider text-pink-100">
+          <span className="h-2 w-2 rounded-full bg-[#ff4fd8] shadow-[0_0_16px_rgba(255,79,216,0.7)]" />
           OPERATOR MODE — MAIMAI SONG SELECT
         </div>
 
         <h1 className="mt-4 text-balance text-3xl font-black tracking-tight text-white sm:text-4xl">
           Song Library + Random Sheets
         </h1>
-        <p className="mt-2 max-w-3xl text-sm leading-6 text-white/70">
+        <p className="mt-2 max-w-3xl text-sm leading-6 text-white/80">
           Filter the full maimai list, generate a seedable random sheet, then run a ban/pick draft like a tournament stage.
         </p>
       </div>
@@ -321,7 +444,7 @@ export default function SongsPage() {
       ) : null}
 
       <div className="grid grid-cols-1 gap-6 xl:grid-cols-[1fr_380px]">
-        <div className="rounded-2xl border border-white/10 bg-white/5 p-5 ring-1 ring-white/10">
+        <div className="rounded-2xl border border-[#ff4fd8]/30 bg-[linear-gradient(180deg,rgba(20,8,32,0.9),rgba(14,7,24,0.9))] p-5 ring-1 ring-[#ff4fd8]/20">
           <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
             <div>
               <div className="text-xs font-bold tracking-widest text-white/60">FILTERS</div>
@@ -342,7 +465,7 @@ export default function SongsPage() {
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
                 placeholder="title / artist"
-                className="mt-2 w-full rounded-xl border border-white/10 bg-black/30 px-4 py-3 text-sm text-white placeholder:text-white/30 outline-none ring-1 ring-transparent focus:ring-sky-400/40"
+                className="mt-2 w-full rounded-xl border border-white/15 bg-black/30 px-4 py-3 text-sm text-white placeholder:text-white/30 outline-none ring-1 ring-transparent focus:ring-[#ff4fd8]/45"
               />
             </label>
 
@@ -351,7 +474,7 @@ export default function SongsPage() {
               <select
                 value={category}
                 onChange={(e) => setCategory(e.target.value)}
-                className="mt-2 w-full rounded-xl border border-white/10 bg-black/30 px-4 py-3 text-sm text-white outline-none ring-1 ring-transparent focus:ring-fuchsia-400/40"
+                className="mt-2 w-full rounded-xl border border-white/15 bg-black/30 px-4 py-3 text-sm text-white outline-none ring-1 ring-transparent focus:ring-[#ff4fd8]/45"
               >
                 {categories.map((c) => (
                   <option key={c} value={c}>
@@ -366,11 +489,42 @@ export default function SongsPage() {
               <select
                 value={typeFilter}
                 onChange={(e) => setTypeFilter(e.target.value as typeof typeFilter)}
-                className="mt-2 w-full rounded-xl border border-white/10 bg-black/30 px-4 py-3 text-sm text-white outline-none ring-1 ring-transparent focus:ring-emerald-400/40"
+                className="mt-2 w-full rounded-xl border border-white/15 bg-black/30 px-4 py-3 text-sm text-white outline-none ring-1 ring-transparent focus:ring-[#ff4fd8]/45"
               >
                 <option value="all">All</option>
                 <option value="dx">DX only</option>
                 <option value="std">STD only</option>
+              </select>
+            </label>
+
+            <label className="block">
+              <span className="text-xs font-bold tracking-widest text-white/70">REGION</span>
+              <select
+                value={regionFilter}
+                onChange={(e) => setRegionFilter(e.target.value as RegionFilter)}
+                className="mt-2 w-full rounded-xl border border-white/15 bg-black/30 px-4 py-3 text-sm text-white outline-none ring-1 ring-transparent focus:ring-[#ff4fd8]/45"
+              >
+                <option value="all">All regions</option>
+                <option value="jp">Japan</option>
+                <option value="intl">International (Asia/Australia)</option>
+                <option value="usa">USA</option>
+                <option value="cn">China</option>
+              </select>
+            </label>
+
+            <label className="block">
+              <span className="text-xs font-bold tracking-widest text-white/70">SHEET VERSION</span>
+              <select
+                value={sheetVersionFilter}
+                onChange={(e) => setSheetVersionFilter(e.target.value as SheetVersionFilter)}
+                className="mt-2 w-full rounded-xl border border-white/15 bg-black/30 px-4 py-3 text-sm text-white outline-none ring-1 ring-transparent focus:ring-[#ff4fd8]/45"
+              >
+                <option value="all">All versions</option>
+                {sheetVersions.map((v, index) => (
+                  <option key={index} value={v}>
+                    {v}
+                  </option>
+                ))}
               </select>
             </label>
 
@@ -383,7 +537,7 @@ export default function SongsPage() {
                   onChange={(e) => setMinLevel(Number(e.target.value || 1))}
                   min={1}
                   max={15}
-                  className="mt-2 w-full rounded-xl border border-white/10 bg-black/30 px-4 py-3 text-sm text-white outline-none ring-1 ring-transparent focus:ring-yellow-300/40"
+                  className="mt-2 w-full rounded-xl border border-white/15 bg-black/30 px-4 py-3 text-sm text-white outline-none ring-1 ring-transparent focus:ring-[#ff4fd8]/45"
                 />
               </label>
               <label className="block">
@@ -394,57 +548,63 @@ export default function SongsPage() {
                   onChange={(e) => setMaxLevel(Number(e.target.value || 15))}
                   min={1}
                   max={15}
-                  className="mt-2 w-full rounded-xl border border-white/10 bg-black/30 px-4 py-3 text-sm text-white outline-none ring-1 ring-transparent focus:ring-yellow-300/40"
+                  className="mt-2 w-full rounded-xl border border-white/15 bg-black/30 px-4 py-3 text-sm text-white outline-none ring-1 ring-transparent focus:ring-[#ff4fd8]/45"
                 />
               </label>
             </div>
           </div>
 
-          <div className="mt-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-            <div className="flex items-center gap-2">
-              <label className="block">
-                <span className="text-xs font-bold tracking-widest text-white/70">SHEET SIZE</span>
-                <input
-                  type="number"
-                  value={sheetSize}
-                  onChange={(e) => setSheetSize(Number(e.target.value || 12))}
-                  min={4}
-                  max={40}
-                  className="mt-2 w-[120px] rounded-xl border border-white/10 bg-black/30 px-4 py-3 text-sm text-white outline-none ring-1 ring-transparent focus:ring-emerald-400/40"
-                />
-              </label>
-            </div>
+          {mode.enabled ? (
+            <div className="mt-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+              <div className="flex items-center gap-2">
+                <label className="block">
+                  <span className="text-xs font-bold tracking-widest text-white/70">SHEET SIZE</span>
+                  <input
+                    type="number"
+                    value={sheetSize}
+                    onChange={(e) => setSheetSize(Number(e.target.value || 12))}
+                    min={4}
+                    max={40}
+                    className="mt-2 w-[120px] rounded-xl border border-white/15 bg-black/30 px-4 py-3 text-sm text-white outline-none ring-1 ring-transparent focus:ring-[#ff4fd8]/45"
+                  />
+                </label>
+              </div>
 
-            <div className="flex flex-col gap-2 sm:flex-row">
-              <button
-                type="button"
-                onClick={generateSheet}
-                disabled={loading || !!error}
-                className="rounded-full bg-[linear-gradient(180deg,#29ff8a,#0bd66a)] px-6 py-3 text-sm font-semibold text-black shadow-[0_0_0_1px_rgba(41,255,138,0.55),0_0_24px_rgba(41,255,138,0.25)] hover:shadow-[0_0_0_1px_rgba(41,255,138,0.75),0_0_34px_rgba(41,255,138,0.45)] disabled:opacity-50"
-              >
-                Generate Random Sheet
-              </button>
-              <button
-                type="button"
-                onClick={resetDraft}
-                className="rounded-full border border-white/10 bg-white/5 px-6 py-3 text-sm font-semibold text-white/85 hover:bg-white/10 hover:text-white"
-              >
-                Reset Sheet
-              </button>
+              <div className="flex flex-col gap-2 sm:flex-row">
+                <button
+                  type="button"
+                  onClick={generateSheet}
+                  disabled={loading || !!error}
+                  className="rounded-full bg-[linear-gradient(180deg,#ff4fd8,#ff2fb1)] text-white cursor-pointer px-6 py-3 text-sm font-semibold text-black shadow-[0_0_0_1px_rgba(255,79,216,0.55),0_0_24px_rgba(255,79,216,0.25)] hover:shadow-[0_0_0_1px_rgba(255,79,216,0.75),0_0_34px_rgba(255,79,216,0.45)] disabled:opacity-50"
+                >
+                  Generate Random Sheet
+                </button>
+                <button
+                  type="button"
+                  onClick={resetDraft}
+                  className="rounded-full cursor-pointer border border-[#ff4fd8]/35 bg-white/10 px-6 py-3 text-sm font-semibold text-white/90 hover:bg-[#ff4fd8]/20 hover:text-white"
+                >
+                  Reset Sheet
+                </button>
+              </div>
             </div>
-          </div>
+          ) : null}
 
           <div className="mt-6">
             <div className="text-xs font-bold tracking-widest text-white/60">SHEET</div>
             <p className="mt-2 text-sm font-semibold text-white/80">{promptText}</p>
 
             <div className="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-2">
-              {sheet.length === 0 ? (
+              {displayedEntries.length === 0 ? (
                 <div className="rounded-2xl border border-white/10 bg-black/20 p-5 text-sm text-white/70 sm:col-span-2">
-                  Generate a sheet to begin.
+                  {mode.enabled
+                    ? sheet.length === 0
+                      ? "Generate a sheet to begin."
+                      : "No songs match the selected region/version filter."
+                    : "No songs match the selected filters."}
                 </div>
               ) : (
-                sheet.map((x) => (
+                displayedEntries.map((x) => (
                   <button
                     key={x.id}
                     type="button"
@@ -455,10 +615,10 @@ export default function SongsPage() {
                         ? "border-emerald-400/25 bg-emerald-400/10 ring-emerald-300/20"
                         : x.status === "banned"
                           ? "border-red-400/25 bg-red-400/10 ring-red-300/20"
-                          : "border-white/10 bg-black/20 ring-white/10 hover:bg-black/30")
+                          : "border-white/12 bg-black/25 ring-white/10 hover:bg-[#ff4fd8]/10")
                     }
                   >
-                    <div className="flex items-start gap-3">
+                    <div className="flex items-start gap-3 cursor-pointer">
                       <div className="relative h-14 w-14 shrink-0 overflow-hidden rounded-xl border border-white/10 bg-white/5 ring-1 ring-white/10">
                         {maimaiCoverUrl(x.imageName) ? (
                           // eslint-disable-next-line @next/next/no-img-element
@@ -519,7 +679,7 @@ export default function SongsPage() {
         </div>
 
         <div className="space-y-4">
-          <div className="rounded-2xl border border-white/10 bg-white/5 p-5 ring-1 ring-white/10">
+          <div className="rounded-2xl border border-[#ff4fd8]/30 bg-[linear-gradient(180deg,rgba(20,8,32,0.9),rgba(14,7,24,0.9))] p-5 ring-1 ring-[#ff4fd8]/20">
             <div className="text-xs font-bold tracking-widest text-white/60">BAN / PICK MODE</div>
 
             <div className="mt-3 flex items-center justify-between gap-3">
@@ -537,7 +697,7 @@ export default function SongsPage() {
                   "rounded-full px-4 py-2 text-sm font-semibold ring-1 transition " +
                   (mode.enabled
                     ? "bg-fuchsia-400/15 text-fuchsia-100 ring-fuchsia-300/25"
-                    : "bg-white/5 text-white/70 ring-white/10 hover:bg-white/10 hover:text-white")
+                    : "bg-white/10 text-white/75 ring-white/15 hover:bg-[#ff4fd8]/15 hover:text-white")
                 }
               >
                 {mode.enabled ? "Enabled" : "Disabled"}
@@ -550,7 +710,7 @@ export default function SongsPage() {
                 <input
                   value={mode.teamA}
                   onChange={(e) => setMode((m) => ({ ...m, teamA: e.target.value }))}
-                  className="mt-2 w-full rounded-xl border border-white/10 bg-black/30 px-4 py-3 text-sm text-white outline-none ring-1 ring-transparent focus:ring-sky-400/40"
+                  className="mt-2 w-full rounded-xl border border-white/15 bg-black/30 px-4 py-3 text-sm text-white outline-none ring-1 ring-transparent focus:ring-[#ff4fd8]/45"
                 />
               </label>
               <label className="block">
@@ -558,7 +718,7 @@ export default function SongsPage() {
                 <input
                   value={mode.teamB}
                   onChange={(e) => setMode((m) => ({ ...m, teamB: e.target.value }))}
-                  className="mt-2 w-full rounded-xl border border-white/10 bg-black/30 px-4 py-3 text-sm text-white outline-none ring-1 ring-transparent focus:ring-fuchsia-400/40"
+                  className="mt-2 w-full rounded-xl border border-white/15 bg-black/30 px-4 py-3 text-sm text-white outline-none ring-1 ring-transparent focus:ring-[#ff4fd8]/45"
                 />
               </label>
 
@@ -576,7 +736,7 @@ export default function SongsPage() {
                         bansPerTeam: clamp(Number(e.target.value || 0), 0, 5),
                       }))
                     }
-                    className="mt-2 w-full rounded-xl border border-white/10 bg-black/30 px-4 py-3 text-sm text-white outline-none ring-1 ring-transparent focus:ring-yellow-300/40"
+                    className="mt-2 w-full rounded-xl border border-white/15 bg-black/30 px-4 py-3 text-sm text-white outline-none ring-1 ring-transparent focus:ring-[#ff4fd8]/45"
                   />
                 </label>
                 <label className="block">
@@ -592,12 +752,12 @@ export default function SongsPage() {
                         picksPerTeam: clamp(Number(e.target.value || 0), 0, 10),
                       }))
                     }
-                    className="mt-2 w-full rounded-xl border border-white/10 bg-black/30 px-4 py-3 text-sm text-white outline-none ring-1 ring-transparent focus:ring-emerald-400/40"
+                    className="mt-2 w-full rounded-xl border border-white/15 bg-black/30 px-4 py-3 text-sm text-white outline-none ring-1 ring-transparent focus:ring-[#ff4fd8]/45"
                   />
                 </label>
               </div>
 
-              <div className="mt-1 rounded-2xl border border-white/10 bg-black/20 p-4">
+              <div className="mt-1 rounded-2xl border border-white/15 bg-black/25 p-4">
                 <div className="text-xs font-bold tracking-widest text-white/60">STATUS</div>
                 <div className="mt-2 text-sm font-semibold text-white/80">
                   Turn {Math.min(turn + 1, actionPlan.length)} / {actionPlan.length}
@@ -607,11 +767,11 @@ export default function SongsPage() {
                 </div>
 
                 <div className="mt-3 grid grid-cols-2 gap-3 text-sm">
-                  <div className="rounded-xl border border-white/10 bg-white/5 p-3">
+                  <div className="rounded-xl border border-white/15 bg-white/10 p-3">
                     <div className="text-xs font-bold tracking-widest text-white/60">BANNED</div>
                     <div className="mt-1 text-lg font-black text-white">{banned.length}</div>
                   </div>
-                  <div className="rounded-xl border border-white/10 bg-white/5 p-3">
+                  <div className="rounded-xl border border-white/15 bg-white/10 p-3">
                     <div className="text-xs font-bold tracking-widest text-white/60">PICKED</div>
                     <div className="mt-1 text-lg font-black text-white">{picked.length}</div>
                   </div>
@@ -624,7 +784,7 @@ export default function SongsPage() {
                       setTurn(0);
                       setSheet((prev) => prev.map((x) => ({ ...x, status: "available" })));
                     }}
-                    className="rounded-full border border-white/10 bg-white/5 px-6 py-3 text-sm font-semibold text-white/85 hover:bg-white/10 hover:text-white"
+                    className="rounded-full border border-[#ff4fd8]/35 bg-white/10 px-6 py-3 text-sm font-semibold text-white/90 hover:bg-[#ff4fd8]/20 hover:text-white"
                   >
                     Reset Draft
                   </button>
@@ -652,18 +812,33 @@ export default function SongsPage() {
             </div>
           </div>
 
-          <div className="rounded-2xl border border-white/10 bg-white/5 p-5 ring-1 ring-white/10">
+          <div className="rounded-2xl border border-[#ff4fd8]/30 bg-[linear-gradient(180deg,rgba(20,8,32,0.9),rgba(14,7,24,0.9))] p-5 ring-1 ring-[#ff4fd8]/20">
             <div className="text-xs font-bold tracking-widest text-white/60">DATA SOURCE</div>
             <p className="mt-2 text-sm leading-6 text-white/70">
-              Songs are fetched live from the community dataset.
+              Songs are cached in IndexedDB for faster load. Use sync to refresh from the community dataset.
             </p>
+            <div className="mt-3 flex flex-wrap items-center gap-2">
+              <button
+                type="button"
+                onClick={syncSongs}
+                disabled={syncing}
+                className="inline-flex items-center justify-center rounded-full border border-[#ff4fd8]/35 bg-white/10 px-4 py-2 text-sm font-semibold text-white/90 hover:bg-[#ff4fd8]/20 hover:text-white disabled:cursor-not-allowed disabled:opacity-50"
+              >
+                {syncing ? "Syncing..." : "Sync"}
+              </button>
+              <span className="text-xs text-white/60">
+                {lastSyncedAt
+                  ? `Last sync: ${new Date(lastSyncedAt).toLocaleString()}`
+                  : "No sync history yet"}
+              </span>
+            </div>
             <a
-              className="mt-3 inline-flex items-center justify-center rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm font-semibold text-white/85 hover:bg-white/10 hover:text-white"
-              href="https://dp4p6x0xfi5o9.cloudfront.net/maimai/data.json"
+              className="mt-3 inline-flex items-center justify-center rounded-full border border-[#ff4fd8]/35 bg-white/10 px-4 py-2 text-sm font-semibold text-white/90 hover:bg-[#ff4fd8]/20 hover:text-white"
+              href="https://arcade-songs.zetaraku.dev/maimai/"
               target="_blank"
               rel="noreferrer"
             >
-              Open data.json
+              Thanks zetaraku.dev
             </a>
           </div>
         </div>

@@ -76,7 +76,7 @@ export function CalendarGrid({
   const weekLabels = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
 
   return (
-    <div className="rounded-2xl border border-white/10 bg-white/5 p-5 ring-1 ring-white/10">
+    <div className="rounded-2xl border border-[#ff4fd8]/30 bg-[linear-gradient(180deg,rgba(20,8,32,0.9),rgba(14,7,24,0.9))] p-5 ring-1 ring-[#ff4fd8]/20">
       <div className="flex items-center justify-between gap-4">
         <div>
           <div className="text-xs font-bold tracking-widest text-white/60">CALENDAR</div>
@@ -88,21 +88,21 @@ export function CalendarGrid({
           <button
             type="button"
             onClick={() => setMonthFocus((d) => addMonths(d, -1))}
-            className="rounded-full border border-white/10 bg-white/5 px-3 py-2 text-xs font-semibold text-white/80 hover:bg-white/10 hover:text-white"
+            className="rounded-full border border-[#ff4fd8]/35 bg-white/10 px-3 py-2 text-xs font-semibold text-white/85 hover:bg-[#ff4fd8]/20 hover:text-white"
           >
             Prev
           </button>
           <button
             type="button"
             onClick={() => setMonthFocus(new Date(focusDate + "T00:00:00"))}
-            className="hidden rounded-full border border-white/10 bg-white/5 px-3 py-2 text-xs font-semibold text-white/70 hover:bg-white/10 hover:text-white sm:block"
+            className="hidden rounded-full border border-[#ff4fd8]/30 bg-white/10 px-3 py-2 text-xs font-semibold text-white/75 hover:bg-[#ff4fd8]/20 hover:text-white sm:block"
           >
             Today
           </button>
           <button
             type="button"
             onClick={() => setMonthFocus((d) => addMonths(d, 1))}
-            className="rounded-full border border-white/10 bg-white/5 px-3 py-2 text-xs font-semibold text-white/80 hover:bg-white/10 hover:text-white"
+            className="rounded-full border border-[#ff4fd8]/35 bg-white/10 px-3 py-2 text-xs font-semibold text-white/85 hover:bg-[#ff4fd8]/20 hover:text-white"
           >
             Next
           </button>
@@ -123,7 +123,7 @@ export function CalendarGrid({
             return (
               <div
                 key={`empty-${idx}`}
-                className="h-[92px] rounded-xl border border-white/5 bg-black/10"
+                className="h-[92px] rounded-xl border border-white/10 bg-black/15"
               />
             );
           }
@@ -139,7 +139,7 @@ export function CalendarGrid({
                 "relative h-[92px] overflow-hidden rounded-xl border p-2 ring-1 " +
                 (important
                   ? "border-fuchsia-400/25 bg-fuchsia-400/10 ring-fuchsia-300/20 shadow-[0_0_0_1px_rgba(255,79,216,0.25),0_0_22px_rgba(255,79,216,0.18)]"
-                  : "border-white/10 bg-black/20 ring-white/10")
+                  : "border-white/10 bg-black/25 ring-white/10")
               }
             >
               <div className="flex items-start justify-between">
@@ -159,7 +159,7 @@ export function CalendarGrid({
                       "block w-full truncate rounded-md px-2 py-1 text-left text-[11px] font-semibold ring-1 transition hover:bg-white/10 " +
                       (e.important
                         ? "bg-fuchsia-400/15 text-fuchsia-100 ring-fuchsia-300/25"
-                        : "bg-white/5 text-white/80 ring-white/10")
+                        : "bg-white/10 text-white/85 ring-white/15")
                     }
                     title={`${e.time} — ${e.title}`}
                   >
@@ -181,7 +181,7 @@ export function CalendarGrid({
             if (e.target === e.currentTarget) setSelectedEvent(null);
           }}
         >
-          <div className="w-full max-w-lg rounded-2xl border border-white/10 bg-black/80 p-5 text-white ring-1 ring-white/15">
+          <div className="w-full max-w-lg rounded-2xl border border-[#ff4fd8]/35 bg-[#1b0824]/92 p-5 text-white ring-1 ring-[#ff4fd8]/25">
             <div className="flex items-start justify-between gap-3">
               <div>
                 <div className="text-xs font-bold tracking-widest text-white/60">EVENT</div>
@@ -192,7 +192,7 @@ export function CalendarGrid({
               <button
                 type="button"
                 onClick={() => setSelectedEvent(null)}
-                className="rounded-full border border-white/10 bg-white/5 px-3 py-2 text-xs font-semibold text-white/80 hover:bg-white/10 hover:text-white"
+                className="rounded-full border border-[#ff4fd8]/35 bg-white/10 px-3 py-2 text-xs font-semibold text-white/85 hover:bg-[#ff4fd8]/20 hover:text-white"
               >
                 Close
               </button>

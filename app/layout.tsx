@@ -39,13 +39,12 @@ export default function RootLayout({
         <link rel="manifest" href="/site.webmanifest" />
       </head>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} min-h-dvh bg-[#05050a] text-white antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} min-h-dvh bg-[#17061f] text-white antialiased`}
       >
         <PwaRegister />
         <ArcadeBackground />
         <Navbar />
         <div className="relative">
-          <div className="pointer-events-none absolute inset-x-0 top-0 h-40 bg-[radial-gradient(circle_at_top,rgba(57,183,255,0.18),transparent_70%)]" />
           {children}
         </div>
       </body>

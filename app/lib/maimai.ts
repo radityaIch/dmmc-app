@@ -7,6 +7,15 @@ export type MaimaiDifficulty =
 
 export type MaimaiSheetType = "dx" | "std";
 
+export type MaimaiRegionValue = string | boolean;
+
+export type MaimaiRegions = {
+  jp: MaimaiRegionValue;
+  intl: MaimaiRegionValue;
+  usa: MaimaiRegionValue;
+  cn: MaimaiRegionValue;
+};
+
 export type MaimaiSongSheet = {
   type: MaimaiSheetType;
   difficulty: MaimaiDifficulty;
@@ -22,6 +31,7 @@ export type MaimaiSongSheet = {
     break: number | null;
     total: number | null;
   };
+  regions: MaimaiRegions;
   isSpecial: boolean;
   version: string;
 };
@@ -55,10 +65,31 @@ export type MaimaiSong = {
   releaseDate: string | null;
   imageName: string | null;
   sheets: MaimaiSongSheet[];
+  regions: MaimaiRegions;
   hasDx: boolean;
   hasStd: boolean;
   maxLevelValue: number | null;
 };
+
+function mergeRegionValue(values: MaimaiRegionValue[]) {
+  if (values.some((v) => v === true)) return true;
+
+  const firstString = values.find(
+    (v): v is string => typeof v === "string" && v.trim().length > 0,
+  );
+  if (firstString) return firstString;
+
+  return false;
+}
+
+function aggregateRegions(sheets: MaimaiSongSheet[]): MaimaiRegions {
+  return {
+    jp: mergeRegionValue(sheets.map((s) => s.regions.jp)),
+    intl: mergeRegionValue(sheets.map((s) => s.regions.intl)),
+    usa: mergeRegionValue(sheets.map((s) => s.regions.usa)),
+    cn: mergeRegionValue(sheets.map((s) => s.regions.cn)),
+  };
+}
 
 export const MAIMAI_DATA_URL =
   "https://dp4p6x0xfi5o9.cloudfront.net/maimai/data.json";
@@ -78,6 +109,7 @@ export function normalizeMaimaiSong(raw: MaimaiSongRaw): MaimaiSong {
     raw.sheets.length > 0
       ? Math.max(...raw.sheets.map((s) => s.levelValue ?? 0))
       : null;
+  const regions = aggregateRegions(raw.sheets);
 
   return {
     id: raw.songId,
@@ -89,6 +121,7 @@ export function normalizeMaimaiSong(raw: MaimaiSongRaw): MaimaiSong {
     releaseDate: raw.releaseDate ?? null,
     imageName: raw.imageName ?? null,
     sheets: raw.sheets,
+    regions,
     hasDx,
     hasStd,
     maxLevelValue,

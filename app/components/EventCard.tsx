@@ -13,13 +13,13 @@ export function EventCard({ event }: { event: DmmcEvent }) {
   return (
     <div
       className={
-        "relative overflow-hidden rounded-2xl border bg-white/5 p-5 shadow-sm ring-1 transition " +
+        "relative overflow-hidden rounded-2xl border bg-[linear-gradient(180deg,rgba(20,8,32,0.9),rgba(14,7,24,0.9))] p-5 shadow-sm ring-1 transition " +
         (event.important
-          ? "border-fuchsia-400/30 ring-fuchsia-300/30 shadow-[0_0_0_1px_rgba(255,79,216,0.35),0_0_28px_rgba(255,79,216,0.22)]"
-          : "border-white/10 ring-white/10 hover:border-white/20")
+          ? "border-fuchsia-400/35 ring-fuchsia-300/35 shadow-[0_0_0_1px_rgba(255,79,216,0.35),0_0_28px_rgba(255,79,216,0.24)]"
+          : "border-[#ff4fd8]/25 ring-[#ff4fd8]/15 hover:border-[#ff4fd8]/40")
       }
     >
-      <div className="pointer-events-none absolute -top-24 left-1/2 h-48 w-48 -translate-x-1/2 rounded-full bg-[radial-gradient(circle,rgba(57,183,255,0.26),transparent_60%)]" />
+      <div className="pointer-events-none absolute -top-24 left-1/2 h-48 w-48 -translate-x-1/2 rounded-full bg-[radial-gradient(circle,rgba(255,79,216,0.30),transparent_60%)]" />
 
       <div className="relative flex flex-col gap-3">
         <div className="flex items-start justify-between gap-3">
