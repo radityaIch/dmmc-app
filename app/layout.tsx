@@ -4,6 +4,7 @@ import "./globals.css";
 
 import { Navbar } from "./components/Navbar";
 import { ArcadeBackground } from "./components/ArcadeBackground";
+import { Footer } from "./components/Footer";
 import { PwaRegister } from "./components/PwaRegister";
 
 const geistSans = Geist({
@@ -61,6 +62,7 @@ export default function RootLayout({
         <div className="relative">
           {children}
         </div>
+        <Footer />
       </body>
     </html>
   );

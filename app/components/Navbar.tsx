@@ -37,13 +37,13 @@ export function Navbar() {
     <header className="sticky top-0 z-50 px-2 pt-3 sm:px-4">
       <div className="mx-auto flex w-full max-w-6xl items-center justify-between rounded-full border border-[#ff4fd8]/35 bg-white/88 px-4 py-3 shadow-[0_10px_28px_rgba(255,79,216,0.25)] backdrop-blur">
         <Link href="/" className="group inline-flex items-center gap-3">
-          <Image src="/assets/images/Logo 04.png" alt="DMMC" width={280} height={109} className="lg:h-10 w-auto sm:h-11" />
+          <Image src="/assets/images/Logo 04.png" alt="DMMC" width={280} height={109} className="lg:h-10 w-auto h-20" />
           <span className="hidden text-sm font-semibold tracking-wide text-[#2f2461]/85 group-hover:text-[#2f2461] sm:block">
             Denpasar Maimai Community
           </span>
         </Link>
 
-        <nav className="hidden items-center gap-5 text-sm font-bold text-[#2f2461]/75 md:flex">
+        <nav className="hidden items-center gap-5 text-sm font-bold text-[#2f2461]/75 lg:flex">
           <Link className="hover:text-[#ff4fd8]" href="/">
             Home
           </Link>
@@ -68,7 +68,7 @@ export function Navbar() {
           <button
             type="button"
             onClick={() => setOpen((v) => !v)}
-            className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-[#ff4fd8]/35 bg-white text-[#2f2461]/80 hover:bg-[#ffd8f3] hover:text-[#2f2461] md:hidden"
+            className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-[#ff4fd8]/35 bg-white text-[#2f2461]/80 hover:bg-[#ffd8f3] hover:text-[#2f2461] lg:hidden"
             aria-label={open ? "Close menu" : "Open menu"}
           >
             <span className="block h-4 w-5">
@@ -85,7 +85,7 @@ export function Navbar() {
       </div>
 
       {open ? (
-        <div className="fixed inset-0 z-50 md:hidden">
+        <div className="fixed inset-0 z-50 lg:hidden">
           <button
             type="button"
             className="absolute inset-0 bg-black/70 backdrop-blur-sm"

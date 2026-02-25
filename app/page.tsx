@@ -9,7 +9,7 @@ export default function Home() {
     <main>
       <section className="relative">
         <div className="relative mx-auto w-full max-w-6xl px-4 py-14 sm:py-20">
-          <div className="relative p-6 sm:p-10">
+          <div className="relative py-6 sm:p-10">
             <div className="grid grid-cols-1 gap-8 lg:grid-cols-2 lg:items-center">
               <div>
                 <div className="inline-flex items-center gap-2 rounded-full border border-[#ff4fd8]/40 bg-[#ff4fd8]/15 px-4 py-2 text-xs font-bold tracking-wider text-pink-100">
