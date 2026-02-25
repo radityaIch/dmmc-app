@@ -17,9 +17,9 @@ const menuLinks = [
 
 const thanksLinks = [
   { href: "https://maimai.sega.com/", label: "SEGA" },
-  { href: "https://github.com/myjian/", label: "Ming-yuen Jien (bookmarklets)" },
-  { href: "https://arcade-songs.zetaraku.dev/maimai/", label: "zetaraku.dev (arcade song list)" },
-  { href: "https://github.com/rama-adi", label: "Rama Adi (motivates)" },
+  // { href: "https://github.com/myjian/", label: "Ming-yuen Jien (bookmarklets)" },
+  // { href: "https://arcade-songs.zetaraku.dev/maimai/", label: "zetaraku.dev (arcade song list)" },
+  // { href: "https://github.com/rama-adi", label: "Rama Adi (motivates)" },
 ];
 
 export function Footer() {
@@ -52,18 +52,25 @@ export function Footer() {
             />
           </div>
           <p className="max-w-md text-sm text-white/70">
-            Denpasar Maimai Community is your local rhythm game circle for events, score sharing,
-            and arcade vibes.
+            Denpasar Maimai Community is your local rhythm game circle for
+            events, score sharing, and arcade vibes.
           </p>
-          <p className="text-xs text-white/45">© {new Date().getFullYear()} DMMC</p>
+          <p className="text-xs text-white/45">
+            © {new Date().getFullYear()} DMMC
+          </p>
         </div>
 
         <div>
-          <h3 className="text-sm font-extrabold uppercase tracking-wider text-[#ffb6ef]">Quick Link</h3>
+          <h3 className="text-sm font-extrabold uppercase tracking-wider text-[#ffb6ef]">
+            Quick Link
+          </h3>
           <ul className="mt-4 space-y-2">
             {quickLinks.map((link) => (
               <li key={link.href}>
-                <Link href={link.href} className="text-sm text-white/80 hover:text-[#ff4fd8]">
+                <Link
+                  href={link.href}
+                  className="text-sm text-white/80 hover:text-[#ff4fd8]"
+                >
                   {link.label}
                 </Link>
               </li>
@@ -72,11 +79,16 @@ export function Footer() {
         </div>
 
         <div>
-          <h3 className="text-sm font-extrabold uppercase tracking-wider text-[#9ce4ff]">Menu</h3>
+          <h3 className="text-sm font-extrabold uppercase tracking-wider text-[#9ce4ff]">
+            Menu
+          </h3>
           <ul className="mt-4 space-y-2">
             {menuLinks.map((link) => (
               <li key={link.href}>
-                <Link href={link.href} className="text-sm text-white/80 hover:text-[#ff4fd8]">
+                <Link
+                  href={link.href}
+                  className="text-sm text-white/80 hover:text-[#ff4fd8]"
+                >
                   {link.label}
                 </Link>
               </li>
@@ -85,7 +97,9 @@ export function Footer() {
         </div>
 
         <div>
-          <h3 className="text-sm font-extrabold uppercase tracking-wider text-[#c8ffd7]">Thanks To</h3>
+          <h3 className="text-sm font-extrabold uppercase tracking-wider text-[#c8ffd7]">
+            Thanks To
+          </h3>
           <ul className="mt-4 space-y-2">
             {thanksLinks.map((link) => (
               <li key={link.href}>
@@ -108,7 +122,7 @@ export function Footer() {
       <div className="border-t border-white/10 bg-black/25">
         <div className="mx-auto flex w-full max-w-6xl text-center flex-col gap-4 px-4 py-5 text-xs text-white/70 sm:px-6 lg:px-8">
           <p>
-            Author of This Project:{" "}
+            {/* Author of This Project:{" "}
             <a
               href="https://github.com/radityaIch/"
               target="_blank"
@@ -116,7 +130,9 @@ export function Footer() {
               className="font-semibold text-white/90 hover:text-[#ff4fd8]"
             >
               JW:5173(Vite)
-            </a>
+            </a> */}
+            DMMC is an unofficial, fan-made community project and is not
+            affiliated with or endorsed by SEGA.
           </p>
         </div>
       </div>
