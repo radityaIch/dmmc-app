@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.3.0](https://github.com/radityaIch/dmmc-app/compare/v1.2.0...v1.3.0) (2026-02-25)
+
+
+### Features
+
+* update AboutPage with notice and terms, and modify Footer to clarify project affiliation ([f47c1c8](https://github.com/radityaIch/dmmc-app/commit/f47c1c8405eb21f70337ac1a071f2262aaf7c5f5))
+* update thanksLinks in Footer component with additional labels ([ebf8d48](https://github.com/radityaIch/dmmc-app/commit/ebf8d48acf1a185099769578d8d9527a2b8d347d))
+
 ## 1.2.0 (2026-02-25)
 
 
