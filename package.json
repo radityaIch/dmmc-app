@@ -9,7 +9,15 @@
     "watch:scripts": "webpack --config webpack.scripts.config.cjs --env development --watch",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "prepare": "husky",
+    "commit": "cz",
+    "commitlint": "commitlint --from=HEAD~1 --to=HEAD --verbose",
+    "commitlint:edit": "commitlint --edit",
+    "release": "standard-version",
+    "release:patch": "standard-version --release-as patch",
+    "release:minor": "standard-version --release-as minor",
+    "release:major": "standard-version --release-as major"
   },
   "dependencies": {
     "dexie": "^4.3.0",
@@ -19,18 +27,29 @@
     "react-dom": "19.2.3"
   },
   "devDependencies": {
+    "@commitlint/cli": "^20.4.2",
+    "@commitlint/config-conventional": "^20.4.2",
     "@tailwindcss/postcss": "^4",
     "@types/dom-to-image": "^2.6.7",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "commitizen": "^4.3.1",
+    "cz-conventional-changelog": "^3.3.0",
     "esbuild": "^0.25.0",
     "eslint": "^9",
     "eslint-config-next": "16.1.6",
+    "husky": "^9.1.7",
+    "standard-version": "^9.5.0",
     "tailwindcss": "^4",
     "ts-loader": "^9.5.2",
     "typescript": "^5",
     "webpack": "^5.98.0",
     "webpack-cli": "^5.1.4"
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
   }
 }

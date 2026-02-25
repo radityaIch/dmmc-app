@@ -69,3 +69,71 @@ Special thanks:
 - Make upcoming events dynamically manageable (CMS-backed).
 - Finish and stabilize buggy tournament features.
 
+## Contributing
+
+This project uses **Git convention + Semantic Versioning** with Husky hooks.
+
+### Commit Convention (Conventional Commits)
+
+- Commit messages are validated by `commitlint` via Husky `commit-msg` hook.
+- Use formats like:
+	- `feat: add region filter`
+	- `fix: reset draft clears local storage`
+	- `docs: update contribution guide`
+	- `chore: upgrade dependencies`
+
+Optional scope example:
+- `feat(songs): add sheet version filter`
+
+### Husky Hooks
+
+- `pre-commit`: runs `npm run lint`
+- `commit-msg`: runs commitlint validation
+
+If hooks are not active after fresh clone:
+
+```bash
+npm install
+npm run prepare
+```
+
+### Helper Commands
+
+- Interactive conventional commit prompt:
+
+```bash
+npm run commit
+```
+
+- Manual lint for recent commit range:
+
+```bash
+npm run commitlint
+```
+
+- Lint a specific commit message file (same mode used by hook):
+
+```bash
+npm run commitlint:edit -- .git/COMMIT_EDITMSG
+```
+
+### Semantic Versioning & Release
+
+Versioning follows SemVer (`major.minor.patch`) using `standard-version`.
+
+- Automatic bump by commit history:
+
+```bash
+npm run release
+```
+
+- Force specific bump type:
+
+```bash
+npm run release:patch
+npm run release:minor
+npm run release:major
+```
+
+`standard-version` updates version/changelog and creates a release commit + git tag.
+
