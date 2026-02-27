@@ -34,6 +34,8 @@ type BanPickMode = {
 type RegionFilter = "all" | "jp" | "intl" | "usa" | "cn";
 type SheetVersionFilter = "all" | string;
 const ITEMS_PER_PAGE = 12;
+const REGION_KEYS = ["jp", "intl", "usa", "cn"] as const;
+type RegionKey = (typeof REGION_KEYS)[number];
 
 function clamp(n: number, min: number, max: number) {
   return Math.max(min, Math.min(max, n));
@@ -51,6 +53,76 @@ function regionAvailable(value: string | boolean) {
   if (typeof value === "boolean") return value;
   const text = value.trim().toLowerCase();
   return text.length > 0 && text !== "false" && text !== "0";
+}
+
+function emptyRegions(): MaimaiRegions {
+  return {
+    jp: false,
+    intl: false,
+    usa: false,
+    cn: false,
+  };
+}
+
+function normalizeRegionValue(value: unknown) {
+  if (typeof value === "boolean") return value;
+  if (typeof value === "string") return value;
+  return false;
+}
+
+function normalizeRegions(regions: unknown): MaimaiRegions {
+  if (!regions || typeof regions !== "object") return emptyRegions();
+  const source = regions as Partial<Record<RegionKey, unknown>>;
+  return {
+    jp: normalizeRegionValue(source.jp),
+    intl: normalizeRegionValue(source.intl),
+    usa: normalizeRegionValue(source.usa),
+    cn: normalizeRegionValue(source.cn),
+  };
+}
+
+function deriveRegionsFromSheets(
+  sheets: Array<{ regions?: unknown }> | undefined,
+): MaimaiRegions {
+  if (!Array.isArray(sheets) || sheets.length === 0) return emptyRegions();
+
+  const merged = emptyRegions();
+  for (const key of REGION_KEYS) {
+    const values = sheets.map((s) => normalizeRegions(s?.regions)[key]);
+    if (values.some((v) => v === true)) {
+      merged[key] = true;
+      continue;
+    }
+    const firstText = values.find((v): v is string => typeof v === "string" && v.trim().length > 0);
+    merged[key] = firstText ?? false;
+  }
+  return merged;
+}
+
+function getSongRegions(song: Pick<MaimaiSong, "regions" | "sheets">): MaimaiRegions {
+  const normalized = normalizeRegions(song.regions);
+  if (REGION_KEYS.some((key) => regionAvailable(normalized[key]))) {
+    return normalized;
+  }
+  return deriveRegionsFromSheets(song.sheets);
+}
+
+function getSongSheetVersions(song: Pick<MaimaiSong, "sheets">): string[] {
+  if (!Array.isArray(song.sheets)) return [];
+  return uniq(
+    song.sheets
+      .map((s) => (typeof s.version === "string" ? s.version.trim() : ""))
+      .filter((v) => v.length > 0),
+  );
+}
+
+function regionsEqual(a: MaimaiRegions, b: MaimaiRegions) {
+  return REGION_KEYS.every((key) => a[key] === b[key]);
+}
+
+function stringArrayEqual(a: string[], b: string[]) {
+  if (a.length !== b.length) return false;
+  return a.every((value, index) => value === b[index]);
 }
 
 export default function SongsPage() {
@@ -167,15 +239,16 @@ export default function SongsPage() {
 
   const sheetVersions = useMemo(() => {
     if (!songs) return [];
-    return uniq(songs.flatMap((s) => s.sheets.map((sh) => sh.version))).sort((a, b) =>
-      a.localeCompare(b),
-    );
+    return uniq(songs.flatMap((s) => getSongSheetVersions(s))).sort((a, b) => a.localeCompare(b));
   }, [songs]);
 
   const filtered = useMemo(() => {
     if (!songs) return [];
 
     return songs.filter((s) => {
+      const songRegions = getSongRegions(s);
+      const sheetVersions = getSongSheetVersions(s);
+
       if (query.trim()) {
         const q = query.trim();
         if (!includesLoose(s.title, q) && !includesLoose(s.artist, q)) return false;
@@ -183,16 +256,20 @@ export default function SongsPage() {
       if (category !== "all" && s.category !== category) return false;
       if (typeFilter === "dx" && !s.hasDx) return false;
       if (typeFilter === "std" && !s.hasStd) return false;
-      if (regionFilter !== "all" && !regionAvailable(s.regions[regionFilter])) return false;
-      if (
-        sheetVersionFilter !== "all" &&
-        !s.sheets.some(
-          (sh) =>
-            sh.version === sheetVersionFilter &&
-            (typeFilter === "all" || sh.type === typeFilter),
-        )
-      ) {
-        return false;
+      if (regionFilter !== "all" && !regionAvailable(songRegions[regionFilter])) return false;
+      if (sheetVersionFilter !== "all") {
+        if (typeFilter === "all") {
+          if (!sheetVersions.includes(sheetVersionFilter)) return false;
+        } else if (
+          !s.sheets.some(
+            (sh) =>
+              typeof sh.version === "string" &&
+              sh.version.trim() === sheetVersionFilter &&
+              sh.type === typeFilter,
+          )
+        ) {
+          return false;
+        }
       }
 
       const lv = s.maxLevelValue;
@@ -213,15 +290,78 @@ export default function SongsPage() {
     maxLevel,
   ]);
 
+  const songById = useMemo(() => {
+    const map = new Map<string, MaimaiSong>();
+    for (const s of songs ?? []) map.set(s.id, s);
+    return map;
+  }, [songs]);
+
+  useEffect(() => {
+    if (!songs || songs.length === 0) return;
+
+    setSheet((prev) => {
+      let changed = false;
+      const next = prev.map((entry) => {
+        const song = songById.get(entry.id);
+
+        const nextRegions =
+          entry.regions && typeof entry.regions === "object"
+            ? normalizeRegions(entry.regions)
+            : song
+              ? getSongRegions(song)
+              : emptyRegions();
+
+        const nextSheetVersions =
+          Array.isArray(entry.sheetVersions) && entry.sheetVersions.length > 0
+            ? uniq(
+                entry.sheetVersions
+                  .filter((v): v is string => typeof v === "string")
+                  .map((v) => v.trim())
+                  .filter((v) => v.length > 0),
+              )
+            : song
+              ? getSongSheetVersions(song)
+              : [];
+
+        if (regionsEqual(entry.regions, nextRegions) && stringArrayEqual(entry.sheetVersions, nextSheetVersions)) {
+          return entry;
+        }
+
+        changed = true;
+        return {
+          ...entry,
+          regions: nextRegions,
+          sheetVersions: nextSheetVersions,
+        };
+      });
+
+      return changed ? next : prev;
+    });
+  }, [songs, songById, setSheet]);
+
   const visibleSheet = useMemo(() => {
     return sheet.filter((s) => {
-      if (regionFilter !== "all" && !regionAvailable(s.regions[regionFilter])) return false;
-      if (sheetVersionFilter !== "all" && !s.sheetVersions.includes(sheetVersionFilter)) {
+      const sourceSong = songById.get(s.id);
+      const entryRegions =
+        s.regions && typeof s.regions === "object"
+          ? normalizeRegions(s.regions)
+          : sourceSong
+            ? getSongRegions(sourceSong)
+            : emptyRegions();
+      const entrySheetVersions =
+        Array.isArray(s.sheetVersions) && s.sheetVersions.length > 0
+          ? s.sheetVersions
+          : sourceSong
+            ? getSongSheetVersions(sourceSong)
+            : [];
+
+      if (regionFilter !== "all" && !regionAvailable(entryRegions[regionFilter])) return false;
+      if (sheetVersionFilter !== "all" && !entrySheetVersions.includes(sheetVersionFilter)) {
         return false;
       }
       return true;
     });
-  }, [sheet, regionFilter, sheetVersionFilter]);
+  }, [sheet, regionFilter, sheetVersionFilter, songById]);
 
   const libraryEntries = useMemo<SheetEntry[]>(() => {
     return filtered.map((s) => ({
@@ -232,8 +372,8 @@ export default function SongsPage() {
       bpm: s.bpm,
       maxLevelValue: s.maxLevelValue,
       imageName: s.imageName,
-      regions: s.regions,
-      sheetVersions: uniq(s.sheets.map((sh) => sh.version)),
+      regions: getSongRegions(s),
+      sheetVersions: getSongSheetVersions(s),
       status: "available",
     }));
   }, [filtered]);
@@ -275,12 +415,6 @@ export default function SongsPage() {
     const shown = filtered.length;
     return { total, shown };
   }, [songs, filtered.length]);
-
-  const songById = useMemo(() => {
-    const map = new Map<string, MaimaiSong>();
-    for (const s of songs ?? []) map.set(s.id, s);
-    return map;
-  }, [songs]);
 
   const selectedSong = useMemo(() => {
     if (!selectedSongId) return null;
@@ -384,8 +518,8 @@ export default function SongsPage() {
       bpm: s.bpm,
       maxLevelValue: s.maxLevelValue,
       imageName: s.imageName,
-      regions: s.regions,
-      sheetVersions: uniq(s.sheets.map((sh) => sh.version)),
+      regions: getSongRegions(s),
+      sheetVersions: getSongSheetVersions(s),
       status: "available" as const,
     }));
 
