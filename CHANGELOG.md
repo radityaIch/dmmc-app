@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.3.1](https://github.com/radityaIch/dmmc-app/compare/v1.3.0...v1.3.1) (2026-02-27)
+
+
+### Bug Fixes
+
+* fixing song region and sheet version handling in SongsPage component ([7ef1024](https://github.com/radityaIch/dmmc-app/commit/7ef1024cc0f36efb6f93a479a6e85670279db5fa))
+
 ## [1.3.0](https://github.com/radityaIch/dmmc-app/compare/v1.2.0...v1.3.0) (2026-02-25)
 
 
