@@ -7,6 +7,7 @@ import { mockEvents } from "./lib/events";
 export default function Home() {
   return (
     <main>
+      {/* ── Hero ──────────────────────────────────────────── */}
       <section className="relative">
         <div className="relative mx-auto w-full max-w-6xl px-4 py-14 sm:py-20">
           <div className="relative py-6 sm:p-10">
@@ -14,16 +15,15 @@ export default function Home() {
               <div>
                 <div className="inline-flex items-center gap-2 rounded-full border border-[#ff4fd8]/40 bg-[#ff4fd8]/15 px-4 py-2 text-xs font-bold tracking-wider text-pink-100">
                   <span className="h-2 w-2 rounded-full bg-[#ff4fd8] shadow-[0_0_16px_rgba(255,79,216,0.7)]" />
-                  DMMC ARCADE MODE
+                  DMMC ARCADE
                 </div>
 
                 <h1 className="mt-6 max-w-2xl text-balance text-4xl font-black leading-tight tracking-tight text-white sm:text-5xl">
-                  Denpasar’s Home for Maimai Players. Let&apos;s Play!
+                  Denpasar&apos;s maimai community, in one place.
                 </h1>
                 <p className="mt-4 max-w-2xl text-pretty text-base leading-7 text-white/78 sm:text-lg">
-                  Whether you&apos;re chasing AP ranks or your next meetup run,
-                  DMMC is your local rhythm game hub for scores, tournaments,
-                  and community energy.
+                  Track scores, run tournaments, find meetups, and connect with
+                  local players — all without leaving your browser.
                 </p>
 
                 <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center">
@@ -32,13 +32,13 @@ export default function Home() {
                     variant="pink"
                     className="w-full sm:w-auto"
                   >
-                    Join the WhatsApp Group 🎮
+                    Join WhatsApp Group
                   </GlowButton>
                   <Link
                     href="/events"
                     className="inline-flex items-center justify-center rounded-full border border-[#ff4fd8]/45 bg-white px-6 py-3 text-base font-semibold text-[#ff4fd8] hover:bg-[#ff4fd8]/22"
                   >
-                    View Events
+                    See Events
                   </Link>
                 </div>
               </div>
@@ -65,6 +65,7 @@ export default function Home() {
         </div>
       </section>
 
+      {/* ── About + Quick Links ───────────────────────────── */}
       <section className="mx-auto w-full max-w-6xl px-4 py-10">
         <div className="grid grid-cols-1 gap-8 md:grid-cols-2 md:items-start">
           <div>
@@ -72,12 +73,10 @@ export default function Home() {
               About DMMC
             </h2>
             <p className="mt-4 text-base leading-7 text-white/70">
-              We are a passionate collective of rhythm game enthusiasts based
-              right here in Denpasar, Bali. Brought together by the flashing
-              lights and high-BPM beats of Sega&apos;s maimai, DMMC was created
-              to connect local players of all skill levels. We know that
-              grinding for that SSS+ rank is always better with friends cheering
-              you on.
+              DMMC is a Denpasar-based maimai circle open to players of all
+              levels. We organize regular meetups, casual sessions, and
+              small-scale tournaments across arcades in Bali. If you play —
+              or want to start — you&apos;re welcome here.
             </p>
           </div>
 
@@ -88,38 +87,39 @@ export default function Home() {
             <div className="mt-4 grid grid-cols-2 gap-3 text-sm font-semibold">
               <Link
                 href="/rules"
-                className="rounded-xl border border-white/10 bg-black/20 px-4 py-3 text-white/80 hover:bg-black/40 hover:text-white"
+                className="rounded-xl border border-white/10 bg-black/20 px-4 py-3 text-white/80 transition hover:bg-black/40 hover:text-white"
               >
-                Rules & Etiquette
+                Rules &amp; Etiquette
               </Link>
               <Link
                 href="/events"
-                className="rounded-xl border border-white/10 bg-black/20 px-4 py-3 text-white/80 hover:bg-black/40 hover:text-white"
+                className="rounded-xl border border-white/10 bg-black/20 px-4 py-3 text-white/80 transition hover:bg-black/40 hover:text-white"
               >
                 Upcoming Meetups
               </Link>
             </div>
-            <p className="mt-4 text-sm leading-6 text-white/60">
-              Mobile-first, installable, and built for arcade energy.
+            <p className="mt-4 text-sm leading-6 text-white/50">
+              Works as a PWA — add to home screen for quick access.
             </p>
           </div>
         </div>
       </section>
 
+      {/* ── Tournament ────────────────────────────────────── */}
       <section className="mx-auto w-full max-w-6xl px-4 pb-10">
         <div className="rounded-3xl border border-[#ff4fd8]/30 bg-[linear-gradient(180deg,rgba(20,8,32,0.9),rgba(14,7,24,0.9))] p-6 ring-1 ring-[#ff4fd8]/20 sm:p-8">
           <div className="grid grid-cols-1 gap-8 lg:grid-cols-2 lg:items-center">
             <div>
               <div className="inline-flex items-center gap-2 rounded-full border border-fuchsia-400/20 bg-fuchsia-400/10 px-4 py-2 text-xs font-semibold tracking-wider text-fuchsia-100 ring-1 ring-fuchsia-300/20">
-                TOURNAMENT MODE
+                TOURNAMENT
               </div>
               <h2 className="mt-5 text-2xl font-black tracking-tight text-white sm:text-3xl">
-                Run brackets, pick songs, and track scores.
+                Run a bracket in minutes.
               </h2>
               <p className="mt-3 max-w-2xl text-sm leading-6 text-white/70">
-                Create a single-elimination bracket, assign songs per match, and
-                enter scores with 4-decimal precision. Perfect for weekly
-                meetups and friendly rivalries.
+                Single-elimination brackets with per-match song selection and
+                score entry to 4 decimal places. Designed for how DMMC
+                actually runs its meetups.
               </p>
 
               <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:items-center">
@@ -134,7 +134,7 @@ export default function Home() {
                   href="/songs"
                   className="inline-flex items-center justify-center rounded-full border border-[#ff4fd8]/35 bg-white/12 px-6 py-3 text-base font-semibold text-white/90 hover:bg-[#ff4fd8]/20 hover:text-white"
                 >
-                  Pick Songs
+                  Song List
                 </Link>
               </div>
             </div>
@@ -148,7 +148,7 @@ export default function Home() {
                   Scrollable rounds
                 </div>
                 <p className="mt-2 text-sm leading-6 text-white/80">
-                  Wide match cards with easy winner selection.
+                  Wide match cards with one-tap winner selection.
                 </p>
               </div>
               <div className="rounded-2xl border border-fuchsia-300/35 bg-[linear-gradient(180deg,rgba(255,79,216,0.22),rgba(40,9,42,0.9))] p-5 ring-1 ring-fuchsia-200/20 backdrop-blur-sm">
@@ -156,10 +156,10 @@ export default function Home() {
                   SONGS
                 </div>
                 <div className="mt-2 text-sm font-semibold text-white/95">
-                  Search + import picks
+                  Search &amp; assign picks
                 </div>
                 <p className="mt-2 text-sm leading-6 text-white/80">
-                  Searchable selector and per-match song lists.
+                  Searchable song selector with per-match lists.
                 </p>
               </div>
               <div className="rounded-2xl border border-violet-300/35 bg-[linear-gradient(180deg,rgba(168,85,247,0.2),rgba(24,12,40,0.9))] p-5 ring-1 ring-violet-200/20 backdrop-blur-sm">
@@ -170,7 +170,7 @@ export default function Home() {
                   4-decimal precision
                 </div>
                 <p className="mt-2 text-sm leading-6 text-white/80">
-                  Totals are calculated and shown beside player names.
+                  Totals shown beside each player name per round.
                 </p>
               </div>
               <div className="rounded-2xl border border-lime-200/35 bg-[linear-gradient(180deg,rgba(213,255,99,0.22),rgba(30,36,8,0.9))] p-5 ring-1 ring-lime-100/20 backdrop-blur-sm">
@@ -178,10 +178,10 @@ export default function Home() {
                   SAVE
                 </div>
                 <div className="mt-2 text-sm font-semibold text-white/95">
-                  Auto-persisted
+                  Saved on-device
                 </div>
                 <p className="mt-2 text-sm leading-6 text-white/80">
-                  Bracket setup and scores are saved on-device.
+                  Bracket and scores persist across sessions automatically.
                 </p>
               </div>
             </div>
@@ -189,21 +189,28 @@ export default function Home() {
         </div>
       </section>
 
+      {/* ── Score Import ──────────────────────────────────── */}
       <section className="mx-auto w-full max-w-6xl px-4 pb-10">
         <div className="rounded-3xl border border-[#ff4fd8]/30 bg-[linear-gradient(180deg,rgba(20,8,32,0.9),rgba(14,7,24,0.9))] p-6 ring-1 ring-[#ff4fd8]/20 sm:p-8">
           <div className="grid grid-cols-1 gap-8 lg:grid-cols-2 lg:items-center">
             <div>
               <div className="inline-flex items-center gap-2 rounded-full border border-emerald-400/20 bg-emerald-400/10 px-4 py-2 text-xs font-semibold tracking-wider text-emerald-100 ring-1 ring-emerald-300/20">
-                SCORE IMPORT (Alpha - Not Stable)
+                SCORE IMPORT
+                <span className="rounded-full bg-emerald-900/60 px-2 py-0.5 text-[10px] font-bold text-emerald-300">
+                  ALPHA
+                </span>
               </div>
               <h2 className="mt-5 text-2xl font-black tracking-tight text-white sm:text-3xl">
-                Import your maimai DX NET scores in seconds.
+                Pull your scores from maimai DX NET.
               </h2>
               <p className="mt-3 max-w-2xl text-sm leading-6 text-white/70">
-                Drag one bookmarklet to your bookmarks bar, open
-                maimaidx-eng.com, then run it. Your scores are sent straight to
-                <span className="font-semibold text-white"> /my-score</span> —
-                no copy-paste, no downloads.
+                Drag a bookmarklet to your browser, open{" "}
+                <span className="font-semibold text-white/90">
+                  maimaidx-eng.com
+                </span>
+                , and run it. Your full play record is sent to{" "}
+                <span className="font-semibold text-white">/my-score</span>{" "}
+                automatically — no copy-paste, no file downloads.
               </p>
 
               <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:items-center">
@@ -212,7 +219,7 @@ export default function Home() {
                   variant="green"
                   className="w-full sm:w-auto"
                 >
-                  Open Bookmarklets
+                  Get the Bookmarklets
                 </GlowButton>
               </div>
             </div>
@@ -223,10 +230,10 @@ export default function Home() {
                   ONE CLICK
                 </div>
                 <div className="mt-2 text-sm font-semibold text-white/95">
-                  Run from bookmarks
+                  Run from bookmarks bar
                 </div>
                 <p className="mt-2 text-sm leading-6 text-white/80">
-                  No extensions needed — works on desktop and mobile.
+                  No extensions. Works on desktop and mobile.
                 </p>
               </div>
               <div className="rounded-2xl border border-sky-300/30 bg-[linear-gradient(180deg,rgba(56,189,248,0.2),rgba(8,19,39,0.9))] p-5 ring-1 ring-sky-200/20 backdrop-blur-sm">
@@ -234,11 +241,11 @@ export default function Home() {
                   LIVE TRANSFER
                 </div>
                 <div className="mt-2 text-sm font-semibold text-white/95">
-                  Sends to your DMMC tab
+                  Direct to your DMMC tab
                 </div>
                 <p className="mt-2 text-sm leading-6 text-white/80">
-                  Exports your play record list and posts JSON securely to the
-                  receiver.
+                  Exports your play record as JSON and posts it to the
+                  receiver tab.
                 </p>
               </div>
               <div className="rounded-2xl border border-fuchsia-300/35 bg-[linear-gradient(180deg,rgba(255,79,216,0.22),rgba(40,9,42,0.9))] p-5 ring-1 ring-fuchsia-200/20 backdrop-blur-sm">
@@ -246,10 +253,10 @@ export default function Home() {
                   INTL READY
                 </div>
                 <div className="mt-2 text-sm font-semibold text-white/95">
-                  Made for maimaidx-eng.com
+                  Built for maimaidx-eng.com
                 </div>
                 <p className="mt-2 text-sm leading-6 text-white/80">
-                  Built specifically for the international DX NET site.
+                  Targets the international DX NET site specifically.
                 </p>
               </div>
               <div className="rounded-2xl border border-amber-300/35 bg-[linear-gradient(180deg,rgba(251,191,36,0.2),rgba(42,27,6,0.9))] p-5 ring-1 ring-amber-200/20 backdrop-blur-sm">
@@ -257,10 +264,10 @@ export default function Home() {
                   FALLBACK
                 </div>
                 <div className="mt-2 text-sm font-semibold text-white/95">
-                  Download if popups are blocked
+                  JSON download if needed
                 </div>
                 <p className="mt-2 text-sm leading-6 text-white/80">
-                  If the receiver tab can’t open, you still get a JSON file.
+                  If the receiver tab can&apos;t open, a file download kicks in.
                 </p>
               </div>
             </div>
@@ -268,14 +275,15 @@ export default function Home() {
         </div>
       </section>
 
+      {/* ── Locations + Events ───────────────────────────── */}
       <section className="mx-auto w-full max-w-6xl px-4 pb-14">
         <div className="mb-10 rounded-3xl border border-[#ff4fd8]/30 bg-[linear-gradient(180deg,rgba(20,8,32,0.9),rgba(14,7,24,0.9))] p-6 ring-1 ring-[#ff4fd8]/20 sm:p-8">
-          <div className="mb-4">
+          <div className="mb-6">
             <h2 className="text-2xl font-black tracking-tight text-white sm:text-3xl">
               maimai DX Locations in Bali
             </h2>
-            <p className="mt-2 text-sm leading-6 text-white/75">
-              Check nearby arcades and open directions in Google Maps.
+            <p className="mt-2 text-sm leading-6 text-white/60">
+              Tap a location to open directions in Google Maps.
             </p>
           </div>
 
@@ -286,8 +294,13 @@ export default function Home() {
               rel="noreferrer"
               className="rounded-2xl border border-sky-300/30 bg-[linear-gradient(180deg,rgba(57,183,255,0.18),rgba(8,19,39,0.88))] p-5 ring-1 ring-sky-200/20 transition hover:translate-y-[-2px]"
             >
-              <div className="text-sm font-bold text-white">TIMEZONE GALERIA BALI</div>
-              <div className="mt-2 text-xs font-semibold text-white/70">Open in Google Maps</div>
+              <div className="text-sm font-bold text-white">
+                Timezone Galeria Bali
+              </div>
+              <div className="mt-2 flex items-center gap-1 text-xs font-semibold text-white/55">
+                <span>Open in Maps</span>
+                <span>↗</span>
+              </div>
             </a>
 
             <a
@@ -296,8 +309,13 @@ export default function Home() {
               rel="noreferrer"
               className="rounded-2xl border border-fuchsia-300/35 bg-[linear-gradient(180deg,rgba(255,79,216,0.2),rgba(40,9,42,0.9))] p-5 ring-1 ring-fuchsia-200/20 transition hover:translate-y-[-2px]"
             >
-              <div className="text-sm font-bold text-white">TIMEZONE TRANS STUDIO MAL BALI</div>
-              <div className="mt-2 text-xs font-semibold text-white/70">Open in Google Maps</div>
+              <div className="text-sm font-bold text-white">
+                Timezone Trans Studio Mal Bali
+              </div>
+              <div className="mt-2 flex items-center gap-1 text-xs font-semibold text-white/55">
+                <span>Open in Maps</span>
+                <span>↗</span>
+              </div>
             </a>
 
             <a
@@ -306,8 +324,13 @@ export default function Home() {
               rel="noreferrer"
               className="rounded-2xl border border-lime-200/35 bg-[linear-gradient(180deg,rgba(213,255,99,0.2),rgba(30,36,8,0.9))] p-5 ring-1 ring-lime-100/20 transition hover:translate-y-[-2px]"
             >
-              <div className="text-sm font-bold text-white">TIMEZONE LEVEL 21</div>
-              <div className="mt-2 text-xs font-semibold text-white/70">Open in Google Maps</div>
+              <div className="text-sm font-bold text-white">
+                Timezone Level 21
+              </div>
+              <div className="mt-2 flex items-center gap-1 text-xs font-semibold text-white/55">
+                <span>Open in Maps</span>
+                <span>↗</span>
+              </div>
             </a>
           </div>
         </div>
@@ -315,11 +338,10 @@ export default function Home() {
         <div className="mb-6 flex items-end justify-between gap-4">
           <div>
             <h2 className="text-2xl font-black tracking-tight text-white sm:text-3xl">
-              Upcoming Arcade Meetups
+              Upcoming Meetups
             </h2>
-            <p className="mt-2 max-w-2xl text-sm leading-6 text-white/70">
-              Cards glow brighter when the event is marked as an important
-              announcement.
+            <p className="mt-2 max-w-2xl text-sm leading-6 text-white/60">
+              Highlighted cards are pinned announcements.
             </p>
           </div>
           <Link
