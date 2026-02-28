@@ -43,6 +43,7 @@ export function DashboardClient({ preloadedUser }: DashboardClientProps) {
                 <DashCard title="My Scores" description="View and manage your score history." href="/my-score" />
                 <DashCard title="Songs" description="Browse the full song catalogue." href="/songs" />
                 <DashCard title="Events" description="Upcoming tournaments and meetups." href="/events" />
+                <DashCard title="My Events" description="Create and manage your own community events." href="/dashboard/events" />
             </div>
         </div>
     );

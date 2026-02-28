@@ -9,6 +9,7 @@
  */
 
 import type * as handlers_auth from "../handlers/auth.js";
+import type * as handlers_event from "../handlers/event.js";
 import type * as http from "../http.js";
 
 import type {
@@ -19,6 +20,7 @@ import type {
 
 declare const fullApi: ApiFromModules<{
   "handlers/auth": typeof handlers_auth;
+  "handlers/event": typeof handlers_event;
   http: typeof http;
 }>;
 

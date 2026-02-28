@@ -1,4 +1,5 @@
 import type { DmmcEvent } from "../lib/events";
+import { eventDate, eventTime } from "../lib/events";
 
 import { useMemo, useState } from "react";
 
@@ -55,12 +56,13 @@ export function CalendarGrid({
   const byDate = useMemo(() => {
     const map = new Map<string, DmmcEvent[]>();
     for (const e of events) {
-      const list = map.get(e.date) ?? [];
+      const date = eventDate(e);
+      const list = map.get(date) ?? [];
       list.push(e);
-      map.set(e.date, list);
+      map.set(date, list);
     }
     for (const [k, list] of map.entries()) {
-      list.sort((a, b) => (a.date + "T" + a.time).localeCompare(b.date + "T" + b.time));
+      list.sort((a, b) => a.datetime.localeCompare(b.datetime));
       map.set(k, list);
     }
     return map;
@@ -130,21 +132,20 @@ export function CalendarGrid({
 
           const key = toKey(c.date);
           const dayEvents = byDate.get(key) ?? [];
-          const important = dayEvents.some((e) => e.important);
 
           return (
             <div
               key={key}
               className={
                 "relative h-[92px] overflow-hidden rounded-xl border p-2 ring-1 " +
-                (important
+                (dayEvents.length > 0
                   ? "border-fuchsia-400/25 bg-fuchsia-400/10 ring-fuchsia-300/20 shadow-[0_0_0_1px_rgba(255,79,216,0.25),0_0_22px_rgba(255,79,216,0.18)]"
                   : "border-white/10 bg-black/25 ring-white/10")
               }
             >
               <div className="flex items-start justify-between">
                 <div className="text-xs font-black text-white">{c.date.getDate()}</div>
-                {important ? (
+                {dayEvents.length > 0 ? (
                   <div className="h-2 w-2 rounded-full bg-fuchsia-300 shadow-[0_0_12px_rgba(255,79,216,0.55)]" />
                 ) : null}
               </div>
@@ -152,18 +153,16 @@ export function CalendarGrid({
               <div className="mt-2 max-h-[56px] space-y-1 overflow-auto pr-1">
                 {dayEvents.map((e) => (
                   <button
-                    key={e.id}
+                    key={e._id}
                     type="button"
                     onClick={() => setSelectedEvent(e)}
                     className={
                       "block w-full truncate rounded-md px-2 py-1 text-left text-[11px] font-semibold ring-1 transition hover:bg-white/10 " +
-                      (e.important
-                        ? "bg-fuchsia-400/15 text-fuchsia-100 ring-fuchsia-300/25"
-                        : "bg-white/10 text-white/85 ring-white/15")
+                      "bg-fuchsia-400/15 text-fuchsia-100 ring-fuchsia-300/25"
                     }
-                    title={`${e.time} — ${e.title}`}
+                    title={`${eventTime(e)} — ${e.name}`}
                   >
-                    {e.time} {e.title}
+                    {eventTime(e)} {e.name}
                   </button>
                 ))}
               </div>
@@ -186,7 +185,7 @@ export function CalendarGrid({
               <div>
                 <div className="text-xs font-bold tracking-widest text-white/60">EVENT</div>
                 <div className="mt-1 text-lg font-black tracking-tight text-white">
-                  {selectedEvent.title}
+                  {selectedEvent.name}
                 </div>
               </div>
               <button
@@ -200,20 +199,32 @@ export function CalendarGrid({
 
             <div className="mt-4 flex flex-wrap items-center gap-2 text-sm text-white/75">
               <span className="rounded-full bg-white/5 px-3 py-1 ring-1 ring-white/10">
-                {formatFullDate(selectedEvent.date)}
+                {formatFullDate(eventDate(selectedEvent))}
               </span>
               <span className="rounded-full bg-white/5 px-3 py-1 ring-1 ring-white/10">
-                {selectedEvent.time}
+                {eventTime(selectedEvent)}
               </span>
               <span className="rounded-full bg-white/5 px-3 py-1 ring-1 ring-white/10">
-                {selectedEvent.location}
+                {selectedEvent.location.name}
               </span>
-              {selectedEvent.important ? (
-                <span className="rounded-full bg-fuchsia-400/15 px-3 py-1 text-sm font-semibold text-fuchsia-200 ring-1 ring-fuchsia-300/30">
-                  Important
-                </span>
-              ) : null}
             </div>
+
+            {selectedEvent.location.address && (
+              <div className="mt-2 text-xs text-white/50">
+                {selectedEvent.location.address}
+              </div>
+            )}
+
+            {selectedEvent.location.googleMapURL && (
+              <a
+                href={selectedEvent.location.googleMapURL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="mt-1 inline-block text-xs text-[#ff4fd8]/80 hover:text-[#ff4fd8] hover:underline"
+              >
+                Open in Google Maps →
+              </a>
+            )}
 
             <p className="mt-4 text-sm leading-6 text-white/70">{selectedEvent.description}</p>
           </div>

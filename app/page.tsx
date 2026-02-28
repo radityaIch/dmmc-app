@@ -1,8 +1,8 @@
 import Link from "next/link";
 
-import { EventCard } from "./components/EventCard";
 import { GlowButton } from "./components/GlowButton";
-import { mockEvents } from "./lib/events";
+import { HomeEventsPreview } from "./components/HomeEventsPreview";
+import { MAIMAI_LOCATIONS } from "./lib/locations";
 
 export default function Home() {
   return (
@@ -288,50 +288,24 @@ export default function Home() {
           </div>
 
           <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
-            <a
-              href="https://www.google.com/maps/search/?api=1&query=TIMEZONE+GALERIA+BALI"
-              target="_blank"
-              rel="noreferrer"
-              className="rounded-2xl border border-sky-300/30 bg-[linear-gradient(180deg,rgba(57,183,255,0.18),rgba(8,19,39,0.88))] p-5 ring-1 ring-sky-200/20 transition hover:translate-y-[-2px]"
-            >
-              <div className="text-sm font-bold text-white">
-                Timezone Galeria Bali
-              </div>
-              <div className="mt-2 flex items-center gap-1 text-xs font-semibold text-white/55">
-                <span>Open in Maps</span>
-                <span>↗</span>
-              </div>
-            </a>
-
-            <a
-              href="https://www.google.com/maps/search/?api=1&query=TIMEZONE+TRANS+STUDIO+MAL+BALI"
-              target="_blank"
-              rel="noreferrer"
-              className="rounded-2xl border border-fuchsia-300/35 bg-[linear-gradient(180deg,rgba(255,79,216,0.2),rgba(40,9,42,0.9))] p-5 ring-1 ring-fuchsia-200/20 transition hover:translate-y-[-2px]"
-            >
-              <div className="text-sm font-bold text-white">
-                Timezone Trans Studio Mal Bali
-              </div>
-              <div className="mt-2 flex items-center gap-1 text-xs font-semibold text-white/55">
-                <span>Open in Maps</span>
-                <span>↗</span>
-              </div>
-            </a>
-
-            <a
-              href="https://www.google.com/maps/search/?api=1&query=TIMEZONE+LEVEL+21"
-              target="_blank"
-              rel="noreferrer"
-              className="rounded-2xl border border-lime-200/35 bg-[linear-gradient(180deg,rgba(213,255,99,0.2),rgba(30,36,8,0.9))] p-5 ring-1 ring-lime-100/20 transition hover:translate-y-[-2px]"
-            >
-              <div className="text-sm font-bold text-white">
-                Timezone Level 21
-              </div>
-              <div className="mt-2 flex items-center gap-1 text-xs font-semibold text-white/55">
-                <span>Open in Maps</span>
-                <span>↗</span>
-              </div>
-            </a>
+            {MAIMAI_LOCATIONS.map((loc) => (
+              <a
+                key={loc.id}
+                href={loc.googleMapURL}
+                target="_blank"
+                rel="noreferrer"
+                className={`rounded-2xl border ${loc.theme.border} ${loc.theme.bg} p-5 ring-1 ${loc.theme.ring} transition hover:translate-y-[-2px]`}
+              >
+                <div className="text-sm font-bold text-white">
+                  {loc.name}
+                </div>
+                <div className="mt-1 text-xs text-white/40">{loc.address}</div>
+                <div className="mt-2 flex items-center gap-1 text-xs font-semibold text-white/55">
+                  <span>Open in Maps</span>
+                  <span>↗</span>
+                </div>
+              </a>
+            ))}
           </div>
         </div>
 
@@ -352,11 +326,7 @@ export default function Home() {
           </Link>
         </div>
 
-        <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-          {mockEvents.slice(0, 4).map((e) => (
-            <EventCard key={e.id} event={e} />
-          ))}
-        </div>
+        <HomeEventsPreview />
 
         <div className="mt-6 sm:hidden">
           <Link

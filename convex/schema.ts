@@ -4,9 +4,9 @@ import { v } from "convex/values";
 
 export default defineSchema({
     event: defineTable({
-        id: v.id("event"),
-        approverUserId: v.optional(v.string()),
         organizerUserId: v.string(),
+        approverUserId: v.optional(v.string()),
+        removerUserId: v.optional(v.string()),
         name: v.string(),
         description: v.string(),
         datetime: v.string(),
@@ -15,7 +15,15 @@ export default defineSchema({
             address: v.string(),
             googleMapURL: v.string(),
         }),
+        status: v.union(
+            v.literal("pending"),
+            v.literal("approved"),
+            v.literal("removed"),
+        ),
         createdAt: v.number(),
         updatedAt: v.number(),
-    }),
+    })
+        .index("by_organizer", ["organizerUserId"])
+        .index("by_status", ["status"])
+        .index("by_status_datetime", ["status", "datetime"]),
 });
