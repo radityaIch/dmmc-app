@@ -1,342 +1,248 @@
 import Link from "next/link";
 
-import { GlowButton } from "./components/GlowButton";
 import { HomeEventsPreview } from "./components/HomeEventsPreview";
 import { MAIMAI_LOCATIONS } from "./lib/locations";
 
 export default function Home() {
   return (
-    <main>
-      {/* ── Hero ──────────────────────────────────────────── */}
-      <section className="relative">
-        <div className="relative mx-auto w-full max-w-6xl px-4 py-14 sm:py-20">
-          <div className="relative py-6 sm:p-10">
-            <div className="grid grid-cols-1 gap-8 lg:grid-cols-2 lg:items-center">
-              <div>
-                <div className="inline-flex items-center gap-2 rounded-full border border-[#ff4fd8]/40 bg-[#ff4fd8]/15 px-4 py-2 text-xs font-bold tracking-wider text-pink-100">
-                  <span className="h-2 w-2 rounded-full bg-[#ff4fd8] shadow-[0_0_16px_rgba(255,79,216,0.7)]" />
-                  DMMC ARCADE
+    <div className="min-h-screen font-sans text-gray-100">
+      <main className="relative z-10 min-h-screen overflow-x-hidden">
+
+        {/* Hero Section — unified flex column, visuals + text in one frame */}
+        <section className="relative z-10 w-full flex flex-col items-center justify-end" style={{ minHeight: '92svh' }}>
+
+          {/* Decorative spinning circle — clipped to hero bounds, doesn't affect section overflow */}
+          <div className="absolute inset-0 overflow-hidden pointer-events-none select-none">
+            <img
+              src="/assets/images/circle_colorful.png"
+              alt=""
+              aria-hidden="true"
+              className="absolute top-4 left-1/2 w-[480px] md:w-[680px] -translate-x-1/2 opacity-50 animate-[slowSpin_15s_linear_infinite]"
+            />
+          </div>
+
+          {/* Characters + logo stacked */}
+          <div className="absolute inset-0 top-16 flex flex-col items-center pointer-events-none select-none z-0 overflow-hidden">
+            <img
+              src="/assets/images/chara.png"
+              alt="DMMC Characters"
+              className="w-[260px] md:w-[420px] drop-shadow-2xl animate-[floaty_5s_ease-in-out_infinite]"
+            />
+            <img
+              src="/assets/images/kv_logo_pc.png"
+              alt="maimai DX"
+              className="-mt-8 w-[180px] md:w-[280px] drop-shadow-[0_8px_24px_rgba(0,0,0,0.95)]"
+            />
+          </div>
+
+          {/* Gradient fade up from page bg, makes text below readable */}
+          <div
+            className="absolute bottom-0 left-0 right-0 h-[50%] pointer-events-none z-[5]"
+            style={{ background: 'linear-gradient(to top, #17061f 40%, #17061fcc 75%, transparent 100%)' }}
+          />
+
+          {/* Hero text + CTAs */}
+          <div className="relative z-10 w-full px-4 pb-20 flex flex-col items-center text-center">
+            <h1
+              className="text-3xl md:text-5xl font-black text-white tracking-tight"
+              style={{ textShadow: '0 2px 20px rgba(0,0,0,0.9), 0 0 48px rgba(255,79,216,0.4)' }}
+            >
+              Bali&apos;s home for maimai players.
+            </h1>
+            <p
+              className="mt-3 text-base md:text-lg font-bold text-gray-200 max-w-xl"
+              style={{ textShadow: '0 1px 10px rgba(0,0,0,1)' }}
+            >
+              DMMC is Denpasar&apos;s main maimai community — 100+ members strong, going for years, and always welcoming new faces. Wherever you play in Bali, you&apos;ll find a DMMC member there.
+            </p>
+            <div className="mt-6 flex flex-col sm:flex-row gap-4 justify-center items-center">
+              <Link
+                href="https://chat.whatsapp.com/KuYiYLO2OxgIY3EEQLCt7p"
+                className="bg-[#ff4fd8] hover:bg-[#e63bc1] text-white text-xl font-bold py-3 px-8 rounded-full border-4 border-[#ffaad8] shadow-[0_6px_0_#c31f9d] active:shadow-[0_2px_0_#c31f9d] active:translate-y-[4px] transition-all"
+              >
+                Join the Community
+              </Link>
+              <Link
+                href="/events"
+                className="bg-[#4fb8ff] hover:bg-[#3ba0e6] text-white text-xl font-bold py-3 px-8 rounded-full border-4 border-[#add2f7] shadow-[0_6px_0_#1a7abf] active:shadow-[0_2px_0_#1a7abf] active:translate-y-[4px] transition-all"
+              >
+                Find a Meetup
+              </Link>
+            </div>
+          </div>
+        </section>
+
+        {/* Content Columns */}
+        <section className="relative z-10 mx-auto w-full max-w-5xl px-4 py-8 flex flex-col gap-10">
+
+          {/* About DMMC */}
+          <div className="bg-white/90 backdrop-blur-xl rounded-[40px] shadow-[0_10px_0_#ff4fd8,0_15px_40px_rgba(255,79,216,0.2)] border-2 border-[#ff4fd8]/40 p-8 md:p-10 w-full">
+            <div className="flex items-center justify-center gap-4 mb-6">
+              <span className="text-3xl text-[#ff4fd8]">{"<<<"}</span>
+              <h2 className="text-3xl font-black text-[#2f2461] tracking-widest uppercase">
+                Who We Are
+              </h2>
+              <span className="text-3xl text-[#ff4fd8]">{">>>"}</span>
+            </div>
+
+            <div className="text-center md:text-lg font-bold text-[#2f2461]/80 mb-8 max-w-3xl mx-auto border-b-2 border-dashed border-[#ff4fd8]/30 pb-8">
+              DMMC (Denpasar Maimai Community) has been Bali&apos;s premier maimai circle for years. Whether you&apos;re a seasoned SSS+ chaser or just hit your first arcade machine last week, you belong here. We hang out at every maimai cabinet in Bali — from malls to arcades — and host regular meetups and tournaments to keep the community buzzing. Come as you are, leave with friends who get it.
+            </div>
+
+            {/* Stats */}
+            <div className="grid grid-cols-3 gap-4 mb-8">
+              {[
+                { num: '100+', label: 'Members' },
+                { num: 'Years', label: 'Going Strong' },
+                { num: 'All', label: 'Skill Levels' },
+              ].map(stat => (
+                <div key={stat.label} className="text-center bg-white border-2 border-[#ff4fd8]/20 shadow-sm rounded-xl py-4 px-2">
+                  <div className="text-2xl md:text-3xl font-black text-[#ff4fd8]">{stat.num}</div>
+                  <div className="text-xs md:text-sm font-bold text-[#2f2461]/60 mt-1">{stat.label}</div>
                 </div>
+              ))}
+            </div>
 
-                <h1 className="mt-6 max-w-2xl text-balance text-4xl font-black leading-tight tracking-tight text-white sm:text-5xl">
-                  Denpasar&apos;s maimai community, in one place.
-                </h1>
-                <p className="mt-4 max-w-2xl text-pretty text-base leading-7 text-white/78 sm:text-lg">
-                  Track scores, run tournaments, find meetups, and connect with
-                  local players — all without leaving your browser.
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <Link href="/rules" className="block text-center border-2 border-[#4fb8ff]/50 rounded-2xl p-4 bg-white hover:bg-[#f0f8ff] transition-colors font-black text-[#4fb8ff] shadow-[0_6px_0_#4fb8ff] active:translate-y-[6px] active:shadow-none">
+                Rules & Etiquette
+              </Link>
+              <Link href="/events" className="block text-center border-2 border-[#ff8e4f]/50 rounded-2xl p-4 bg-white hover:bg-[#fff5f0] transition-colors font-black text-[#ff8e4f] shadow-[0_6px_0_#ff8e4f] active:translate-y-[6px] active:shadow-none">
+                Upcoming Meetups
+              </Link>
+            </div>
+          </div>
+
+          {/* Locations & Events Previews */}
+          <div className="bg-white/90 backdrop-blur-xl rounded-[40px] shadow-[0_10px_0_#ffbb33,0_15px_40px_rgba(255,187,51,0.2)] border-2 border-[#ffbb33]/40 p-8 w-full">
+            <div className="flex flex-col items-center justify-center gap-4 mb-4">
+              <div className="flex items-center gap-4">
+                <span className="text-3xl text-[#ffbb33]">{"<<<"}</span>
+                <h2 className="text-2xl md:text-3xl font-black text-[#2f2461] tracking-widest uppercase text-center">
+                  Where We Play
+                </h2>
+                <span className="text-3xl text-[#ffbb33]">{">>>"}</span>
+              </div>
+              <p className="text-[#2f2461]/80 font-bold text-center max-w-xl">
+                You&apos;ll find DMMC members at every maimai DX cabinet across Bali. Here&apos;s where to look.
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-10">
+              {MAIMAI_LOCATIONS.map(loc => (
+                <a
+                  key={loc.id}
+                  href={loc.googleMapURL}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="block bg-white hover:bg-[#f0f8ff] shadow-sm border-2 border-[#4fb8ff]/30 rounded-2xl p-4 transition-transform hover:-translate-y-1"
+                >
+                  <div className="text-sm font-black text-[#4fb8ff]">{loc.name}</div>
+                  <div className="mt-1 text-xs font-bold text-[#2f2461]/60">{loc.address}</div>
+                  <div className="mt-3 text-xs font-black text-[#4fb8ff] flex justify-end">
+                    Open in Maps ↗
+                  </div>
+                </a>
+              ))}
+            </div>
+
+            <div className="flex items-center justify-center gap-4 mb-8">
+              <span className="text-3xl text-[#ff4fd8]">{"<<<"}</span>
+              <h2 className="text-2xl md:text-3xl font-black text-[#2f2461] tracking-widest uppercase text-center">
+                Next Meetups
+              </h2>
+              <span className="text-3xl text-[#ff4fd8]">{">>>"}</span>
+            </div>
+
+            <div className="bg-white shadow-inner border-2 border-[#ff4fd8]/20 rounded-3xl p-4 sm:p-6 mb-6">
+              <HomeEventsPreview />
+            </div>
+
+            <div className="flex justify-center">
+              <Link href="/events" className="bg-[#ff4fd8] hover:bg-[#e63bc1] text-white text-lg font-bold py-3 px-8 rounded-full border-4 border-[#ffaad8] shadow-[0_6px_0_#c31f9d] active:shadow-[0_2px_0_#c31f9d] active:translate-y-[4px] transition-all">
+                See All Events
+              </Link>
+            </div>
+          </div>
+
+          {/* Tournament Info */}
+          <div className="bg-white/90 backdrop-blur-xl rounded-[40px] shadow-[0_10px_0_#4fb8ff,0_15px_40px_rgba(79,184,255,0.2)] border-2 border-[#4fb8ff]/40 p-8 w-full">
+            <div className="flex items-center justify-center gap-4 mb-6">
+              <span className="text-3xl text-[#4fb8ff]">{"<<<"}</span>
+              <h2 className="text-2xl md:text-3xl font-black text-[#2f2461] tracking-widest uppercase text-center">
+                Run Tournaments
+              </h2>
+              <span className="text-3xl text-[#4fb8ff]">{">>>"}</span>
+            </div>
+
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+              <div className="text-center lg:text-left">
+                <p className="font-bold text-[#2f2461]/80 text-lg mb-6">
+                  DMMC hosts regular in-community tournaments — and we built our own bracket tool for it. Single-elimination, per-match song picks, and score entry down to 4 decimal places. No Challonge, no spreadsheets.
                 </p>
-
-                <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center">
-                  <GlowButton
-                    href="https://chat.whatsapp.com/KuYiYLO2OxgIY3EEQLCt7p"
-                    variant="pink"
-                    className="w-full sm:w-auto"
-                  >
-                    Join WhatsApp Group
-                  </GlowButton>
-                  <Link
-                    href="/events"
-                    className="inline-flex items-center justify-center rounded-full border border-[#ff4fd8]/45 bg-white px-6 py-3 text-base font-semibold text-[#ff4fd8] hover:bg-[#ff4fd8]/22"
-                  >
-                    See Events
+                <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
+                  <Link href="/tournament" className="bg-[#ff4fd8] hover:bg-[#e63bc1] text-white text-lg font-bold py-3 px-6 rounded-full border-4 border-[#ffaad8] shadow-[0_6px_0_#c31f9d] active:shadow-[0_2px_0_#c31f9d] active:translate-y-[4px] transition-all">
+                    Open Tournament
+                  </Link>
+                  <Link href="/songs" className="bg-[#ffbb33] hover:bg-[#e6a82e] text-white text-lg font-bold py-3 px-6 rounded-full border-4 border-[#ffe59e] shadow-[0_6px_0_#c99120] active:shadow-[0_2px_0_#c99120] active:translate-y-[4px] transition-all">
+                    Song List
                   </Link>
                 </div>
               </div>
 
-              <div className="relative min-h-[320px]">
-                <img
-                  src="/assets/images/circle_colorful.png"
-                  alt=""
-                  className="absolute top-8 left-1/2 h-[270px] w-[270px] -translate-x-1/2 opacity-70"
-                />
-                <img
-                  src="/assets/images/chara.png"
-                  alt="DMMC characters"
-                  className="absolute right-1/2 sm:bottom-0 lg:-bottom-20 lg:h-[500px] sm:h-[200px] w-auto translate-x-1/2 animate-[floaty_6.5s_ease-in-out_infinite]"
-                />
-                <img
-                  src="/assets/images/kv_logo_pc.png"
-                  alt="maimai circle logo"
-                  className="absolute bottom-4 left-1/2 w-[240px] -translate-x-1/2 drop-shadow-[0_10px_20px_rgba(0,0,0,0.45)]"
-                />
+              <div className="grid grid-cols-2 gap-3 text-center">
+                {[
+                  { title: 'BRACKET', text: 'Scrollable rounds', bg: 'bg-[#f0f8ff]', border: 'border-[#4fb8ff]/40', color: 'text-[#4fb8ff]' },
+                  { title: 'SONGS', text: 'Search & assign picks', bg: 'bg-[#fff0f8]', border: 'border-[#ff4fd8]/40', color: 'text-[#ff4fd8]' },
+                  { title: 'SCORES', text: '4-decimal precision', bg: 'bg-[#f8f0ff]', border: 'border-[#b54fff]/40', color: 'text-[#b54fff]' },
+                  { title: 'SAVE', text: 'Saved on-device', bg: 'bg-[#f0fff0]', border: 'border-[#2cb869]/40', color: 'text-[#2cb869]' },
+                ].map(item => (
+                  <div key={item.title} className={`${item.bg} border-2 ${item.border} rounded-xl p-3 shadow-sm`}>
+                    <div className={`text-xs font-black ${item.color} mb-1`}>{item.title}</div>
+                    <div className="text-sm font-bold text-[#2f2461]/70 leading-tight">{item.text}</div>
+                  </div>
+                ))}
               </div>
             </div>
           </div>
-        </div>
-      </section>
 
-      {/* ── About + Quick Links ───────────────────────────── */}
-      <section className="mx-auto w-full max-w-6xl px-4 py-10">
-        <div className="grid grid-cols-1 gap-8 md:grid-cols-2 md:items-start">
-          <div>
-            <h2 className="text-2xl font-black tracking-tight text-white sm:text-3xl">
-              About DMMC
-            </h2>
-            <p className="mt-4 text-base leading-7 text-white/70">
-              DMMC is a Denpasar-based maimai circle open to players of all
-              levels. We organize regular meetups, casual sessions, and
-              small-scale tournaments across arcades in Bali. If you play —
-              or want to start — you&apos;re welcome here.
-            </p>
-          </div>
+          {/* Score Import */}
+          <div className="bg-white/90 backdrop-blur-xl rounded-[40px] shadow-[0_10px_0_#2cb869,0_15px_40px_rgba(44,184,105,0.2)] border-2 border-[#2cb869]/40 p-8 w-full mb-12">
+            <div className="flex items-center justify-center gap-4 mb-6">
+              <span className="text-3xl text-[#2cb869]">{"<<<"}</span>
+              <h2 className="text-2xl md:text-3xl font-black text-[#2f2461] tracking-widest uppercase text-center">
+                Track Your Scores
+              </h2>
+              <span className="text-3xl text-[#2cb869]">{">>>"}</span>
+            </div>
 
-          <div className="rounded-2xl border border-white/10 bg-[linear-gradient(180deg,rgba(20,8,32,0.9),rgba(14,7,24,0.9))] p-6 ring-1 ring-white/10">
-            <h3 className="text-sm font-bold tracking-widest text-white/80">
-              QUICK LINKS
-            </h3>
-            <div className="mt-4 grid grid-cols-2 gap-3 text-sm font-semibold">
-              <Link
-                href="/rules"
-                className="rounded-xl border border-white/10 bg-black/20 px-4 py-3 text-white/80 transition hover:bg-black/40 hover:text-white"
-              >
-                Rules &amp; Etiquette
-              </Link>
-              <Link
-                href="/events"
-                className="rounded-xl border border-white/10 bg-black/20 px-4 py-3 text-white/80 transition hover:bg-black/40 hover:text-white"
-              >
-                Upcoming Meetups
+            <div className="text-center font-bold text-[#2f2461]/80 text-lg mb-6 max-w-3xl mx-auto">
+              Import your full play record from <span className="text-[#ff4fd8]">maimai DX NET</span> with one click. Just drag a bookmarklet to your bookmarks bar and run it from the game site — your scores land on DMMC automatically.
+            </div>
+
+            <div className="flex justify-center mb-8">
+              <Link href="/bookmarklets" className="bg-[#2cb869] hover:bg-[#259e5a] text-white text-xl font-bold py-3 px-8 rounded-full border-4 border-[#bdfcd0] shadow-[0_6px_0_#1c7d45] active:shadow-[0_2px_0_#1c7d45] active:translate-y-[4px] transition-all">
+                Get the Bookmarklet
               </Link>
             </div>
-            <p className="mt-4 text-sm leading-6 text-white/50">
-              Works as a PWA — add to home screen for quick access.
-            </p>
-          </div>
-        </div>
-      </section>
 
-      {/* ── Tournament ────────────────────────────────────── */}
-      <section className="mx-auto w-full max-w-6xl px-4 pb-10">
-        <div className="rounded-3xl border border-[#ff4fd8]/30 bg-[linear-gradient(180deg,rgba(20,8,32,0.9),rgba(14,7,24,0.9))] p-6 ring-1 ring-[#ff4fd8]/20 sm:p-8">
-          <div className="grid grid-cols-1 gap-8 lg:grid-cols-2 lg:items-center">
-            <div>
-              <div className="inline-flex items-center gap-2 rounded-full border border-fuchsia-400/20 bg-fuchsia-400/10 px-4 py-2 text-xs font-semibold tracking-wider text-fuchsia-100 ring-1 ring-fuchsia-300/20">
-                TOURNAMENT
-              </div>
-              <h2 className="mt-5 text-2xl font-black tracking-tight text-white sm:text-3xl">
-                Run a bracket in minutes.
-              </h2>
-              <p className="mt-3 max-w-2xl text-sm leading-6 text-white/70">
-                Single-elimination brackets with per-match song selection and
-                score entry to 4 decimal places. Designed for how DMMC
-                actually runs its meetups.
-              </p>
-
-              <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:items-center">
-                <GlowButton
-                  href="/tournament"
-                  variant="pink"
-                  className="w-full sm:w-auto"
-                >
-                  Open Tournament
-                </GlowButton>
-                <Link
-                  href="/songs"
-                  className="inline-flex items-center justify-center rounded-full border border-[#ff4fd8]/35 bg-white/12 px-6 py-3 text-base font-semibold text-white/90 hover:bg-[#ff4fd8]/20 hover:text-white"
-                >
-                  Song List
-                </Link>
-              </div>
-            </div>
-
-            <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
-              <div className="rounded-2xl border border-sky-300/30 bg-[linear-gradient(180deg,rgba(57,183,255,0.2),rgba(8,19,39,0.9))] p-5 ring-1 ring-sky-200/20 backdrop-blur-sm">
-                <div className="text-xs font-bold tracking-widest text-white/60">
-                  BRACKET
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 text-center">
+              {[
+                { title: 'ONE CLICK', text: 'Run from bookmarks bar' },
+                { title: 'LIVE TRANSFER', text: 'Direct to your DMMC tab' },
+                { title: 'INTL READY', text: 'Works on maimaidx-eng.com' },
+                { title: 'FALLBACK', text: 'JSON download if needed' }
+              ].map(item => (
+                <div key={item.title} className="bg-white shadow-sm border-2 border-[#2cb869]/30 rounded-xl p-3">
+                  <div className="text-xs font-black text-[#2cb869] mb-1">{item.title}</div>
+                  <div className="text-sm font-bold text-[#2f2461]/70 leading-tight">{item.text}</div>
                 </div>
-                <div className="mt-2 text-sm font-semibold text-white/95">
-                  Scrollable rounds
-                </div>
-                <p className="mt-2 text-sm leading-6 text-white/80">
-                  Wide match cards with one-tap winner selection.
-                </p>
-              </div>
-              <div className="rounded-2xl border border-fuchsia-300/35 bg-[linear-gradient(180deg,rgba(255,79,216,0.22),rgba(40,9,42,0.9))] p-5 ring-1 ring-fuchsia-200/20 backdrop-blur-sm">
-                <div className="text-xs font-bold tracking-widest text-white/60">
-                  SONGS
-                </div>
-                <div className="mt-2 text-sm font-semibold text-white/95">
-                  Search &amp; assign picks
-                </div>
-                <p className="mt-2 text-sm leading-6 text-white/80">
-                  Searchable song selector with per-match lists.
-                </p>
-              </div>
-              <div className="rounded-2xl border border-violet-300/35 bg-[linear-gradient(180deg,rgba(168,85,247,0.2),rgba(24,12,40,0.9))] p-5 ring-1 ring-violet-200/20 backdrop-blur-sm">
-                <div className="text-xs font-bold tracking-widest text-white/60">
-                  SCORES
-                </div>
-                <div className="mt-2 text-sm font-semibold text-white/95">
-                  4-decimal precision
-                </div>
-                <p className="mt-2 text-sm leading-6 text-white/80">
-                  Totals shown beside each player name per round.
-                </p>
-              </div>
-              <div className="rounded-2xl border border-lime-200/35 bg-[linear-gradient(180deg,rgba(213,255,99,0.22),rgba(30,36,8,0.9))] p-5 ring-1 ring-lime-100/20 backdrop-blur-sm">
-                <div className="text-xs font-bold tracking-widest text-white/60">
-                  SAVE
-                </div>
-                <div className="mt-2 text-sm font-semibold text-white/95">
-                  Saved on-device
-                </div>
-                <p className="mt-2 text-sm leading-6 text-white/80">
-                  Bracket and scores persist across sessions automatically.
-                </p>
-              </div>
+              ))}
             </div>
           </div>
-        </div>
-      </section>
 
-      {/* ── Score Import ──────────────────────────────────── */}
-      <section className="mx-auto w-full max-w-6xl px-4 pb-10">
-        <div className="rounded-3xl border border-[#ff4fd8]/30 bg-[linear-gradient(180deg,rgba(20,8,32,0.9),rgba(14,7,24,0.9))] p-6 ring-1 ring-[#ff4fd8]/20 sm:p-8">
-          <div className="grid grid-cols-1 gap-8 lg:grid-cols-2 lg:items-center">
-            <div>
-              <div className="inline-flex items-center gap-2 rounded-full border border-emerald-400/20 bg-emerald-400/10 px-4 py-2 text-xs font-semibold tracking-wider text-emerald-100 ring-1 ring-emerald-300/20">
-                SCORE IMPORT
-                <span className="rounded-full bg-emerald-900/60 px-2 py-0.5 text-[10px] font-bold text-emerald-300">
-                  ALPHA
-                </span>
-              </div>
-              <h2 className="mt-5 text-2xl font-black tracking-tight text-white sm:text-3xl">
-                Pull your scores from maimai DX NET.
-              </h2>
-              <p className="mt-3 max-w-2xl text-sm leading-6 text-white/70">
-                Drag a bookmarklet to your browser, open{" "}
-                <span className="font-semibold text-white/90">
-                  maimaidx-eng.com
-                </span>
-                , and run it. Your full play record is sent to{" "}
-                <span className="font-semibold text-white">/my-score</span>{" "}
-                automatically — no copy-paste, no file downloads.
-              </p>
-
-              <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:items-center">
-                <GlowButton
-                  href="/bookmarklets"
-                  variant="green"
-                  className="w-full sm:w-auto"
-                >
-                  Get the Bookmarklets
-                </GlowButton>
-              </div>
-            </div>
-
-            <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
-              <div className="rounded-2xl border border-emerald-300/30 bg-[linear-gradient(180deg,rgba(16,185,129,0.2),rgba(8,33,25,0.9))] p-5 ring-1 ring-emerald-200/20 backdrop-blur-sm">
-                <div className="text-xs font-bold tracking-widest text-white/60">
-                  ONE CLICK
-                </div>
-                <div className="mt-2 text-sm font-semibold text-white/95">
-                  Run from bookmarks bar
-                </div>
-                <p className="mt-2 text-sm leading-6 text-white/80">
-                  No extensions. Works on desktop and mobile.
-                </p>
-              </div>
-              <div className="rounded-2xl border border-sky-300/30 bg-[linear-gradient(180deg,rgba(56,189,248,0.2),rgba(8,19,39,0.9))] p-5 ring-1 ring-sky-200/20 backdrop-blur-sm">
-                <div className="text-xs font-bold tracking-widest text-white/60">
-                  LIVE TRANSFER
-                </div>
-                <div className="mt-2 text-sm font-semibold text-white/95">
-                  Direct to your DMMC tab
-                </div>
-                <p className="mt-2 text-sm leading-6 text-white/80">
-                  Exports your play record as JSON and posts it to the
-                  receiver tab.
-                </p>
-              </div>
-              <div className="rounded-2xl border border-fuchsia-300/35 bg-[linear-gradient(180deg,rgba(255,79,216,0.22),rgba(40,9,42,0.9))] p-5 ring-1 ring-fuchsia-200/20 backdrop-blur-sm">
-                <div className="text-xs font-bold tracking-widest text-white/60">
-                  INTL READY
-                </div>
-                <div className="mt-2 text-sm font-semibold text-white/95">
-                  Built for maimaidx-eng.com
-                </div>
-                <p className="mt-2 text-sm leading-6 text-white/80">
-                  Targets the international DX NET site specifically.
-                </p>
-              </div>
-              <div className="rounded-2xl border border-amber-300/35 bg-[linear-gradient(180deg,rgba(251,191,36,0.2),rgba(42,27,6,0.9))] p-5 ring-1 ring-amber-200/20 backdrop-blur-sm">
-                <div className="text-xs font-bold tracking-widest text-white/60">
-                  FALLBACK
-                </div>
-                <div className="mt-2 text-sm font-semibold text-white/95">
-                  JSON download if needed
-                </div>
-                <p className="mt-2 text-sm leading-6 text-white/80">
-                  If the receiver tab can&apos;t open, a file download kicks in.
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* ── Locations + Events ───────────────────────────── */}
-      <section className="mx-auto w-full max-w-6xl px-4 pb-14">
-        <div className="mb-10 rounded-3xl border border-[#ff4fd8]/30 bg-[linear-gradient(180deg,rgba(20,8,32,0.9),rgba(14,7,24,0.9))] p-6 ring-1 ring-[#ff4fd8]/20 sm:p-8">
-          <div className="mb-6">
-            <h2 className="text-2xl font-black tracking-tight text-white sm:text-3xl">
-              maimai DX Locations in Bali
-            </h2>
-            <p className="mt-2 text-sm leading-6 text-white/60">
-              Tap a location to open directions in Google Maps.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
-            {MAIMAI_LOCATIONS.map((loc) => (
-              <a
-                key={loc.id}
-                href={loc.googleMapURL}
-                target="_blank"
-                rel="noreferrer"
-                className={`rounded-2xl border ${loc.theme.border} ${loc.theme.bg} p-5 ring-1 ${loc.theme.ring} transition hover:translate-y-[-2px]`}
-              >
-                <div className="text-sm font-bold text-white">
-                  {loc.name}
-                </div>
-                <div className="mt-1 text-xs text-white/40">{loc.address}</div>
-                <div className="mt-2 flex items-center gap-1 text-xs font-semibold text-white/55">
-                  <span>Open in Maps</span>
-                  <span>↗</span>
-                </div>
-              </a>
-            ))}
-          </div>
-        </div>
-
-        <div className="mb-6 flex items-end justify-between gap-4">
-          <div>
-            <h2 className="text-2xl font-black tracking-tight text-white sm:text-3xl">
-              Upcoming Meetups
-            </h2>
-            <p className="mt-2 max-w-2xl text-sm leading-6 text-white/60">
-              Highlighted cards are pinned announcements.
-            </p>
-          </div>
-          <Link
-            href="/events"
-            className="hidden rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm font-semibold text-white/85 hover:bg-white/10 hover:text-white sm:inline-flex"
-          >
-            All events
-          </Link>
-        </div>
-
-        <HomeEventsPreview />
-
-        <div className="mt-6 sm:hidden">
-          <Link
-            href="/events"
-            className="inline-flex w-full items-center justify-center rounded-full border border-white/10 bg-white/5 px-4 py-3 text-sm font-semibold text-white/85 hover:bg-white/10 hover:text-white"
-          >
-            All events
-          </Link>
-        </div>
-      </section>
-    </main>
+        </section>
+      </main>
+    </div>
   );
 }
