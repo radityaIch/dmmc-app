@@ -1,6 +1,9 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import { PageCard } from "../components/PageCard";
+import { PageWrapper } from "../components/PageWrapper";
+import { SectionHeader } from "../components/SectionHeader";
 
 type ImportedScore = {
   songName: string;
@@ -124,118 +127,125 @@ export default function ImportScoresPage() {
   }, [payload]);
 
   return (
-    <div className="mx-auto w-full max-w-6xl px-4 py-10">
-      <div className="mb-6">
-        <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-2 text-xs font-semibold tracking-wider text-white/80">
-          <span className="h-2 w-2 rounded-full bg-sky-400 shadow-[0_0_16px_rgba(57,183,255,0.6)]" />
-          SCORE IMPORT
+    <PageWrapper>
+      <PageCard color="blue">
+        <div className="mb-4 flex justify-center">
+          <div className="inline-flex items-center gap-2 rounded-full border border-[#39b7ff]/30 bg-[#39b7ff]/10 px-4 py-2 text-xs font-semibold tracking-wider text-[#2f2461]/70">
+            <span className="h-2 w-2 rounded-full bg-sky-400 shadow-[0_0_16px_rgba(57,183,255,0.6)]" />
+            SCORE IMPORT
+          </div>
         </div>
 
-        <h1 className="mt-4 text-balance text-3xl font-black tracking-tight text-white sm:text-4xl">
-          Import maimai DX NET JSON
-        </h1>
-        <p className="mt-2 max-w-3xl text-sm leading-6 text-white/70">
+        <SectionHeader color="blue">Import maimai DX NET JSON</SectionHeader>
+
+        <p className="mb-8 text-center text-sm font-medium leading-6 text-[#2f2461]/70 max-w-3xl mx-auto">
           Paste the exported JSON from your bookmarklet here to verify and preview the parsed scores.
         </p>
-      </div>
 
-      <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
-        <div className="rounded-2xl border border-white/10 bg-white/5 p-5 ring-1 ring-white/10">
-          <div className="text-xs font-bold tracking-widest text-white/60">PASTE JSON</div>
-          <textarea
-            value={raw}
-            onChange={(e) => setRaw(e.target.value)}
-            spellCheck={false}
-            placeholder={`{\n  "schema": "..."\n}`}
-            className="mt-4 h-[420px] w-full resize-none rounded-2xl border border-white/10 bg-black/30 p-4 text-xs text-white/85 outline-none ring-1 ring-transparent focus:ring-sky-400/40"
-          />
+        <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
+          <div className="rounded-2xl border border-[#2f2461]/10 bg-white/60 p-5">
+            <div className="text-xs font-bold tracking-widest text-[#2f2461]/50">PASTE JSON</div>
+            <textarea
+              value={raw}
+              onChange={(e) => setRaw(e.target.value)}
+              spellCheck={false}
+              placeholder={`{\n  "schema": "..."\n}`}
+              className="mt-4 h-[420px] w-full resize-none rounded-2xl border border-[#2f2461]/20 bg-[#17061f] p-4 font-mono text-xs text-white/80 outline-none ring-1 ring-transparent focus:ring-sky-400/40"
+            />
 
-          {!raw ? (
-            <div className="mt-3 text-xs text-white/50">Waiting for JSON…</div>
-          ) : parsed.ok ? null : (
-            <div className="mt-3 rounded-xl border border-red-500/20 bg-red-500/10 p-3 text-xs text-red-200 ring-1 ring-red-500/20">
-              Invalid JSON: {parsed.error}
-            </div>
-          )}
-
-          {raw && parsed.ok && !payload ? (
-            <div className="mt-3 rounded-xl border border-amber-400/20 bg-amber-400/10 p-3 text-xs text-amber-100 ring-1 ring-amber-300/20">
-              JSON parsed, but schema is not recognized.
-            </div>
-          ) : null}
-        </div>
-
-        <div className="rounded-2xl border border-white/10 bg-white/5 p-5 ring-1 ring-white/10">
-          <div className="text-xs font-bold tracking-widest text-white/60">PREVIEW</div>
-
-          {payload && summary ? (
-            <div className="mt-4 space-y-4">
-              <div className="rounded-2xl border border-white/10 bg-black/20 p-4 ring-1 ring-white/10">
-                <div className="text-xs font-semibold text-white/70">Schema</div>
-                <div className="mt-1 text-sm font-semibold text-white/90">{payload.schema}</div>
-                <div className="mt-3 text-xs font-semibold text-white/70">Origin</div>
-                <div className="mt-1 text-sm font-semibold text-white/90">{payload.origin}</div>
-                <div className="mt-3 text-xs font-semibold text-white/70">Exported</div>
-                <div className="mt-1 text-sm font-semibold text-white/90">
-                  {new Date(payload.exportedAt).toLocaleString()}
-                </div>
+            {!raw ? (
+              <div className="mt-3 text-xs text-[#2f2461]/45">Waiting for JSON…</div>
+            ) : parsed.ok ? null : (
+              <div className="mt-3 rounded-xl border border-red-400/30 bg-red-50 p-3 text-xs text-red-600 ring-1 ring-red-400/20">
+                Invalid JSON: {parsed.error}
               </div>
+            )}
 
-              <div className="rounded-2xl border border-white/10 bg-black/20 p-4 ring-1 ring-white/10">
-                <div className="text-sm font-semibold text-white/90">Total scores: {summary.total}</div>
-                <div className="mt-3 grid grid-cols-2 gap-2 text-xs text-white/70">
-                  {Array.from(summary.byDiff.entries()).map(([k, v]) => (
-                    <div
-                      key={k}
-                      className="rounded-xl border border-white/10 bg-white/5 px-3 py-2 ring-1 ring-white/10"
-                    >
-                      <div className="font-bold tracking-widest text-white/60">{k}</div>
-                      <div className="mt-1 text-sm font-semibold text-white/85">{v}</div>
+            {raw && parsed.ok && !payload ? (
+              <div className="mt-3 rounded-xl border border-amber-400/30 bg-amber-50 p-3 text-xs text-amber-700 ring-1 ring-amber-300/20">
+                JSON parsed, but schema is not recognized.
+              </div>
+            ) : null}
+          </div>
+
+          <div className="rounded-2xl border border-[#2f2461]/10 bg-white/60 p-5">
+            <div className="text-xs font-bold tracking-widest text-[#2f2461]/50">PREVIEW</div>
+
+            {payload && summary ? (
+              <div className="mt-4 space-y-4">
+                <div className="rounded-2xl border border-[#2f2461]/10 bg-white/80 p-4 space-y-3">
+                  <div>
+                    <div className="text-xs font-semibold text-[#2f2461]/55">Schema</div>
+                    <div className="mt-0.5 text-sm font-semibold text-[#2f2461]">{payload.schema}</div>
+                  </div>
+                  <div>
+                    <div className="text-xs font-semibold text-[#2f2461]/55">Origin</div>
+                    <div className="mt-0.5 text-sm font-semibold text-[#2f2461]">{payload.origin}</div>
+                  </div>
+                  <div>
+                    <div className="text-xs font-semibold text-[#2f2461]/55">Exported</div>
+                    <div className="mt-0.5 text-sm font-semibold text-[#2f2461]">
+                      {new Date(payload.exportedAt).toLocaleString()}
                     </div>
-                  ))}
+                  </div>
                 </div>
-              </div>
 
-              <div className="rounded-2xl border border-white/10 bg-black/20 p-4 ring-1 ring-white/10 h-40 overflow-y-auto">
-                <div className="text-xs font-semibold text-white/70">Sample</div>
-                <div className="mt-3 overflow-auto">
-                  <table className="min-w-full border-collapse text-left text-xs">
-                    <thead>
-                      <tr className="text-white/70">
-                        <th className="px-2 py-2">Song</th>
-                        <th className="px-2 py-2">Diff</th>
-                        <th className="px-2 py-2">Type</th>
-                        <th className="px-2 py-2">Achv</th>
-                        <th className="px-2 py-2">Rank</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {payload.scores
-                        .filter((s) => s.achievement !== null)
-                        .sort((a, b) => b.achievement! - a.achievement!)
-                        .map((s, idx) => (
-                          <tr key={idx} className="border-t border-white/10 text-white/85">
-                            <td className="max-w-[240px] truncate px-2 py-2" title={s.songName}>
-                              {s.songName}
-                            </td>
-                            <td className="px-2 py-2">{s.levelText}</td>
-                            <td className="px-2 py-2">{s.chartType}</td>
-                            <td className="px-2 py-2">
-                              {typeof s.achievement === "number" ? s.achievement.toFixed(4) + "%" : ""}
-                            </td>
-                            <td className="px-2 py-2">{s.rank ?? ""}</td>
-                          </tr>
-                        ))}
-                    </tbody>
-                  </table>
+                <div className="rounded-2xl border border-[#2f2461]/10 bg-white/80 p-4">
+                  <div className="text-sm font-semibold text-[#2f2461]">Total scores: {summary.total}</div>
+                  <div className="mt-3 grid grid-cols-2 gap-2 text-xs">
+                    {Array.from(summary.byDiff.entries()).map(([k, v]) => (
+                      <div
+                        key={k}
+                        className="rounded-xl border border-[#2f2461]/10 bg-[#2f2461]/5 px-3 py-2"
+                      >
+                        <div className="font-bold tracking-widest text-[#2f2461]/55">{k}</div>
+                        <div className="mt-1 text-sm font-semibold text-[#2f2461]">{v}</div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="h-40 overflow-y-auto rounded-2xl border border-[#2f2461]/10 bg-white/80 p-4">
+                  <div className="text-xs font-semibold text-[#2f2461]/55">Sample</div>
+                  <div className="mt-3 overflow-auto">
+                    <table className="min-w-full border-collapse text-left text-xs">
+                      <thead>
+                        <tr className="text-[#2f2461]/55">
+                          <th className="px-2 py-2">Song</th>
+                          <th className="px-2 py-2">Diff</th>
+                          <th className="px-2 py-2">Type</th>
+                          <th className="px-2 py-2">Achv</th>
+                          <th className="px-2 py-2">Rank</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {payload.scores
+                          .filter((s) => s.achievement !== null)
+                          .sort((a, b) => b.achievement! - a.achievement!)
+                          .map((s, idx) => (
+                            <tr key={idx} className="border-t border-[#2f2461]/8 text-[#2f2461]/75">
+                              <td className="max-w-[240px] truncate px-2 py-2" title={s.songName}>
+                                {s.songName}
+                              </td>
+                              <td className="px-2 py-2">{s.levelText}</td>
+                              <td className="px-2 py-2">{s.chartType}</td>
+                              <td className="px-2 py-2">
+                                {typeof s.achievement === "number" ? s.achievement.toFixed(4) + "%" : ""}
+                              </td>
+                              <td className="px-2 py-2">{s.rank ?? ""}</td>
+                            </tr>
+                          ))}
+                      </tbody>
+                    </table>
+                  </div>
                 </div>
               </div>
-            </div>
-          ) : (
-            <div className="mt-4 text-sm text-white/60">Paste your exported JSON to see a preview.</div>
-          )}
+            ) : (
+              <div className="mt-4 text-sm text-[#2f2461]/50">Paste your exported JSON to see a preview.</div>
+            )}
+          </div>
         </div>
-      </div>
-    </div>
+      </PageCard>
+    </PageWrapper>
   );
 }

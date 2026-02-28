@@ -134,7 +134,7 @@ export function SongCombobox({
             }
           }}
           className={
-            "w-full rounded-lg border border-white/10 bg-black/20 px-3 py-2 pr-9 text-sm text-white outline-none placeholder:text-white/40 ring-1 ring-transparent focus:ring-sky-400/40 " +
+            "w-full rounded-lg border border-[#2f2461]/20 bg-white/80 px-3 py-2 pr-9 text-sm text-[#2f2461] outline-none placeholder:text-[#2f2461]/30 ring-1 ring-transparent focus:ring-[#ff4fd8]/40 " +
             (disabled ? "opacity-60" : "")
           }
         />
@@ -151,16 +151,16 @@ export function SongCombobox({
               window.setTimeout(() => inputRef.current?.focus(), 0);
             }
           }}
-          className="absolute right-2 top-1/2 -translate-y-1/2 rounded-md border border-white/10 bg-white/5 px-2 py-1 text-[10px] font-black tracking-widest text-white/80 hover:bg-white/10"
+          className="absolute right-2 top-1/2 -translate-y-1/2 rounded-md border border-[#2f2461]/15 bg-[#2f2461]/5 px-2 py-1 text-[10px] font-black tracking-widest text-[#2f2461]/60 hover:bg-[#2f2461]/10"
         >
           {open ? "×" : "▾"}
         </button>
       </div>
 
       {open ? (
-        <div className="absolute z-50 mt-2 max-h-72 w-full overflow-auto rounded-xl border border-white/10 bg-[rgba(5,5,10,0.96)] p-1 shadow-[0_0_0_1px_rgba(255,255,255,0.06),0_12px_40px_rgba(0,0,0,0.55)]">
+        <div className="absolute z-50 mt-2 max-h-72 w-full overflow-auto rounded-xl border border-[#2f2461]/10 bg-white p-1 shadow-[0_4px_24px_rgba(47,36,97,0.12)]">
           {filtered.length === 0 ? (
-            <div className="px-3 py-2 text-xs font-semibold text-white/60">No results</div>
+            <div className="px-3 py-2 text-xs font-semibold text-[#2f2461]/50">No results</div>
           ) : (
             filtered.slice(0, 160).map((o, idx) => (
               <button
@@ -171,13 +171,13 @@ export function SongCombobox({
                 className={
                   "w-full rounded-lg px-3 py-2 text-left text-sm font-semibold transition " +
                   (idx === activeIndex
-                    ? "bg-sky-400/15 text-white ring-1 ring-sky-300/25"
-                    : "text-white/85 hover:bg-white/5")
+                    ? "bg-[#ff4fd8]/10 text-[#2f2461] ring-1 ring-[#ff4fd8]/20"
+                    : "text-[#2f2461]/80 hover:bg-[#2f2461]/5")
                 }
               >
                 <div className="truncate">{o.label}</div>
                 {o.subLabel ? (
-                  <div className="mt-0.5 truncate text-xs font-semibold text-white/55">
+                  <div className="mt-0.5 truncate text-xs font-semibold text-[#2f2461]/50">
                     {o.subLabel}
                   </div>
                 ) : null}

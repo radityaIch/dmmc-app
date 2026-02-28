@@ -3,6 +3,9 @@
 import { useEffect, useMemo, useState } from "react";
 
 import { GlowButton } from "../components/GlowButton";
+import { PageCard } from "../components/PageCard";
+import { PageWrapper } from "../components/PageWrapper";
+import { SectionHeader } from "../components/SectionHeader";
 import { SongCombobox } from "../components/SongCombobox";
 import { db, type TournamentStateRecord } from "../lib/db";
 import type { MaimaiSong } from "../lib/maimai";
@@ -401,36 +404,37 @@ export default function TournamentPage() {
   }, [bracket, players]);
 
   return (
-    <div className="mx-auto w-full max-w-6xl px-4 py-10">
-      <div className="mb-6 rounded-3xl border border-[#ff4fd8]/30 bg-[linear-gradient(180deg,rgba(20,8,32,0.9),rgba(14,7,24,0.9))] p-6 shadow-[0_0_0_1px_rgba(255,79,216,0.14),0_16px_45px_rgba(18,8,30,0.45)]">
-        <div className="inline-flex items-center gap-2 rounded-full border border-[#ff4fd8]/35 bg-[#ff4fd8]/16 px-4 py-2 text-xs font-semibold tracking-wider text-pink-100">
-          <span className="h-2 w-2 rounded-full bg-fuchsia-400 shadow-[0_0_16px_rgba(255,79,216,0.55)]" />
-          TOURNAMENT MODE — BRACKET
+    <PageWrapper className="max-w-6xl">
+      {/* Page Header */}
+      <PageCard color="pink">
+        <div className="mb-4 flex justify-center">
+          <div className="inline-flex items-center gap-2 rounded-full border border-[#ff4fd8]/30 bg-[#ff4fd8]/10 px-4 py-2 text-xs font-semibold tracking-wider text-[#2f2461]/70">
+            <span className="h-2 w-2 rounded-full bg-[#ff4fd8] shadow-[0_0_16px_rgba(255,79,216,0.55)]" />
+            TOURNAMENT MODE — BRACKET
+          </div>
         </div>
-
-        <h1 className="mt-4 text-balance text-3xl font-black tracking-tight text-white sm:text-4xl">
-          {name}
-        </h1>
-        <p className="mt-2 max-w-3xl text-sm leading-6 text-white/80">
+        <SectionHeader color="pink">{name}</SectionHeader>
+        <p className="text-center text-sm font-medium leading-6 text-[#2f2461]/70 max-w-3xl mx-auto">
           Single-elimination bracket (customizable). Add players, generate bracket, then report match winners.
         </p>
-      </div>
+      </PageCard>
 
       <div className="flex flex-col gap-6">
-        <div className="rounded-2xl border border-[#ff4fd8]/30 bg-[linear-gradient(180deg,rgba(20,8,32,0.9),rgba(14,7,24,0.9))] p-5 ring-1 ring-[#ff4fd8]/20">
-          <div className="text-xs font-bold tracking-widest text-white/60">SETUP</div>
+        {/* Setup Panel */}
+        <PageCard color="blue">
+          <div className="text-xs font-bold tracking-widest text-[#2f2461]/60">SETUP</div>
 
           <label className="mt-4 block">
-            <span className="text-xs font-bold tracking-widest text-white/70">TOURNAMENT NAME</span>
+            <span className="text-xs font-bold tracking-widest text-[#2f2461]/60">TOURNAMENT NAME</span>
             <input
               value={name}
               onChange={(e) => setName(e.target.value)}
-              className="mt-2 w-full rounded-xl border border-white/15 bg-black/30 px-4 py-3 text-sm text-white outline-none ring-1 ring-transparent focus:ring-[#ff4fd8]/45"
+              className="mt-2 w-full rounded-xl border border-[#2f2461]/20 bg-white/80 px-4 py-3 text-sm text-[#2f2461] outline-none ring-1 ring-transparent focus:ring-[#ff4fd8]/30"
             />
           </label>
 
           <div className="mt-5">
-            <div className="text-xs font-bold tracking-widest text-white/70">PLAYERS</div>
+            <div className="text-xs font-bold tracking-widest text-[#2f2461]/60">PLAYERS</div>
             <div className="mt-3 space-y-2">
               {players.map((p) => (
                 <div key={p.id} className="flex items-center gap-2">
@@ -441,12 +445,12 @@ export default function TournamentPage() {
                         prev.map((x) => (x.id === p.id ? { ...x, name: e.target.value } : x)),
                       )
                     }
-                    className="w-full rounded-xl border border-white/15 bg-black/30 px-4 py-3 text-sm text-white outline-none ring-1 ring-transparent focus:ring-[#ff4fd8]/45"
+                    className="w-full rounded-xl border border-[#2f2461]/20 bg-white/80 px-4 py-3 text-sm text-[#2f2461] outline-none ring-1 ring-transparent focus:ring-[#ff4fd8]/30"
                   />
                   <button
                     type="button"
                     onClick={() => setPlayers((prev) => prev.filter((x) => x.id !== p.id))}
-                    className="rounded-full border border-[#ff4fd8]/35 bg-white/10 px-3 py-2 text-xs font-semibold text-white/85 hover:bg-[#ff4fd8]/20 hover:text-white"
+                    className="rounded-full border border-[#2f2461]/20 bg-[#2f2461]/5 px-3 py-2 text-xs font-semibold text-[#2f2461]/70 hover:bg-[#ff4fd8]/10 hover:text-[#2f2461]"
                   >
                     Del
                   </button>
@@ -460,7 +464,7 @@ export default function TournamentPage() {
                 onClick={() =>
                   setPlayers((prev) => [...prev, { id: newId("p"), name: `Player ${prev.length + 1}` }])
                 }
-                className="flex-1 rounded-full border border-[#ff4fd8]/35 bg-white/10 px-6 py-3 text-sm font-semibold text-white/90 hover:bg-[#ff4fd8]/20 hover:text-white"
+                className="flex-1 rounded-full border border-[#ff4fd8]/30 bg-[#ff4fd8]/5 px-6 py-3 text-sm font-semibold text-[#2f2461] hover:bg-[#ff4fd8]/10"
               >
                 Add Player
               </button>
@@ -469,7 +473,7 @@ export default function TournamentPage() {
                 onClick={() => {
                   setBracket(null);
                 }}
-                className="rounded-full border border-[#ff4fd8]/35 bg-white/10 px-6 py-3 text-sm font-semibold text-white/90 hover:bg-[#ff4fd8]/20 hover:text-white"
+                className="rounded-full border border-[#2f2461]/20 bg-[#2f2461]/5 px-6 py-3 text-sm font-semibold text-[#2f2461]/70 hover:bg-[#ff4fd8]/10 hover:text-[#2f2461]"
               >
                 Reset
               </button>
@@ -479,7 +483,7 @@ export default function TournamentPage() {
               <button
                 type="button"
                 onClick={createBracket}
-                className="w-full rounded-full text-white bg-[linear-gradient(180deg,#ff4fd8,#ff2fb1)] px-6 py-3 text-sm font-semibold text-black shadow-[0_0_0_1px_rgba(255,79,216,0.55),0_0_24px_rgba(255,79,216,0.25)] hover:shadow-[0_0_0_1px_rgba(255,79,216,0.75),0_0_34px_rgba(255,79,216,0.45)]"
+                className="w-full rounded-full text-white bg-[linear-gradient(180deg,#ff4fd8,#ff2fb1)] px-6 py-3 text-sm font-semibold shadow-[0_0_0_1px_rgba(255,79,216,0.55),0_0_24px_rgba(255,79,216,0.25)] hover:shadow-[0_0_0_1px_rgba(255,79,216,0.75),0_0_34px_rgba(255,79,216,0.45)]"
               >
                 Generate Bracket
               </button>
@@ -491,18 +495,19 @@ export default function TournamentPage() {
               </GlowButton>
             </div>
           </div>
-        </div>
+        </PageCard>
 
-        <div className="rounded-2xl border border-[#ff4fd8]/30 bg-[linear-gradient(180deg,rgba(20,8,32,0.9),rgba(14,7,24,0.9))] p-5 ring-1 ring-[#ff4fd8]/20">
+        {/* Bracket Panel */}
+        <PageCard color="yellow" className="mb-12">
           <div className="flex items-center justify-between gap-4">
             <div>
-              <div className="text-xs font-bold tracking-widest text-white/60">BRACKET</div>
-              <div className="mt-1 text-sm font-semibold text-white/80">
+              <div className="text-xs font-bold tracking-widest text-[#2f2461]/60">BRACKET</div>
+              <div className="mt-1 text-sm font-semibold text-[#2f2461]/70">
                 {bracket ? "Live" : "Preview"}
               </div>
             </div>
             {champion ? (
-              <div className="rounded-full bg-emerald-400/15 px-4 py-2 text-xs font-semibold text-emerald-200 ring-1 ring-emerald-300/25">
+              <div className="rounded-full bg-emerald-50 px-4 py-2 text-xs font-semibold text-emerald-700 ring-1 ring-emerald-300/25">
                 Champion: {champion.name}
               </div>
             ) : null}
@@ -513,16 +518,16 @@ export default function TournamentPage() {
               <div className="flex min-w-max items-start gap-6">
                 {rounds.map((r) => (
                   <div key={r.round} className="w-96 shrink-0 space-y-4">
-                    <div className="text-xs font-bold tracking-widest text-white/60">
+                    <div className="text-xs font-bold tracking-widest text-[#2f2461]/60">
                       {roundName(r.round)}
                     </div>
 
                     {r.matches.map((m) => (
                       <div
                         key={m.id}
-                        className="rounded-2xl border border-white/15 bg-black/25 p-5 ring-1 ring-white/10"
+                        className="rounded-2xl border border-[#2f2461]/10 bg-white/80 p-5 ring-1 ring-[#2f2461]/5"
                       >
-                        <div className="text-xs font-semibold text-white/60">
+                        <div className="text-xs font-semibold text-[#2f2461]/55">
                           Match {m.index + 1}
                         </div>
 
@@ -534,14 +539,14 @@ export default function TournamentPage() {
                             className={
                               "rounded-xl border px-3 py-2 text-left text-sm font-semibold ring-1 transition " +
                               (m.winnerId === m.p1?.id
-                                ? "border-emerald-400/25 bg-emerald-400/10 ring-emerald-300/20 text-white"
-                                : "border-white/15 bg-white/10 ring-white/10 text-white/90 hover:bg-[#ff4fd8]/16")
+                                ? "border-emerald-400/25 bg-emerald-50 ring-emerald-300/20 text-[#2f2461]"
+                                : "border-[#2f2461]/15 bg-white/60 ring-[#2f2461]/5 text-[#2f2461]/80 hover:bg-[#ff4fd8]/8 hover:border-[#ff4fd8]/20")
                             }
                           >
                             <span className="flex items-center justify-between gap-3">
                               <span className="min-w-0 truncate">{m.p1?.name ?? "TBD"}</span>
                               {m.p1?.id ? (
-                                <span className="shrink-0 text-xs font-black tracking-widest text-white/70">
+                                <span className="shrink-0 text-xs font-black tracking-widest text-[#2f2461]/55">
                                   {(() => {
                                     const t = totalsByMatch.get(m.id);
                                     if (t?.p1 == null) return "";
@@ -558,14 +563,14 @@ export default function TournamentPage() {
                             className={
                               "rounded-xl border px-3 py-2 text-left text-sm font-semibold ring-1 transition " +
                               (m.winnerId === m.p2?.id
-                                ? "border-emerald-400/25 bg-emerald-400/10 ring-emerald-300/20 text-white"
-                                : "border-white/15 bg-white/10 ring-white/10 text-white/90 hover:bg-[#ff4fd8]/16")
+                                ? "border-emerald-400/25 bg-emerald-50 ring-emerald-300/20 text-[#2f2461]"
+                                : "border-[#2f2461]/15 bg-white/60 ring-[#2f2461]/5 text-[#2f2461]/80 hover:bg-[#ff4fd8]/8 hover:border-[#ff4fd8]/20")
                             }
                           >
                             <span className="flex items-center justify-between gap-3">
                               <span className="min-w-0 truncate">{m.p2?.name ?? "TBD"}</span>
                               {m.p2?.id ? (
-                                <span className="shrink-0 text-xs font-black tracking-widest text-white/70">
+                                <span className="shrink-0 text-xs font-black tracking-widest text-[#2f2461]/55">
                                   {(() => {
                                     const t = totalsByMatch.get(m.id);
                                     if (t?.p2 == null) return "";
@@ -577,9 +582,9 @@ export default function TournamentPage() {
                           </button>
                         </div>
 
-                        <div className="mt-5 rounded-2xl border border-white/15 bg-white/10 p-4 ring-1 ring-white/10">
+                        <div className="mt-5 rounded-2xl border border-[#2f2461]/10 bg-[#2f2461]/5 p-4">
                           <div className="flex items-center justify-between gap-3">
-                            <div className="text-xs font-bold tracking-widest text-white/60">
+                            <div className="text-xs font-bold tracking-widest text-[#2f2461]/55">
                               SONGS
                             </div>
                             <div className="flex items-center gap-2">
@@ -591,7 +596,7 @@ export default function TournamentPage() {
                                     [m.id]: !(prev[m.id] ?? false),
                                   }))
                                 }
-                                className="rounded-full border border-[#ff4fd8]/35 bg-white/10 px-3 py-1 text-xs font-semibold text-white/90 hover:bg-[#ff4fd8]/20 hover:text-white"
+                                className="rounded-full border border-[#2f2461]/20 bg-white/60 px-3 py-1 text-xs font-semibold text-[#2f2461]/70 hover:bg-[#ff4fd8]/10 hover:text-[#2f2461]"
                               >
                                 {(songsOpenByMatch[m.id] ?? false) ? "Hide" : "Show"}
                               </button>
@@ -600,13 +605,13 @@ export default function TournamentPage() {
                                 <button
                                   type="button"
                                   onClick={() => importPickedSongsIntoMatch(m.id)}
-                                  className="rounded-full border border-[#ff4fd8]/35 bg-white/10 px-3 py-1 text-xs font-semibold text-white/90 hover:bg-[#ff4fd8]/20 hover:text-white"
+                                  className="rounded-full border border-[#ff4fd8]/30 bg-[#ff4fd8]/5 px-3 py-1 text-xs font-semibold text-[#2f2461] hover:bg-[#ff4fd8]/10"
                                 >
                                   Import Picked
                                 </button>
                               ) : null}
 
-                              <label className="flex items-center gap-2 text-xs font-semibold text-white/70">
+                              <label className="flex items-center gap-2 text-xs font-semibold text-[#2f2461]/60">
                                 <span>Count</span>
                                 <select
                                   value={matchConfigs[m.id]?.songCount ?? 1}
@@ -623,7 +628,7 @@ export default function TournamentPage() {
                                       return { songCount, songs: songs.slice(0, songCount) };
                                     });
                                   }}
-                                  className="rounded-full border border-white/15 bg-black/30 px-3 py-1 text-xs font-semibold text-white/90 outline-none"
+                                  className="rounded-full border border-[#2f2461]/20 bg-white/80 px-3 py-1 text-xs font-semibold text-[#2f2461] outline-none"
                                 >
                                   <option value={1}>1</option>
                                   <option value={2}>2</option>
@@ -641,11 +646,11 @@ export default function TournamentPage() {
                               }).map((_, idx) => (
                                 <div
                                   key={idx}
-                                  className="rounded-xl border border-white/15 bg-black/30 p-4 ring-1 ring-transparent focus-within:ring-[#ff4fd8]/45"
+                                  className="rounded-xl border border-[#2f2461]/10 bg-white/60 p-4 ring-1 ring-transparent focus-within:ring-[#ff4fd8]/30"
                                 >
                                   <div className="grid grid-cols-1 gap-3">
                                     <label className="block">
-                                      <div className="text-[10px] font-bold tracking-widest text-white/60">
+                                      <div className="text-[10px] font-bold tracking-widest text-[#2f2461]/55">
                                         Song {idx + 1}
                                       </div>
                                       <div className="mt-1">
@@ -675,7 +680,7 @@ export default function TournamentPage() {
 
                                     <div className="grid grid-cols-2 gap-2">
                                       <label className="block">
-                                        <div className="text-[10px] font-bold tracking-widest text-white/60">
+                                        <div className="text-[10px] font-bold tracking-widest text-[#2f2461]/55">
                                           P1
                                         </div>
                                         <input
@@ -710,12 +715,12 @@ export default function TournamentPage() {
                                               return { songCount, songs: songs.slice(0, songCount) };
                                             });
                                           }}
-                                          className="mt-1 w-full rounded-lg border border-white/10 bg-black/20 px-3 py-2 text-sm text-white outline-none"
+                                          className="mt-1 w-full rounded-lg border border-[#2f2461]/20 bg-white/80 px-3 py-2 text-sm text-[#2f2461] outline-none"
                                           placeholder="0-101.0000"
                                         />
                                       </label>
                                       <label className="block">
-                                        <div className="text-[10px] font-bold tracking-widest text-white/60">
+                                        <div className="text-[10px] font-bold tracking-widest text-[#2f2461]/55">
                                           P2
                                         </div>
                                         <input
@@ -750,7 +755,7 @@ export default function TournamentPage() {
                                               return { songCount, songs: songs.slice(0, songCount) };
                                             });
                                           }}
-                                          className="mt-1 w-full rounded-lg border border-white/10 bg-black/20 px-3 py-2 text-sm text-white outline-none"
+                                          className="mt-1 w-full rounded-lg border border-[#2f2461]/20 bg-white/80 px-3 py-2 text-sm text-[#2f2461] outline-none"
                                           placeholder="0-101.0000"
                                         />
                                       </label>
@@ -768,8 +773,8 @@ export default function TournamentPage() {
               </div>
             </div>
           </div>
-        </div>
+        </PageCard>
       </div>
-    </div>
+    </PageWrapper>
   );
 }

@@ -1,6 +1,9 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
+import { PageCard } from "../components/PageCard";
+import { PageWrapper } from "../components/PageWrapper";
+import { SectionHeader } from "../components/SectionHeader";
 
 type ImportedScore = {
   songName: string;
@@ -164,65 +167,60 @@ export default function MyScorePage() {
   }, [payload]);
 
   return (
-    <div className="mx-auto w-full max-w-6xl px-4 py-10">
-      <div className="mb-6">
-        <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-2 text-xs font-semibold tracking-wider text-white/80">
-          <span className="h-2 w-2 rounded-full bg-emerald-400 shadow-[0_0_16px_rgba(52,211,153,0.6)]" />
-          MY SCORE
+    <PageWrapper>
+      <PageCard color="green">
+        <div className="mb-4 flex justify-center">
+          <div className="inline-flex items-center gap-2 rounded-full border border-[#2cb869]/30 bg-[#2cb869]/10 px-4 py-2 text-xs font-semibold tracking-wider text-[#2f2461]/70">
+            <span className="h-2 w-2 rounded-full bg-emerald-400 shadow-[0_0_16px_rgba(52,211,153,0.6)]" />
+            MY SCORE
+          </div>
         </div>
 
-        <h1 className="mt-4 text-balance text-3xl font-black tracking-tight text-white sm:text-4xl">
-          maimai DX NET import receiver
-        </h1>
-        <p className="mt-2 max-w-3xl text-sm leading-6 text-white/70">
+        <SectionHeader color="green">maimai DX NET Import Receiver</SectionHeader>
+
+        <p className="mb-6 text-center text-sm font-medium leading-6 text-[#2f2461]/70 max-w-3xl mx-auto">
           Keep this tab open. When you run the bookmarklet on maimaidx-eng.com, it will send your exported scores here.
         </p>
-      </div>
 
-      <div className="rounded-2xl border border-white/10 bg-[linear-gradient(180deg,rgba(20,8,32,0.9),rgba(14,7,24,0.9))] p-5 ring-1 ring-white/10">
-        <div className="text-xs font-bold tracking-widest text-white/60">STATUS</div>
-        <div className="mt-2 text-sm font-semibold text-white/85">{status}</div>
-      </div>
+        <div className="rounded-2xl border border-[#2f2461]/10 bg-white/60 p-4 text-center">
+          <div className="text-xs font-bold tracking-widest text-[#2f2461]/45 mb-1">STATUS</div>
+          <div className="text-sm font-semibold text-[#2f2461]/80">{status}</div>
+        </div>
+      </PageCard>
 
       {payload && summary ? (
-        <div className="mt-6 grid grid-cols-1 gap-6">
-          <div className="rounded-2xl border border-white/10 bg-[linear-gradient(180deg,rgba(20,8,32,0.9),rgba(14,7,24,0.9))] p-5 ring-1 ring-white/10">
-            <div className="text-xs font-bold tracking-widest text-white/60">META</div>
-            <div className="mt-4 rounded-2xl border border-white/10 bg-black/20 p-4 ring-1 ring-white/10">
-              <div className="text-xs font-semibold text-white/70">Schema</div>
-              <div className="mt-1 text-sm font-semibold text-white/90">{payload.schema}</div>
-              <div className="mt-3 text-xs font-semibold text-white/70">Origin</div>
-              <div className="mt-1 text-sm font-semibold text-white/90">{payload.origin}</div>
-              <div className="mt-3 text-xs font-semibold text-white/70">Exported</div>
-              <div className="mt-1 text-sm font-semibold text-white/90">
-                {new Date(payload.exportedAt).toLocaleString()}
+        <>
+          <PageCard color="blue">
+            <SectionHeader color="blue">Import Meta</SectionHeader>
+            <div className="mx-auto max-w-sm rounded-2xl border border-[#2f2461]/10 bg-white/60 p-4 space-y-3">
+              <div>
+                <div className="text-xs font-semibold text-[#2f2461]/55">Schema</div>
+                <div className="mt-0.5 text-sm font-semibold text-[#2f2461]">{payload.schema}</div>
+              </div>
+              <div>
+                <div className="text-xs font-semibold text-[#2f2461]/55">Origin</div>
+                <div className="mt-0.5 text-sm font-semibold text-[#2f2461]">{payload.origin}</div>
+              </div>
+              <div>
+                <div className="text-xs font-semibold text-[#2f2461]/55">Exported</div>
+                <div className="mt-0.5 text-sm font-semibold text-[#2f2461]">
+                  {new Date(payload.exportedAt).toLocaleString()}
+                </div>
               </div>
             </div>
+          </PageCard>
 
-            {/* <div className="mt-4 rounded-2xl border border-white/10 bg-black/20 p-4 ring-1 ring-white/10">
-              <div className="text-sm font-semibold text-white/90">Total scores: {summary.total}</div>
-              <div className="mt-3 grid grid-cols-2 gap-2 text-xs text-white/70">
-                {Array.from(summary.byDiff.entries()).map(([k, v]) => (
-                  <div key={k} className="rounded-xl border border-white/10 bg-white/5 px-3 py-2 ring-1 ring-white/10">
-                    <div className="font-bold tracking-widest text-white/60">{k}</div>
-                    <div className="mt-1 text-sm font-semibold text-white/85">{v}</div>
-                  </div>
-                ))}
-              </div>
-            </div> */}
-          </div>
-
-          <div className="rounded-2xl border border-white/10 bg-[linear-gradient(180deg,rgba(20,8,32,0.9),rgba(14,7,24,0.9))] p-5 ring-1 ring-white/10">
-            <div className="text-xs font-bold tracking-widest text-white/60">Your Score (Highest to Lowest)</div>
-            <div className="mt-4 overflow-auto rounded-2xl border border-white/10 bg-black/20 ring-1 ring-white/10 h-70 overflow-y-auto">
+          <PageCard color="pink" className="mb-12">
+            <SectionHeader color="pink">Your Scores (Highest to Lowest)</SectionHeader>
+            <div className="overflow-auto rounded-2xl border border-[#2f2461]/10 bg-white/60 ring-1 ring-[#2f2461]/5 h-70 overflow-y-auto">
               <table className="min-w-full border-collapse text-left text-xs">
                 <thead>
-                  <tr className="text-white/70">
-                    <th className="px-3 py-3">Song</th>
-                    <th className="px-3 py-3">Diff</th>
-                    <th className="px-3 py-3">Type</th>
-                    <th className="px-3 py-3">Achv</th>
-                    <th className="px-3 py-3">Rank</th>
+                  <tr className="text-[#2f2461]/55 border-b border-[#2f2461]/10">
+                    <th className="px-3 py-3 font-bold tracking-widest">SONG</th>
+                    <th className="px-3 py-3 font-bold tracking-widest">DIFF</th>
+                    <th className="px-3 py-3 font-bold tracking-widest">TYPE</th>
+                    <th className="px-3 py-3 font-bold tracking-widest">ACHV</th>
+                    <th className="px-3 py-3 font-bold tracking-widest">RANK</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -230,7 +228,7 @@ export default function MyScorePage() {
                     .filter((s) => s.achievement !== null)
                     .sort((a, b) => (b.achievement as number) - (a.achievement as number))
                     .map((s, idx) => (
-                      <tr key={idx} className="border-t border-white/10 text-white/85">
+                      <tr key={idx} className="border-t border-[#2f2461]/8 text-[#2f2461]/80">
                         <td className="max-w-[280px] truncate px-3 py-2" title={s.songName}>
                           {s.songName}
                         </td>
@@ -245,9 +243,9 @@ export default function MyScorePage() {
                 </tbody>
               </table>
             </div>
-          </div>
-        </div>
+          </PageCard>
+        </>
       ) : null}
-    </div>
+    </PageWrapper>
   );
 }

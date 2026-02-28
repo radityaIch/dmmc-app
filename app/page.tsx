@@ -1,6 +1,10 @@
 import Link from "next/link";
 
+import { GlowButton } from "./components/GlowButton";
 import { HomeEventsPreview } from "./components/HomeEventsPreview";
+import { PageCard } from "./components/PageCard";
+import { PageWrapper } from "./components/PageWrapper";
+import { SectionHeader } from "./components/SectionHeader";
 import { MAIMAI_LOCATIONS } from "./lib/locations";
 
 export default function Home() {
@@ -73,17 +77,11 @@ export default function Home() {
         </section>
 
         {/* Content Sections */}
-        <section className="relative z-10 mx-auto w-full max-w-5xl px-4 py-8 flex flex-col gap-8">
+        <PageWrapper>
 
           {/* About DMMC */}
-          <div className="bg-white/90 backdrop-blur-xl rounded-3xl border border-[#ff4fd8]/30 shadow-[0_8px_32px_rgba(255,79,216,0.18)] p-8 md:p-10 w-full">
-            <div className="flex items-center justify-center gap-3 mb-6">
-              <div className="h-px flex-1 max-w-12 bg-[#ff4fd8]/30" />
-              <h2 className="text-2xl md:text-3xl font-extrabold text-[#2f2461] tracking-wide">
-                Who We Are
-              </h2>
-              <div className="h-px flex-1 max-w-12 bg-[#ff4fd8]/30" />
-            </div>
+          <PageCard color="pink">
+            <SectionHeader color="pink">Who We Are</SectionHeader>
 
             <p className="text-center md:text-lg font-medium text-[#2f2461]/75 mb-8 max-w-3xl mx-auto leading-relaxed border-b border-[#ff4fd8]/15 pb-8">
               DMMC (Denpasar Maimai Community) has been Bali&apos;s premier maimai circle for years. Whether you&apos;re a seasoned SSS+ chaser or just hit your first arcade machine last week, you belong here. We hang out at every maimai cabinet in Bali — from malls to arcades — and host regular meetups and tournaments to keep the community buzzing. Come as you are, leave with friends who get it.
@@ -111,22 +109,16 @@ export default function Home() {
                 Upcoming Meetups
               </Link>
             </div>
-          </div>
+          </PageCard>
 
-          {/* Locations & Events Previews */}
-          <div className="bg-white/90 backdrop-blur-xl rounded-3xl border border-[#ffbb33]/30 shadow-[0_8px_32px_rgba(255,187,51,0.18)] p-8 w-full">
-            <div className="flex flex-col items-center gap-3 mb-6">
-              <div className="flex items-center gap-3">
-                <div className="h-px flex-1 max-w-12 bg-[#ffbb33]/30" />
-                <h2 className="text-2xl md:text-3xl font-extrabold text-[#2f2461] tracking-wide text-center">
-                  Where We Play
-                </h2>
-                <div className="h-px flex-1 max-w-12 bg-[#ffbb33]/30" />
-              </div>
-              <p className="text-[#2f2461]/70 font-medium text-center max-w-xl">
-                You&apos;ll find DMMC members at every maimai DX cabinet across Bali. Here&apos;s where to look.
-              </p>
-            </div>
+          {/* Locations & Events */}
+          <PageCard color="yellow">
+            <SectionHeader
+              color="yellow"
+              sub="You'll find DMMC members at every maimai DX cabinet across Bali. Here's where to look."
+            >
+              Where We Play
+            </SectionHeader>
 
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-10">
               {MAIMAI_LOCATIONS.map(loc => (
@@ -146,37 +138,22 @@ export default function Home() {
               ))}
             </div>
 
-            <div className="flex items-center justify-center gap-3 mb-6">
-              <div className="h-px flex-1 max-w-12 bg-[#ff4fd8]/30" />
-              <h2 className="text-2xl md:text-3xl font-extrabold text-[#2f2461] tracking-wide text-center">
-                Next Meetups
-              </h2>
-              <div className="h-px flex-1 max-w-12 bg-[#ff4fd8]/30" />
-            </div>
+            <SectionHeader color="pink">Next Meetups</SectionHeader>
 
             <div className="bg-white/60 border border-[#ff4fd8]/15 shadow-inner rounded-2xl p-4 sm:p-6 mb-6">
               <HomeEventsPreview />
             </div>
 
             <div className="flex justify-center">
-              <Link
-                href="/events"
-                className="inline-flex items-center justify-center text-white text-base font-semibold py-3 px-8 rounded-full bg-[#d63fb5] border border-[#e87fd3]/40 shadow-[0_2px_12px_rgba(214,63,181,0.25)] hover:bg-[#c4379f] hover:shadow-[0_4px_20px_rgba(214,63,181,0.35)] hover:-translate-y-0.5 active:translate-y-0 transition-all"
-              >
+              <GlowButton variant="pink" href="/events">
                 See All Events
-              </Link>
+              </GlowButton>
             </div>
-          </div>
+          </PageCard>
 
           {/* Tournament Info */}
-          <div className="bg-white/90 backdrop-blur-xl rounded-3xl border border-[#39b7ff]/30 shadow-[0_8px_32px_rgba(57,183,255,0.18)] p-8 w-full">
-            <div className="flex items-center justify-center gap-3 mb-6">
-              <div className="h-px flex-1 max-w-12 bg-[#39b7ff]/30" />
-              <h2 className="text-2xl md:text-3xl font-extrabold text-[#2f2461] tracking-wide text-center">
-                Run Tournaments
-              </h2>
-              <div className="h-px flex-1 max-w-12 bg-[#39b7ff]/30" />
-            </div>
+          <PageCard color="blue">
+            <SectionHeader color="blue">Run Tournaments</SectionHeader>
 
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
               <div className="text-center lg:text-left">
@@ -184,18 +161,12 @@ export default function Home() {
                   DMMC hosts regular in-community tournaments — and we built our own bracket tool for it. Single-elimination, per-match song picks, and score entry down to 4 decimal places. No Challonge, no spreadsheets.
                 </p>
                 <div className="flex flex-col sm:flex-row gap-3 justify-center lg:justify-start">
-                  <Link
-                    href="/tournament"
-                    className="inline-flex items-center justify-center text-white text-base font-semibold py-3 px-6 rounded-full bg-[#d63fb5] border border-[#e87fd3]/40 shadow-[0_2px_12px_rgba(214,63,181,0.25)] hover:bg-[#c4379f] hover:shadow-[0_4px_20px_rgba(214,63,181,0.35)] hover:-translate-y-0.5 active:translate-y-0 transition-all"
-                  >
+                  <GlowButton variant="pink" href="/tournament">
                     Open Tournament
-                  </Link>
-                  <Link
-                    href="/songs"
-                    className="inline-flex items-center justify-center text-white text-base font-semibold py-3 px-6 rounded-full bg-[#d4960f] border border-[#e8bf5e]/40 shadow-[0_2px_12px_rgba(212,150,15,0.25)] hover:bg-[#bf870d] hover:shadow-[0_4px_20px_rgba(212,150,15,0.35)] hover:-translate-y-0.5 active:translate-y-0 transition-all"
-                  >
+                  </GlowButton>
+                  <GlowButton variant="gold" href="/songs">
                     Song List
-                  </Link>
+                  </GlowButton>
                 </div>
               </div>
 
@@ -213,29 +184,20 @@ export default function Home() {
                 ))}
               </div>
             </div>
-          </div>
+          </PageCard>
 
           {/* Score Import */}
-          <div className="bg-white/90 backdrop-blur-xl rounded-3xl border border-[#2cb869]/30 shadow-[0_8px_32px_rgba(44,184,105,0.18)] p-8 w-full mb-12">
-            <div className="flex items-center justify-center gap-3 mb-6">
-              <div className="h-px flex-1 max-w-12 bg-[#2cb869]/30" />
-              <h2 className="text-2xl md:text-3xl font-extrabold text-[#2f2461] tracking-wide text-center">
-                Track Your Scores
-              </h2>
-              <div className="h-px flex-1 max-w-12 bg-[#2cb869]/30" />
-            </div>
+          <PageCard color="green" className="mb-12">
+            <SectionHeader color="green">Track Your Scores</SectionHeader>
 
             <p className="text-center font-medium text-[#2f2461]/75 text-lg mb-6 max-w-3xl mx-auto leading-relaxed">
               Import your full play record from <span className="font-bold text-[#ff4fd8]">maimai DX NET</span> with one click. Just drag a bookmarklet to your bookmarks bar and run it from the game site — your scores land on DMMC automatically.
             </p>
 
             <div className="flex justify-center mb-8">
-              <Link
-                href="/bookmarklets"
-                className="inline-flex items-center justify-center text-white text-lg font-semibold py-3 px-8 rounded-full bg-[#1ea85a] border border-[#5ec98a]/40 shadow-[0_2px_12px_rgba(30,168,90,0.25)] hover:bg-[#1a944f] hover:shadow-[0_4px_20px_rgba(30,168,90,0.35)] hover:-translate-y-0.5 active:translate-y-0 transition-all"
-              >
+              <GlowButton variant="green" href="/bookmarklets">
                 Get the Bookmarklet
-              </Link>
+              </GlowButton>
             </div>
 
             <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 text-center">
@@ -251,9 +213,9 @@ export default function Home() {
                 </div>
               ))}
             </div>
-          </div>
+          </PageCard>
 
-        </section>
+        </PageWrapper>
       </main>
     </div>
   );

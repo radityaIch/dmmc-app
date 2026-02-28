@@ -3,7 +3,7 @@ import Link from "next/link";
 type GlowButtonProps = {
   href: string;
   children: React.ReactNode;
-  variant?: "green" | "pink" | "blue";
+  variant?: "green" | "pink" | "blue" | "gold";
   className?: string;
   onClick?: () => void;
 };
@@ -15,6 +15,8 @@ const variantClasses: Record<NonNullable<GlowButtonProps["variant"]>, string> = 
     "bg-[linear-gradient(180deg,#ff4fd8,#ff2fb1)] text-black shadow-[0_0_0_1px_rgba(255,79,216,0.5),0_0_24px_rgba(255,79,216,0.35)] hover:shadow-[0_0_0_1px_rgba(255,79,216,0.7),0_0_34px_rgba(255,79,216,0.55)]",
   blue:
     "bg-[linear-gradient(180deg,#39b7ff,#168bff)] text-black shadow-[0_0_0_1px_rgba(57,183,255,0.5),0_0_24px_rgba(57,183,255,0.35)] hover:shadow-[0_0_0_1px_rgba(57,183,255,0.7),0_0_34px_rgba(57,183,255,0.55)]",
+  gold:
+    "bg-[linear-gradient(180deg,#ffd84f,#f0b429)] text-black shadow-[0_0_0_1px_rgba(255,187,51,0.5),0_0_24px_rgba(255,187,51,0.35)] hover:shadow-[0_0_0_1px_rgba(255,187,51,0.7),0_0_34px_rgba(255,187,51,0.55)]",
 };
 
 export function GlowButton({

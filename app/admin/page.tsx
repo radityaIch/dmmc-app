@@ -6,24 +6,27 @@ import { useQuery, useMutation } from "convex/react";
 import { api } from "@/convex/_generated/api";
 import type { Id } from "@/convex/_generated/dataModel";
 import { eventDate, eventTime } from "@/app/lib/events";
+import { PageCard } from "@/app/components/PageCard";
+import { PageWrapper } from "@/app/components/PageWrapper";
+import { SectionHeader } from "@/app/components/SectionHeader";
 
 function statusBadge(status: string) {
   switch (status) {
     case "approved":
       return (
-        <span className="rounded-full bg-emerald-400/15 px-2.5 py-1 text-xs font-semibold text-emerald-200 ring-1 ring-emerald-300/30">
+        <span className="rounded-full bg-emerald-100 px-2.5 py-1 text-xs font-semibold text-emerald-700 ring-1 ring-emerald-400/30">
           Approved
         </span>
       );
     case "removed":
       return (
-        <span className="rounded-full bg-red-400/15 px-2.5 py-1 text-xs font-semibold text-red-200 ring-1 ring-red-300/30">
+        <span className="rounded-full bg-red-100 px-2.5 py-1 text-xs font-semibold text-red-600 ring-1 ring-red-400/30">
           Removed
         </span>
       );
     default:
       return (
-        <span className="rounded-full bg-amber-400/15 px-2.5 py-1 text-xs font-semibold text-amber-200 ring-1 ring-amber-300/30">
+        <span className="rounded-full bg-amber-100 px-2.5 py-1 text-xs font-semibold text-amber-700 ring-1 ring-amber-400/30">
           Pending
         </span>
       );
@@ -73,33 +76,34 @@ export default function AdminDashboardPage() {
   }
 
   return (
-    <div className="mx-auto w-full max-w-6xl px-4 py-10">
+    <PageWrapper className="max-w-6xl">
       <div className="grid grid-cols-1 gap-6 md:grid-cols-[240px_1fr]">
-        <aside className="rounded-2xl border border-white/10 bg-white/5 p-4 ring-1 ring-white/10">
-          <div className="mb-3 flex items-center justify-between">
+        {/* Sidebar */}
+        <PageCard color="yellow">
+          <div className="mb-4 flex items-center justify-between">
             <div>
-              <div className="text-xs font-bold tracking-widest text-white/60">ADMIN</div>
-              <div className="text-base font-black tracking-tight text-white">
+              <div className="text-xs font-bold tracking-widest text-[#2f2461]/45">ADMIN</div>
+              <div className="text-base font-black tracking-tight text-[#2f2461]">
                 Dashboard
               </div>
             </div>
             <Link
               href="/"
-              className="rounded-full border border-white/10 bg-black/20 px-3 py-1 text-xs font-semibold text-white/75 hover:bg-black/40 hover:text-white"
+              className="rounded-full border border-[#2f2461]/20 bg-[#2f2461]/5 px-3 py-1 text-xs font-semibold text-[#2f2461]/70 hover:bg-[#2f2461]/10 hover:text-[#2f2461]"
             >
               Site
             </Link>
           </div>
 
-          <div className="mt-4 space-y-2">
+          <div className="space-y-2">
             <button
               type="button"
               onClick={() => setActive("overview")}
               className={
                 "w-full rounded-xl px-4 py-3 text-left text-sm font-semibold transition " +
                 (active === "overview"
-                  ? "bg-white/10 text-white ring-1 ring-white/20"
-                  : "bg-black/20 text-white/75 hover:bg-black/30 hover:text-white")
+                  ? "bg-[#ff4fd8]/15 text-[#2f2461] ring-1 ring-[#ff4fd8]/25"
+                  : "bg-[#2f2461]/5 text-[#2f2461]/65 hover:bg-[#2f2461]/10 hover:text-[#2f2461]")
               }
             >
               Overview
@@ -110,13 +114,13 @@ export default function AdminDashboardPage() {
               className={
                 "w-full rounded-xl px-4 py-3 text-left text-sm font-semibold transition " +
                 (active === "events"
-                  ? "bg-white/10 text-white ring-1 ring-white/20"
-                  : "bg-black/20 text-white/75 hover:bg-black/30 hover:text-white")
+                  ? "bg-[#ff4fd8]/15 text-[#2f2461] ring-1 ring-[#ff4fd8]/25"
+                  : "bg-[#2f2461]/5 text-[#2f2461]/65 hover:bg-[#2f2461]/10 hover:text-[#2f2461]")
               }
             >
               Manage Events
               {stats.pending > 0 && (
-                <span className="ml-2 inline-flex h-5 w-5 items-center justify-center rounded-full bg-amber-400/20 text-[10px] font-bold text-amber-200">
+                <span className="ml-2 inline-flex h-5 w-5 items-center justify-center rounded-full bg-amber-100 text-[10px] font-bold text-amber-700">
                   {stats.pending}
                 </span>
               )}
@@ -124,42 +128,43 @@ export default function AdminDashboardPage() {
 
             <Link
               href="/dashboard"
-              className="block w-full rounded-xl bg-black/20 px-4 py-3 text-left text-sm font-semibold text-white/75 hover:bg-black/30 hover:text-white"
+              className="block w-full rounded-xl bg-[#2f2461]/5 px-4 py-3 text-left text-sm font-semibold text-[#2f2461]/65 hover:bg-[#2f2461]/10 hover:text-[#2f2461]"
             >
               ← User Dashboard
             </Link>
           </div>
-        </aside>
+        </PageCard>
 
-        <section className="rounded-2xl border border-white/10 bg-white/5 p-6 ring-1 ring-white/10">
+        {/* Main content */}
+        <PageCard color="blue" className="mb-12">
           {active === "overview" ? (
             <div>
-              <h1 className="text-xl font-black tracking-tight text-white">Overview</h1>
-              <p className="mt-2 text-sm leading-6 text-white/70">
+              <SectionHeader color="blue">Overview</SectionHeader>
+              <p className="mb-6 text-center text-sm font-medium leading-6 text-[#2f2461]/70">
                 Admin panel connected to Convex. All data is live and reactive.
               </p>
-              <div className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-4">
-                <div className="rounded-2xl border border-white/10 bg-black/20 p-4">
-                  <div className="text-xs font-bold tracking-widest text-white/60">TOTAL</div>
-                  <div className="mt-1 text-2xl font-black text-white">
+              <div className="grid grid-cols-1 gap-4 sm:grid-cols-4">
+                <div className="rounded-2xl border border-[#2f2461]/10 bg-white/60 p-4 text-center">
+                  <div className="text-xs font-bold tracking-widest text-[#2f2461]/45">TOTAL</div>
+                  <div className="mt-1 text-2xl font-black text-[#2f2461]">
                     {stats.total}
                   </div>
                 </div>
-                <div className="rounded-2xl border border-amber-400/20 bg-amber-400/10 p-4">
-                  <div className="text-xs font-bold tracking-widest text-amber-200/60">PENDING</div>
-                  <div className="mt-1 text-2xl font-black text-amber-200">
+                <div className="rounded-2xl border border-amber-400/25 bg-amber-50 p-4 text-center">
+                  <div className="text-xs font-bold tracking-widest text-amber-600/70">PENDING</div>
+                  <div className="mt-1 text-2xl font-black text-amber-700">
                     {stats.pending}
                   </div>
                 </div>
-                <div className="rounded-2xl border border-emerald-400/20 bg-emerald-400/10 p-4">
-                  <div className="text-xs font-bold tracking-widest text-emerald-200/60">APPROVED</div>
-                  <div className="mt-1 text-2xl font-black text-emerald-200">
+                <div className="rounded-2xl border border-emerald-400/25 bg-emerald-50 p-4 text-center">
+                  <div className="text-xs font-bold tracking-widest text-emerald-600/70">APPROVED</div>
+                  <div className="mt-1 text-2xl font-black text-emerald-700">
                     {stats.approved}
                   </div>
                 </div>
-                <div className="rounded-2xl border border-red-400/20 bg-red-400/10 p-4">
-                  <div className="text-xs font-bold tracking-widest text-red-200/60">REMOVED</div>
-                  <div className="mt-1 text-2xl font-black text-red-200">
+                <div className="rounded-2xl border border-red-400/25 bg-red-50 p-4 text-center">
+                  <div className="text-xs font-bold tracking-widest text-red-600/70">REMOVED</div>
+                  <div className="mt-1 text-2xl font-black text-red-600">
                     {stats.removed}
                   </div>
                 </div>
@@ -167,15 +172,8 @@ export default function AdminDashboardPage() {
             </div>
           ) : (
             <div>
-              <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
-                <div>
-                  <h1 className="text-xl font-black tracking-tight text-white">
-                    Manage Events
-                  </h1>
-                  <p className="mt-2 text-sm leading-6 text-white/70">
-                    Approve or remove events submitted by community members.
-                  </p>
-                </div>
+              <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between mb-6">
+                <SectionHeader color="blue" className="mb-0">Manage Events</SectionHeader>
 
                 {/* Filter pills */}
                 <div className="flex items-center gap-2">
@@ -188,13 +186,13 @@ export default function AdminDashboardPage() {
                         className={
                           "rounded-full px-3 py-1.5 text-xs font-semibold ring-1 transition " +
                           (filter === f
-                            ? "bg-white/10 text-white ring-white/30"
-                            : "bg-black/20 text-white/60 ring-white/10 hover:bg-black/30 hover:text-white/80")
+                            ? "bg-[#ff4fd8]/15 text-[#2f2461] ring-[#ff4fd8]/25"
+                            : "bg-[#2f2461]/5 text-[#2f2461]/55 ring-[#2f2461]/10 hover:bg-[#2f2461]/10 hover:text-[#2f2461]")
                         }
                       >
                         {f.charAt(0).toUpperCase() + f.slice(1)}
                         {f === "pending" && stats.pending > 0 && (
-                          <span className="ml-1 text-amber-200">
+                          <span className="ml-1 text-amber-600">
                             ({stats.pending})
                           </span>
                         )}
@@ -205,46 +203,47 @@ export default function AdminDashboardPage() {
               </div>
 
               {filtered.length === 0 ? (
-                <div className="mt-6 rounded-2xl border border-white/10 bg-black/20 p-8 text-center">
-                  <p className="text-sm text-white/50">
+                <div className="rounded-2xl border border-[#2f2461]/10 bg-white/60 p-8 text-center">
+                  <p className="text-sm text-[#2f2461]/50">
                     No events match this filter.
                   </p>
                 </div>
               ) : (
-                <div className="mt-6 space-y-3">
+                <div className="space-y-3">
                   {filtered.map((e) => (
                     <div
                       key={e._id}
                       className={
                         "rounded-2xl border p-4 ring-1 " +
                         (e.status === "pending"
-                          ? "border-amber-400/20 bg-amber-400/5 ring-amber-300/15"
+                          ? "border-amber-400/25 bg-amber-50 ring-amber-300/15"
                           : e.status === "approved"
-                            ? "border-emerald-400/15 bg-emerald-400/5 ring-emerald-300/10"
-                            : "border-red-400/15 bg-red-400/5 ring-red-300/10")
+                            ? "border-emerald-400/20 bg-emerald-50 ring-emerald-300/10"
+                            : "border-red-400/20 bg-red-50 ring-red-300/10")
                       }
                     >
                       <div className="flex flex-wrap items-start justify-between gap-3">
                         <div className="min-w-0 flex-1">
                           <div className="flex items-center gap-2">
-                            <span className="text-sm font-bold text-white">
+                            <span className="text-sm font-bold text-[#2f2461]">
                               {e.name}
                             </span>
                             {statusBadge(e.status)}
                           </div>
-                          <div className="mt-1 text-xs font-semibold text-white/50">
+                          <div className="mt-1 text-xs font-semibold text-[#2f2461]/45">
                             {eventDate(e)} • {eventTime(e)} •{" "}
                             {e.location.name}
                           </div>
-                          <div className="mt-1 text-xs text-white/40 flex items-center gap-1.5">
+                          <div className="mt-1 text-xs text-[#2f2461]/40 flex items-center gap-1.5">
                             {e.organizer?.image ? (
+                              // eslint-disable-next-line @next/next/no-img-element
                               <img
                                 src={e.organizer.image}
                                 alt=""
-                                className="h-4 w-4 rounded-full object-cover ring-1 ring-white/15"
+                                className="h-4 w-4 rounded-full object-cover ring-1 ring-[#2f2461]/15"
                               />
                             ) : (
-                              <span className="flex h-4 w-4 items-center justify-center rounded-full bg-white/10 text-[8px] font-bold text-white/50 ring-1 ring-white/15">
+                              <span className="flex h-4 w-4 items-center justify-center rounded-full bg-[#2f2461]/10 text-[8px] font-bold text-[#2f2461]/50 ring-1 ring-[#2f2461]/15">
                                 ?
                               </span>
                             )}
@@ -258,11 +257,9 @@ export default function AdminDashboardPage() {
                               type="button"
                               disabled={actionLoading === e._id}
                               onClick={() => handleApprove(e._id)}
-                              className="rounded-full border border-emerald-400/25 bg-emerald-400/15 px-3 py-1 text-xs font-semibold text-emerald-200 hover:bg-emerald-400/25 hover:text-emerald-100 disabled:opacity-50"
+                              className="rounded-full border border-emerald-400/30 bg-emerald-50 px-3 py-1 text-xs font-semibold text-emerald-700 hover:bg-emerald-100 hover:text-emerald-800 disabled:opacity-50"
                             >
-                              {actionLoading === e._id
-                                ? "..."
-                                : "Approve"}
+                              {actionLoading === e._id ? "..." : "Approve"}
                             </button>
                           )}
                           {e.status !== "removed" && (
@@ -270,22 +267,20 @@ export default function AdminDashboardPage() {
                               type="button"
                               disabled={actionLoading === e._id}
                               onClick={() => handleRemove(e._id)}
-                              className="rounded-full border border-red-400/25 bg-red-400/15 px-3 py-1 text-xs font-semibold text-red-200 hover:bg-red-400/25 hover:text-red-100 disabled:opacity-50"
+                              className="rounded-full border border-red-400/30 bg-red-50 px-3 py-1 text-xs font-semibold text-red-600 hover:bg-red-100 hover:text-red-700 disabled:opacity-50"
                             >
-                              {actionLoading === e._id
-                                ? "..."
-                                : "Remove"}
+                              {actionLoading === e._id ? "..." : "Remove"}
                             </button>
                           )}
                         </div>
                       </div>
 
-                      <p className="mt-3 text-sm leading-6 text-white/60">
+                      <p className="mt-3 text-sm leading-6 text-[#2f2461]/60">
                         {e.description}
                       </p>
 
                       {e.location.address && (
-                        <div className="mt-1 text-xs text-white/40">
+                        <div className="mt-1 text-xs text-[#2f2461]/40">
                           📍 {e.location.address}
                         </div>
                       )}
@@ -295,8 +290,8 @@ export default function AdminDashboardPage() {
               )}
             </div>
           )}
-        </section>
+        </PageCard>
       </div>
-    </div>
+    </PageWrapper>
   );
 }

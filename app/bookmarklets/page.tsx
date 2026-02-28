@@ -1,6 +1,9 @@
 "use client";
 
 import { useEffect, useMemo, useRef, useState } from "react";
+import { PageCard } from "../components/PageCard";
+import { PageWrapper } from "../components/PageWrapper";
+import { SectionHeader } from "../components/SectionHeader";
 
 function makeBookmarklet(code: string) {
   const encoded = encodeURIComponent(code).replace(/'/g, "%27");
@@ -50,25 +53,25 @@ export default function BookmarkletsPage() {
   }, [mobileBookmarkletHref]);
 
   return (
-    <div className="mx-auto w-full max-w-6xl px-4 py-10">
-      <div className="mb-6">
-        <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-2 text-xs font-semibold tracking-wider text-white/80">
-          <span className="h-2 w-2 rounded-full bg-fuchsia-400 shadow-[0_0_16px_rgba(255,79,216,0.55)]" />
-          BOOKMARKLETS
+    <PageWrapper>
+      <PageCard color="blue">
+        <div className="mb-4 flex justify-center">
+          <div className="inline-flex items-center gap-2 rounded-full border border-[#39b7ff]/30 bg-[#39b7ff]/10 px-4 py-2 text-xs font-semibold tracking-wider text-[#2f2461]/70">
+            <span className="h-2 w-2 rounded-full bg-[#39b7ff] shadow-[0_0_16px_rgba(57,183,255,0.55)]" />
+            BOOKMARKLETS
+          </div>
         </div>
-        <h1 className="mt-4 text-balance text-3xl font-black tracking-tight text-white sm:text-4xl">
-          Export maimai DX NET (Intl)
-        </h1>
-        <p className="mt-2 max-w-3xl text-sm leading-6 text-white/70">
-          Use this bookmarklet on maimaidx-eng.com while logged in. It will export your scores, then redirect you to{" "}
-          <span className="font-semibold text-white">/my-score</span> with the results.
-        </p>
-      </div>
 
-      <div className="rounded-3xl border border-white/10 bg-white/5 p-6 ring-1 ring-white/10 sm:p-8">
+        <SectionHeader color="blue">Export maimai DX NET (Intl)</SectionHeader>
+
+        <p className="mb-8 text-center text-sm font-medium leading-6 text-[#2f2461]/70 max-w-3xl mx-auto">
+          Use this bookmarklet on maimaidx-eng.com while logged in. It will export your scores, then redirect you to{" "}
+          <span className="font-semibold text-[#2f2461]">/my-score</span> with the results.
+        </p>
+
         <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
-          <div className="rounded-2xl border border-white/10 bg-black/20 p-5 ring-1 ring-white/10">
-            <div className="text-xs font-bold tracking-widest text-white/60">MOBILE (RECOMMENDED)</div>
+          <div className="rounded-2xl border border-[#2f2461]/10 bg-white/60 p-5">
+            <div className="text-xs font-bold tracking-widest text-[#2f2461]/50">MOBILE (RECOMMENDED)</div>
             <div className="mt-3">
               <a
                 href="#"
@@ -79,17 +82,17 @@ export default function BookmarkletsPage() {
                 DMMC Export (Mobile)
               </a>
             </div>
-            <p className="mt-3 text-sm leading-6 text-white/70">
+            <p className="mt-3 text-sm leading-6 text-[#2f2461]/65">
               Short bookmarklet that loads the exporter script from DMMC. Works better on mobile browsers.
             </p>
           </div>
 
-          <div className="rounded-2xl border border-white/10 bg-black/20 p-5 ring-1 ring-white/10">
-            <div className="text-xs font-bold tracking-widest text-white/60">COPY (MOBILE)</div>
+          <div className="rounded-2xl border border-[#2f2461]/10 bg-white/60 p-5">
+            <div className="text-xs font-bold tracking-widest text-[#2f2461]/50">COPY (MOBILE)</div>
             <textarea
               readOnly
               value={mobileBookmarkletHref}
-              className="mt-4 h-40 w-full resize-none rounded-2xl border border-white/10 bg-black/30 p-4 text-xs text-white/85 outline-none"
+              className="mt-4 h-40 w-full resize-none rounded-2xl border border-[#2f2461]/20 bg-[#17061f] p-4 font-mono text-xs text-white/80 outline-none"
             />
             <button
               type="button"
@@ -102,14 +105,14 @@ export default function BookmarkletsPage() {
                   setCopiedMobile(false);
                 }
               }}
-              className="mt-4 w-full rounded-full border border-white/10 bg-white/5 px-6 py-3 text-sm font-semibold text-white/85 hover:bg-white/10 hover:text-white"
+              className="mt-4 w-full rounded-full border border-[#2f2461]/20 bg-[#2f2461]/5 px-6 py-3 text-sm font-semibold text-[#2f2461]/75 hover:bg-[#2f2461]/10 hover:text-[#2f2461]"
             >
               {copiedMobile ? "Copied" : "Copy mobile bookmarklet"}
             </button>
           </div>
 
-          <div className="rounded-2xl border border-white/10 bg-black/20 p-5 ring-1 ring-white/10">
-            <div className="text-xs font-bold tracking-widest text-white/60">DESKTOP (INLINE)</div>
+          <div className="rounded-2xl border border-[#2f2461]/10 bg-white/60 p-5">
+            <div className="text-xs font-bold tracking-widest text-[#2f2461]/50">DESKTOP (INLINE)</div>
             <div className="mt-3">
               <a
                 href="#"
@@ -120,17 +123,17 @@ export default function BookmarkletsPage() {
                 DMMC Export (Desktop)
               </a>
             </div>
-            <p className="mt-3 text-sm leading-6 text-white/70">
+            <p className="mt-3 text-sm leading-6 text-[#2f2461]/65">
               Full exporter embedded inside the bookmarklet. Works on desktop, but can be too long for some mobile browsers.
             </p>
           </div>
 
-          <div className="rounded-2xl border border-white/10 bg-black/20 p-5 ring-1 ring-white/10">
-            <div className="text-xs font-bold tracking-widest text-white/60">COPY (DESKTOP)</div>
+          <div className="rounded-2xl border border-[#2f2461]/10 bg-white/60 p-5">
+            <div className="text-xs font-bold tracking-widest text-[#2f2461]/50">COPY (DESKTOP)</div>
             <textarea
               readOnly
               value={bookmarkletHref}
-              className="mt-4 h-40 w-full resize-none rounded-2xl border border-white/10 bg-black/30 p-4 text-xs text-white/85 outline-none"
+              className="mt-4 h-40 w-full resize-none rounded-2xl border border-[#2f2461]/20 bg-[#17061f] p-4 font-mono text-xs text-white/80 outline-none"
             />
             <button
               type="button"
@@ -143,13 +146,13 @@ export default function BookmarkletsPage() {
                   setCopied(false);
                 }
               }}
-              className="mt-4 w-full rounded-full border border-white/10 bg-white/5 px-6 py-3 text-sm font-semibold text-white/85 hover:bg-white/10 hover:text-white"
+              className="mt-4 w-full rounded-full border border-[#2f2461]/20 bg-[#2f2461]/5 px-6 py-3 text-sm font-semibold text-[#2f2461]/75 hover:bg-[#2f2461]/10 hover:text-[#2f2461]"
             >
               {copied ? "Copied" : "Copy desktop bookmarklet"}
             </button>
           </div>
         </div>
-      </div>
-    </div>
+      </PageCard>
+    </PageWrapper>
   );
 }

@@ -3,6 +3,9 @@
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { PageCard } from "../components/PageCard";
+import { PageWrapper } from "../components/PageWrapper";
+import { SectionHeader } from "../components/SectionHeader";
 
 export default function LoginPage() {
   const router = useRouter();
@@ -10,48 +13,48 @@ export default function LoginPage() {
   const [password, setPassword] = useState("");
 
   return (
-    <div className="mx-auto w-full max-w-6xl px-4 py-10">
-      <div className="mx-auto max-w-md overflow-hidden rounded-2xl border border-white/10 bg-white/5 p-6 ring-1 ring-white/10">
-        <div className="flex items-center justify-between gap-4">
-          <h1 className="text-xl font-black tracking-tight text-white">Admin Login</h1>
+    <PageWrapper>
+      <PageCard color="blue" className="mx-auto max-w-md mb-12">
+        <div className="mb-4 flex items-center justify-between gap-4">
+          <SectionHeader color="blue" className="mb-0 flex-1">Admin Login</SectionHeader>
           <Link
             href="/"
-            className="rounded-full border border-white/10 bg-black/20 px-3 py-1 text-xs font-semibold text-white/75 hover:bg-black/40 hover:text-white"
+            className="shrink-0 rounded-full border border-[#2f2461]/20 bg-[#2f2461]/5 px-3 py-1 text-xs font-semibold text-[#2f2461]/70 hover:bg-[#2f2461]/10 hover:text-[#2f2461]"
           >
             Back
           </Link>
         </div>
 
-        <p className="mt-2 text-sm leading-6 text-white/70">
+        <p className="mb-6 text-center text-sm font-medium leading-6 text-[#2f2461]/70">
           This is a simple UI gate for now. Authentication will be wired later.
         </p>
 
         <form
-          className="mt-6 space-y-4"
+          className="space-y-4"
           onSubmit={(e) => {
             e.preventDefault();
             router.push("/admin/dashboard");
           }}
         >
           <label className="block">
-            <span className="text-xs font-bold tracking-widest text-white/70">EMAIL</span>
+            <span className="text-xs font-bold tracking-widest text-[#2f2461]/60">EMAIL</span>
             <input
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               type="email"
               placeholder="admin@dmmc.local"
-              className="mt-2 w-full rounded-xl border border-white/10 bg-black/30 px-4 py-3 text-sm text-white placeholder:text-white/30 outline-none ring-1 ring-transparent focus:ring-sky-400/40"
+              className="mt-2 w-full rounded-xl border border-[#2f2461]/20 bg-white/80 px-4 py-3 text-sm text-[#2f2461] placeholder:text-[#2f2461]/30 outline-none ring-1 ring-transparent focus:ring-[#39b7ff]/40"
             />
           </label>
 
           <label className="block">
-            <span className="text-xs font-bold tracking-widest text-white/70">PASSWORD</span>
+            <span className="text-xs font-bold tracking-widest text-[#2f2461]/60">PASSWORD</span>
             <input
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               type="password"
               placeholder="••••••••"
-              className="mt-2 w-full rounded-xl border border-white/10 bg-black/30 px-4 py-3 text-sm text-white placeholder:text-white/30 outline-none ring-1 ring-transparent focus:ring-fuchsia-400/40"
+              className="mt-2 w-full rounded-xl border border-[#2f2461]/20 bg-white/80 px-4 py-3 text-sm text-[#2f2461] placeholder:text-[#2f2461]/30 outline-none ring-1 ring-transparent focus:ring-[#ff4fd8]/40"
             />
           </label>
 
@@ -64,7 +67,7 @@ export default function LoginPage() {
             </button>
           </div>
         </form>
-      </div>
-    </div>
+      </PageCard>
+    </PageWrapper>
   );
 }

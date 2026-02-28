@@ -7,6 +7,9 @@ import type { Id } from "@/convex/_generated/dataModel";
 import { eventDate, eventTime } from "@/app/lib/events";
 import { MAIMAI_LOCATIONS, findLocationById } from "@/app/lib/locations";
 import Link from "next/link";
+import { PageCard } from "@/app/components/PageCard";
+import { PageWrapper } from "@/app/components/PageWrapper";
+import { SectionHeader } from "@/app/components/SectionHeader";
 
 type LocationMode = "preset" | "custom";
 
@@ -36,19 +39,19 @@ function statusBadge(status: string) {
     switch (status) {
         case "approved":
             return (
-                <span className="rounded-full bg-emerald-400/15 px-2.5 py-1 text-xs font-semibold text-emerald-200 ring-1 ring-emerald-300/30">
+                <span className="rounded-full bg-emerald-100 px-2.5 py-1 text-xs font-semibold text-emerald-700 ring-1 ring-emerald-400/30">
                     Approved
                 </span>
             );
         case "removed":
             return (
-                <span className="rounded-full bg-red-400/15 px-2.5 py-1 text-xs font-semibold text-red-200 ring-1 ring-red-300/30">
+                <span className="rounded-full bg-red-100 px-2.5 py-1 text-xs font-semibold text-red-600 ring-1 ring-red-400/30">
                     Removed
                 </span>
             );
         default:
             return (
-                <span className="rounded-full bg-amber-400/15 px-2.5 py-1 text-xs font-semibold text-amber-200 ring-1 ring-amber-300/30">
+                <span className="rounded-full bg-amber-100 px-2.5 py-1 text-xs font-semibold text-amber-700 ring-1 ring-amber-400/30">
                     Pending
                 </span>
             );
@@ -108,7 +111,6 @@ export default function DashboardEventsPage() {
     }
 
     function startEdit(event: (typeof events)[number]) {
-        // Detect if the event location matches a preset
         const preset = MAIMAI_LOCATIONS.find(
             (l) => l.name === event.location.name,
         );
@@ -140,88 +142,68 @@ export default function DashboardEventsPage() {
     const isCustom = draft.locationMode === "custom";
 
     return (
-        <div className="mx-auto w-full max-w-6xl px-4 py-10">
-            {/* Back link */}
+        <PageWrapper>
             <Link
                 href="/dashboard"
-                className="mb-6 inline-flex items-center gap-2 text-sm font-semibold text-white/60 hover:text-white"
+                className="inline-flex items-center gap-2 text-sm font-semibold text-white/60 transition hover:text-white"
             >
                 ← Back to Dashboard
             </Link>
 
-            <div className="mb-8">
-                <h1 className="text-2xl font-black tracking-tight text-white">
-                    My Events
-                </h1>
-                <p className="mt-2 text-sm leading-6 text-white/60">
-                    Create and manage your community events. New events will be
-                    reviewed by an admin before appearing publicly.
-                </p>
-            </div>
-
             <div className="grid grid-cols-1 gap-6 lg:grid-cols-[400px_1fr]">
                 {/* ─── Create / Edit Form ─── */}
-                <div className="rounded-2xl border border-white/10 bg-white/5 p-5 ring-1 ring-white/10">
-                    <div className="text-xs font-bold tracking-widest text-white/60">
-                        {editingId ? "EDIT EVENT" : "CREATE EVENT"}
-                    </div>
+                <PageCard color="pink">
+                    <SectionHeader color="pink">
+                        {editingId ? "Edit Event" : "Create Event"}
+                    </SectionHeader>
 
-                    <form className="mt-4 space-y-3" onSubmit={handleSubmit}>
+                    <form className="space-y-3" onSubmit={handleSubmit}>
                         <label className="block">
-                            <span className="text-xs font-bold tracking-widest text-white/70">
+                            <span className="text-xs font-bold tracking-widest text-[#2f2461]/60">
                                 EVENT NAME
                             </span>
                             <input
                                 value={draft.name}
                                 onChange={(e) =>
-                                    setDraft((d) => ({
-                                        ...d,
-                                        name: e.target.value,
-                                    }))
+                                    setDraft((d) => ({ ...d, name: e.target.value }))
                                 }
-                                className="mt-2 w-full rounded-xl border border-white/10 bg-black/30 px-4 py-3 text-sm text-white outline-none ring-1 ring-transparent focus:ring-[#ff4fd8]/40"
+                                className="mt-2 w-full rounded-xl border border-[#2f2461]/20 bg-white/80 px-4 py-3 text-sm text-[#2f2461] placeholder:text-[#2f2461]/30 outline-none ring-1 ring-transparent focus:ring-[#ff4fd8]/30"
                                 required
                                 placeholder="e.g. Weekend Grind & Chill"
                             />
                         </label>
 
                         <label className="block">
-                            <span className="text-xs font-bold tracking-widest text-white/70">
+                            <span className="text-xs font-bold tracking-widest text-[#2f2461]/60">
                                 DATE & TIME
                             </span>
                             <input
                                 type="datetime-local"
                                 value={draft.datetime}
                                 onChange={(e) =>
-                                    setDraft((d) => ({
-                                        ...d,
-                                        datetime: e.target.value,
-                                    }))
+                                    setDraft((d) => ({ ...d, datetime: e.target.value }))
                                 }
-                                className="mt-2 w-full rounded-xl border border-white/10 bg-black/30 px-4 py-3 text-sm text-white outline-none ring-1 ring-transparent focus:ring-emerald-400/40"
+                                className="mt-2 w-full rounded-xl border border-[#2f2461]/20 bg-white/80 px-4 py-3 text-sm text-[#2f2461] outline-none ring-1 ring-transparent focus:ring-emerald-400/40"
                                 required
                             />
                         </label>
 
                         {/* ─── Location Picker ─── */}
                         <div>
-                            <span className="text-xs font-bold tracking-widest text-white/70">
+                            <span className="text-xs font-bold tracking-widest text-[#2f2461]/60">
                                 LOCATION
                             </span>
                             <div className="mt-2 flex items-center gap-2">
                                 <button
                                     type="button"
                                     onClick={() =>
-                                        setDraft((d) => ({
-                                            ...d,
-                                            locationMode: "preset",
-                                        }))
+                                        setDraft((d) => ({ ...d, locationMode: "preset" }))
                                     }
                                     className={
                                         "rounded-full px-3 py-1.5 text-xs font-semibold ring-1 transition " +
                                         (!isCustom
-                                            ? "bg-[#ff4fd8]/20 text-pink-100 ring-[#ff4fd8]/40"
-                                            : "bg-white/5 text-white/60 ring-white/15 hover:bg-white/10 hover:text-white")
+                                            ? "bg-[#ff4fd8]/20 text-[#2f2461] ring-[#ff4fd8]/40"
+                                            : "bg-[#2f2461]/5 text-[#2f2461]/60 ring-[#2f2461]/15 hover:bg-[#ff4fd8]/10 hover:text-[#2f2461]")
                                     }
                                 >
                                     maimai Arcade
@@ -229,16 +211,13 @@ export default function DashboardEventsPage() {
                                 <button
                                     type="button"
                                     onClick={() =>
-                                        setDraft((d) => ({
-                                            ...d,
-                                            locationMode: "custom",
-                                        }))
+                                        setDraft((d) => ({ ...d, locationMode: "custom" }))
                                     }
                                     className={
                                         "rounded-full px-3 py-1.5 text-xs font-semibold ring-1 transition " +
                                         (isCustom
-                                            ? "bg-[#ff4fd8]/20 text-pink-100 ring-[#ff4fd8]/40"
-                                            : "bg-white/5 text-white/60 ring-white/15 hover:bg-white/10 hover:text-white")
+                                            ? "bg-[#ff4fd8]/20 text-[#2f2461] ring-[#ff4fd8]/40"
+                                            : "bg-[#2f2461]/5 text-[#2f2461]/60 ring-[#2f2461]/15 hover:bg-[#ff4fd8]/10 hover:text-[#2f2461]")
                                     }
                                 >
                                     Custom Location
@@ -248,8 +227,7 @@ export default function DashboardEventsPage() {
                             {!isCustom ? (
                                 <div className="mt-3 space-y-2">
                                     {MAIMAI_LOCATIONS.map((loc) => {
-                                        const selected =
-                                            draft.presetLocationId === loc.id;
+                                        const selected = draft.presetLocationId === loc.id;
                                         return (
                                             <button
                                                 key={loc.id}
@@ -257,21 +235,20 @@ export default function DashboardEventsPage() {
                                                 onClick={() =>
                                                     setDraft((d) => ({
                                                         ...d,
-                                                        presetLocationId:
-                                                            loc.id,
+                                                        presetLocationId: loc.id,
                                                     }))
                                                 }
                                                 className={
                                                     "w-full rounded-xl border px-4 py-3 text-left transition ring-1 " +
                                                     (selected
-                                                        ? "border-[#ff4fd8]/40 bg-[#ff4fd8]/15 ring-[#ff4fd8]/30 text-white"
-                                                        : "border-white/10 bg-black/20 ring-white/5 text-white/70 hover:bg-black/30 hover:text-white")
+                                                        ? "border-[#ff4fd8]/35 bg-[#ff4fd8]/10 ring-[#ff4fd8]/20 text-[#2f2461]"
+                                                        : "border-[#2f2461]/10 bg-white/60 ring-[#2f2461]/5 text-[#2f2461]/70 hover:bg-white/80 hover:text-[#2f2461]")
                                                 }
                                             >
                                                 <div className="text-sm font-bold">
                                                     {loc.name}
                                                 </div>
-                                                <div className="mt-0.5 text-xs text-white/40">
+                                                <div className="mt-0.5 text-xs text-[#2f2461]/45">
                                                     {loc.address}
                                                 </div>
                                             </button>
@@ -283,42 +260,28 @@ export default function DashboardEventsPage() {
                                     <input
                                         value={draft.customLocationName}
                                         onChange={(e) =>
-                                            setDraft((d) => ({
-                                                ...d,
-                                                customLocationName:
-                                                    e.target.value,
-                                            }))
+                                            setDraft((d) => ({ ...d, customLocationName: e.target.value }))
                                         }
-                                        className="w-full rounded-xl border border-white/10 bg-black/30 px-4 py-3 text-sm text-white outline-none ring-1 ring-transparent focus:ring-yellow-300/40"
+                                        className="w-full rounded-xl border border-[#2f2461]/20 bg-white/80 px-4 py-3 text-sm text-[#2f2461] placeholder:text-[#2f2461]/30 outline-none ring-1 ring-transparent focus:ring-yellow-300/40"
                                         required={isCustom}
                                         placeholder="Location name"
                                     />
                                     <input
                                         value={draft.customLocationAddress}
                                         onChange={(e) =>
-                                            setDraft((d) => ({
-                                                ...d,
-                                                customLocationAddress:
-                                                    e.target.value,
-                                            }))
+                                            setDraft((d) => ({ ...d, customLocationAddress: e.target.value }))
                                         }
-                                        className="w-full rounded-xl border border-white/10 bg-black/30 px-4 py-3 text-sm text-white outline-none ring-1 ring-transparent focus:ring-yellow-300/40"
+                                        className="w-full rounded-xl border border-[#2f2461]/20 bg-white/80 px-4 py-3 text-sm text-[#2f2461] placeholder:text-[#2f2461]/30 outline-none ring-1 ring-transparent focus:ring-yellow-300/40"
                                         required={isCustom}
                                         placeholder="Address"
                                     />
                                     <input
                                         type="url"
-                                        value={
-                                            draft.customLocationGoogleMapURL
-                                        }
+                                        value={draft.customLocationGoogleMapURL}
                                         onChange={(e) =>
-                                            setDraft((d) => ({
-                                                ...d,
-                                                customLocationGoogleMapURL:
-                                                    e.target.value,
-                                            }))
+                                            setDraft((d) => ({ ...d, customLocationGoogleMapURL: e.target.value }))
                                         }
-                                        className="w-full rounded-xl border border-white/10 bg-black/30 px-4 py-3 text-sm text-white outline-none ring-1 ring-transparent focus:ring-sky-400/40"
+                                        className="w-full rounded-xl border border-[#2f2461]/20 bg-white/80 px-4 py-3 text-sm text-[#2f2461] placeholder:text-[#2f2461]/30 outline-none ring-1 ring-transparent focus:ring-sky-400/40"
                                         required={isCustom}
                                         placeholder="Google Maps URL"
                                     />
@@ -327,19 +290,16 @@ export default function DashboardEventsPage() {
                         </div>
 
                         <label className="block">
-                            <span className="text-xs font-bold tracking-widest text-white/70">
+                            <span className="text-xs font-bold tracking-widest text-[#2f2461]/60">
                                 DESCRIPTION
                             </span>
                             <textarea
                                 value={draft.description}
                                 onChange={(e) =>
-                                    setDraft((d) => ({
-                                        ...d,
-                                        description: e.target.value,
-                                    }))
+                                    setDraft((d) => ({ ...d, description: e.target.value }))
                                 }
                                 rows={4}
-                                className="mt-2 w-full resize-none rounded-xl border border-white/10 bg-black/30 px-4 py-3 text-sm text-white outline-none ring-1 ring-transparent focus:ring-sky-400/40"
+                                className="mt-2 w-full resize-none rounded-xl border border-[#2f2461]/20 bg-white/80 px-4 py-3 text-sm text-[#2f2461] placeholder:text-[#2f2461]/30 outline-none ring-1 ring-transparent focus:ring-sky-400/40"
                                 required
                                 placeholder="Tell the community what to expect..."
                             />
@@ -364,46 +324,42 @@ export default function DashboardEventsPage() {
                                         setEditingId(null);
                                         setDraft(emptyDraft);
                                     }}
-                                    className="rounded-full border border-white/10 bg-white/5 px-4 py-3 text-sm font-semibold text-white/80 hover:bg-white/10"
+                                    className="rounded-full border border-[#2f2461]/20 bg-[#2f2461]/5 px-4 py-3 text-sm font-semibold text-[#2f2461]/70 hover:bg-[#2f2461]/10"
                                 >
                                     Cancel
                                 </button>
                             )}
                         </div>
                     </form>
-                </div>
+                </PageCard>
 
                 {/* ─── My Events List ─── */}
-                <div>
-                    <div className="text-xs font-bold tracking-widest text-white/60">
-                        MY EVENTS ({events.length})
-                    </div>
+                <PageCard color="yellow" className="mb-12">
+                    <SectionHeader color="yellow">My Events ({events.length})</SectionHeader>
 
                     {events.length === 0 ? (
-                        <div className="mt-4 rounded-2xl border border-white/10 bg-white/5 p-8 text-center ring-1 ring-white/5">
-                            <p className="text-sm text-white/50">
+                        <div className="rounded-2xl border border-[#2f2461]/10 bg-white/60 p-8 text-center">
+                            <p className="text-sm text-[#2f2461]/50">
                                 You haven&#39;t created any events yet.
                             </p>
                         </div>
                     ) : (
-                        <div className="mt-4 space-y-3">
+                        <div className="space-y-3">
                             {events.map((e) => (
                                 <div
                                     key={e._id}
-                                    className="rounded-2xl border border-white/10 bg-white/5 p-4 ring-1 ring-white/10"
+                                    className="rounded-2xl border border-[#2f2461]/10 bg-white/60 p-4 ring-1 ring-[#2f2461]/5"
                                 >
                                     <div className="flex flex-wrap items-start justify-between gap-3">
                                         <div>
                                             <div className="flex items-center gap-2">
-                                                <span className="text-sm font-bold text-white">
+                                                <span className="text-sm font-bold text-[#2f2461]">
                                                     {e.name}
                                                 </span>
                                                 {statusBadge(e.status)}
                                             </div>
-                                            <div className="mt-1 text-xs font-semibold text-white/50">
-                                                {eventDate(e)} •{" "}
-                                                {eventTime(e)} •{" "}
-                                                {e.location.name}
+                                            <div className="mt-1 text-xs font-semibold text-[#2f2461]/45">
+                                                {eventDate(e)} • {eventTime(e)} • {e.location.name}
                                             </div>
                                         </div>
 
@@ -411,34 +367,30 @@ export default function DashboardEventsPage() {
                                             <button
                                                 type="button"
                                                 onClick={() => startEdit(e)}
-                                                className="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs font-semibold text-white/80 hover:bg-white/10 hover:text-white"
+                                                className="rounded-full border border-[#2f2461]/20 bg-[#2f2461]/5 px-3 py-1 text-xs font-semibold text-[#2f2461]/70 hover:bg-[#2f2461]/10 hover:text-[#2f2461]"
                                             >
                                                 Edit
                                             </button>
                                             <button
                                                 type="button"
                                                 disabled={deleting === e._id}
-                                                onClick={() =>
-                                                    handleDelete(e._id)
-                                                }
-                                                className="rounded-full border border-red-400/20 bg-red-400/10 px-3 py-1 text-xs font-semibold text-red-200 hover:bg-red-400/20 hover:text-red-100 disabled:opacity-50"
+                                                onClick={() => handleDelete(e._id)}
+                                                className="rounded-full border border-red-400/30 bg-red-50 px-3 py-1 text-xs font-semibold text-red-600 hover:bg-red-100 hover:text-red-700 disabled:opacity-50"
                                             >
-                                                {deleting === e._id
-                                                    ? "Deleting..."
-                                                    : "Delete"}
+                                                {deleting === e._id ? "Deleting..." : "Delete"}
                                             </button>
                                         </div>
                                     </div>
 
-                                    <p className="mt-3 text-sm leading-6 text-white/60">
+                                    <p className="mt-3 text-sm leading-6 text-[#2f2461]/60">
                                         {e.description}
                                     </p>
                                 </div>
                             ))}
                         </div>
                     )}
-                </div>
+                </PageCard>
             </div>
-        </div>
+        </PageWrapper>
     );
 }

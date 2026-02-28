@@ -14,8 +14,8 @@ export function HomeEventsPreview() {
 
     if (preview.length === 0) {
         return (
-            <div className="rounded-2xl border border-white/10 bg-white/5 p-8 text-center ring-1 ring-white/5">
-                <p className="text-sm text-white/50">No upcoming events yet.</p>
+            <div className="rounded-2xl border border-[#2f2461]/10 bg-[#2f2461]/5 p-8 text-center ring-1 ring-[#2f2461]/5">
+                <p className="text-sm text-[#2f2461]/50">No upcoming events yet.</p>
             </div>
         );
     }
