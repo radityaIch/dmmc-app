@@ -47,7 +47,7 @@ export default async function RootLayout({
   children: React.ReactNode;
 }>) {
   const token = await getToken();
-  const preloadedUser = await preloadAuthQuery(api.auth.getCurrentUser);
+  const preloadedUser = await preloadAuthQuery(api.handlers.auth.getCurrentUser);
   return (
     <html lang="en">
       <head>

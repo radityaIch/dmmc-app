@@ -4,6 +4,6 @@ import { DashboardClient } from "./DashboardClient";
 
 
 export default async function DashboardPage() {
-    const preloadedUser = await preloadAuthQuery(api.auth.getCurrentUser);
+    const preloadedUser = await preloadAuthQuery(api.handlers.auth.getCurrentUser);
     return <DashboardClient preloadedUser={preloadedUser} />;
 }

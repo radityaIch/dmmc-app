@@ -3,21 +3,18 @@ import { v } from "convex/values";
 
 
 export default defineSchema({
-    location: defineTable({
-        id: v.id("location"),
-        name: v.string(),
-        address: v.string(),
-        googleMapURL: v.string(),
-        createdAt: v.number(),
-        updatedAt: v.number(),
-    }),
     event: defineTable({
         id: v.id("event"),
-        organizerId: v.string(),
+        approverUserId: v.string(),
+        organizerUserId: v.string(),
         name: v.string(),
         description: v.string(),
         datetime: v.string(),
-        location: v.id("location"),
+        location: v.object({
+            name: v.string(),
+            address: v.string(),
+            googleMapURL: v.string(),
+        }),
         createdAt: v.number(),
         updatedAt: v.number(),
     }),

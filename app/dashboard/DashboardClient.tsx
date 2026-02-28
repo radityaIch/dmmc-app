@@ -6,7 +6,7 @@ import type { api } from "@/convex/_generated/api";
 import Link from "next/link";
 
 interface DashboardClientProps {
-    preloadedUser: Preloaded<typeof api.auth.getCurrentUser>;
+    preloadedUser: Preloaded<typeof api.handlers.auth.getCurrentUser>;
 }
 
 export function DashboardClient({ preloadedUser }: DashboardClientProps) {

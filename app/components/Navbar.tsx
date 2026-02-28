@@ -16,7 +16,7 @@ const InstallAppButton = dynamic(
 );
 
 interface NavbarProps {
-  preloadedUser: Preloaded<typeof api.auth.getCurrentUser>;
+  preloadedUser: Preloaded<typeof api.handlers.auth.getCurrentUser>;
 }
 
 export function Navbar({ preloadedUser }: NavbarProps) {
