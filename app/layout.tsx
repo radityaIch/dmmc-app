@@ -7,7 +7,8 @@ import { ArcadeBackground } from "./components/ArcadeBackground";
 import { Footer } from "./components/Footer";
 import { PwaRegister } from "./components/PwaRegister";
 import { ConvexClientProvider } from "@/app/components/ConvexClientProvider";
-import { getToken } from "./lib/auth/server";
+import { getToken, preloadAuthQuery } from "./lib/auth/server";
+import { api } from "@/convex/_generated/api";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -46,6 +47,7 @@ export default async function RootLayout({
   children: React.ReactNode;
 }>) {
   const token = await getToken();
+  const preloadedUser = await preloadAuthQuery(api.auth.getCurrentUser);
   return (
     <html lang="en">
       <head>
@@ -62,7 +64,7 @@ export default async function RootLayout({
         <ConvexClientProvider initialToken={token}>
           <PwaRegister />
           <ArcadeBackground />
-          <Navbar />
+          <Navbar preloadedUser={preloadedUser} />
           <div className="relative">
             {children}
           </div>

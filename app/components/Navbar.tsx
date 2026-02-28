@@ -1,9 +1,12 @@
 "use client";
 
+import { usePreloadedAuthQuery } from "@convex-dev/better-auth/nextjs/client";
 import dynamic from "next/dynamic";
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import type { Preloaded } from "convex/react";
+import type { api } from "@/convex/_generated/api";
 
 import { GlowButton } from "./GlowButton";
 
@@ -12,7 +15,12 @@ const InstallAppButton = dynamic(
   { ssr: false },
 );
 
-export function Navbar() {
+interface NavbarProps {
+  preloadedUser: Preloaded<typeof api.auth.getCurrentUser>;
+}
+
+export function Navbar({ preloadedUser }: NavbarProps) {
+  const user = usePreloadedAuthQuery(preloadedUser);
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
@@ -33,6 +41,42 @@ export function Navbar() {
     };
   }, [open]);
 
+  // Desktop auth button
+  const AuthButton = user ? (
+    <Link
+      href="/dashboard"
+      className="rounded-full border border-[#ff4fd8]/40 bg-[#ff4fd8]/10 px-4 py-1.5 text-sm font-bold text-[#ff4fd8] hover:bg-[#ff4fd8]/20 transition-colors"
+    >
+      Dashboard
+    </Link>
+  ) : (
+    <Link
+      href="/auth"
+      className="rounded-full border border-[#2f2461]/30 bg-[#2f2461]/5 px-4 py-1.5 text-sm font-bold text-[#2f2461]/80 hover:bg-[#2f2461]/10 hover:text-[#2f2461] transition-colors"
+    >
+      Sign In
+    </Link>
+  );
+
+  // Mobile auth block
+  const MobileAuthBlock = user ? (
+    <Link
+      href="/dashboard"
+      onClick={() => setOpen(false)}
+      className="block rounded-xl border border-[#ff4fd8]/30 bg-[#ff4fd8]/10 px-4 py-3 text-sm font-semibold text-[#ff4fd8] hover:bg-[#ff4fd8]/20"
+    >
+      Dashboard
+    </Link>
+  ) : (
+    <Link
+      href="/auth"
+      onClick={() => setOpen(false)}
+      className="block rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm font-semibold text-white/90 hover:bg-white/10"
+    >
+      Sign In
+    </Link>
+  );
+
   return (
     <header className="sticky top-0 z-50 px-2 pt-3 sm:px-4">
       <div className="mx-auto flex w-full max-w-6xl items-center justify-between rounded-full border border-[#ff4fd8]/35 bg-white/88 px-4 py-3 shadow-[0_10px_28px_rgba(255,79,216,0.25)] backdrop-blur">
@@ -44,24 +88,13 @@ export function Navbar() {
         </Link>
 
         <nav className="hidden items-center gap-5 text-sm font-bold text-[#2f2461]/75 lg:flex">
-          <Link className="hover:text-[#ff4fd8]" href="/">
-            Home
-          </Link>
-          <Link className="hover:text-[#ff4fd8]" href="/events">
-            Events
-          </Link>
-          <Link className="hover:text-[#ff4fd8]" href="/songs">
-            Songs
-          </Link>
-          <Link className="hover:text-[#ff4fd8]" href="/tournament">
-            Tournament
-          </Link>
-          <Link className="hover:text-[#ff4fd8]" href="/about">
-            About
-          </Link>
-          <Link className="hover:text-[#ff4fd8]" href="/rules">
-            Rules
-          </Link>
+          <Link className="hover:text-[#ff4fd8]" href="/">Home</Link>
+          <Link className="hover:text-[#ff4fd8]" href="/events">Events</Link>
+          <Link className="hover:text-[#ff4fd8]" href="/songs">Songs</Link>
+          <Link className="hover:text-[#ff4fd8]" href="/tournament">Tournament</Link>
+          <Link className="hover:text-[#ff4fd8]" href="/about">About</Link>
+          <Link className="hover:text-[#ff4fd8]" href="/rules">Rules</Link>
+          {AuthButton}
         </nav>
 
         <div className="flex items-center gap-2">
@@ -107,48 +140,13 @@ export function Navbar() {
 
             <nav className="flex-1 overflow-auto px-5 py-4">
               <div className="space-y-2">
-                <Link
-                  href="/"
-                  onClick={() => setOpen(false)}
-                  className="block rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm font-semibold text-white/90 hover:bg-white/10"
-                >
-                  Home
-                </Link>
-                <Link
-                  href="/events"
-                  onClick={() => setOpen(false)}
-                  className="block rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm font-semibold text-white/90 hover:bg-white/10"
-                >
-                  Events
-                </Link>
-                <Link
-                  href="/songs"
-                  onClick={() => setOpen(false)}
-                  className="block rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm font-semibold text-white/90 hover:bg-white/10"
-                >
-                  Songs
-                </Link>
-                <Link
-                  href="/tournament"
-                  onClick={() => setOpen(false)}
-                  className="block rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm font-semibold text-white/90 hover:bg-white/10"
-                >
-                  Tournament
-                </Link>
-                <Link
-                  href="/about"
-                  onClick={() => setOpen(false)}
-                  className="block rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm font-semibold text-white/90 hover:bg-white/10"
-                >
-                  About
-                </Link>
-                <Link
-                  href="/rules"
-                  onClick={() => setOpen(false)}
-                  className="block rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm font-semibold text-white/90 hover:bg-white/10"
-                >
-                  Rules
-                </Link>
+                <Link href="/" onClick={() => setOpen(false)} className="block rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm font-semibold text-white/90 hover:bg-white/10">Home</Link>
+                <Link href="/events" onClick={() => setOpen(false)} className="block rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm font-semibold text-white/90 hover:bg-white/10">Events</Link>
+                <Link href="/songs" onClick={() => setOpen(false)} className="block rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm font-semibold text-white/90 hover:bg-white/10">Songs</Link>
+                <Link href="/tournament" onClick={() => setOpen(false)} className="block rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm font-semibold text-white/90 hover:bg-white/10">Tournament</Link>
+                <Link href="/about" onClick={() => setOpen(false)} className="block rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm font-semibold text-white/90 hover:bg-white/10">About</Link>
+                <Link href="/rules" onClick={() => setOpen(false)} className="block rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm font-semibold text-white/90 hover:bg-white/10">Rules</Link>
+                {MobileAuthBlock}
               </div>
             </nav>
 

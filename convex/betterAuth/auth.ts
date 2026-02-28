@@ -7,6 +7,7 @@ import { components } from "../_generated/api";
 import type { DataModel } from "../_generated/dataModel";
 import authConfig from "../auth.config";
 import schema from "./schema";
+import { admin } from "better-auth/plugins"
 
 // Better Auth Component
 export const authComponent = createClient<DataModel, typeof schema>(
@@ -20,14 +21,23 @@ export const authComponent = createClient<DataModel, typeof schema>(
 // Better Auth Options
 export const createAuthOptions = (ctx: GenericCtx<DataModel>) => {
     return {
-        appName: "My App",
+        appName: "DMMC",
         baseURL: process.env.SITE_URL,
         secret: process.env.BETTER_AUTH_SECRET,
         database: authComponent.adapter(ctx),
         emailAndPassword: {
-            enabled: true,
+            enabled: false,
         },
-        plugins: [convex({ authConfig })],
+        socialProviders: {
+            discord: {
+                clientId: process.env.DISCORD_CLIENT_ID as string,
+                clientSecret: process.env.DISCORD_CLIENT_SECRET as string,
+            },
+        },
+        plugins: [
+            convex({ authConfig }),
+            admin()
+        ],
     } satisfies BetterAuthOptions;
 };
 
