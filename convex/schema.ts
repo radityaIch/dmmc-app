@@ -5,7 +5,7 @@ import { v } from "convex/values";
 export default defineSchema({
     event: defineTable({
         id: v.id("event"),
-        approverUserId: v.string(),
+        approverUserId: v.optional(v.string()),
         organizerUserId: v.string(),
         name: v.string(),
         description: v.string(),
