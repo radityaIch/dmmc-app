@@ -1,3 +1,4 @@
+import Link from "next/link";
 import type { DmmcEvent } from "../lib/events";
 import { eventDate, eventTime } from "../lib/events";
 
@@ -19,19 +20,21 @@ export function EventCard({ event }: { event: EventWithOrganizer }) {
   const time = eventTime(event);
 
   return (
-    <div
+    <Link
+      href={`/events/${event._id}`}
       className={
-        "relative overflow-hidden rounded-2xl border bg-[linear-gradient(180deg,rgba(20,8,32,0.9),rgba(14,7,24,0.9))] p-5 shadow-sm ring-1 transition " +
-        "border-[#ff4fd8]/25 ring-[#ff4fd8]/15 hover:border-[#ff4fd8]/40"
+        "group relative block overflow-hidden rounded-2xl border bg-[linear-gradient(180deg,rgba(20,8,32,0.9),rgba(14,7,24,0.9))] p-5 shadow-sm ring-1 transition " +
+        "border-[#ff4fd8]/25 ring-[#ff4fd8]/15 hover:border-[#ff4fd8]/40 hover:shadow-[0_0_30px_rgba(255,79,216,0.15)]"
       }
     >
       <div className="pointer-events-none absolute -top-24 left-1/2 h-48 w-48 -translate-x-1/2 rounded-full bg-[radial-gradient(circle,rgba(255,79,216,0.30),transparent_60%)]" />
 
       <div className="relative flex flex-col gap-3">
         <div className="flex items-start justify-between gap-3">
-          <h3 className="text-base font-bold tracking-tight text-white">
+          <h3 className="text-base font-bold tracking-tight text-white group-hover:text-pink-100 transition">
             {event.name}
           </h3>
+          <span className="shrink-0 text-white/30 transition group-hover:text-white/60">↗</span>
         </div>
 
         <div className="flex flex-wrap items-center gap-2 text-sm text-white/75">
@@ -46,7 +49,7 @@ export function EventCard({ event }: { event: EventWithOrganizer }) {
           </span>
         </div>
 
-        <p className="text-sm leading-6 text-white/70">{event.description}</p>
+        <p className="text-sm leading-6 text-white/70 line-clamp-2">{event.description}</p>
 
         {event.organizer && (
           <div className="flex items-center gap-2 pt-1 border-t border-white/5">
@@ -67,6 +70,6 @@ export function EventCard({ event }: { event: EventWithOrganizer }) {
           </div>
         )}
       </div>
-    </div>
+    </Link>
   );
 }

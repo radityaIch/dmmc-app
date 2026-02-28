@@ -100,11 +100,25 @@ export const listAll = query({
     },
 });
 
-/** Get a single event by ID. */
+/** Get a single event by ID with organizer info. */
 export const getById = query({
     args: { id: v.id("event") },
     handler: async (ctx, { id }) => {
-        return ctx.db.get(id);
+        const event = await ctx.db.get(id);
+        if (!event) return null;
+
+        const user = await authComponent.getAnyUserById(
+            ctx,
+            event.organizerUserId,
+        );
+
+        return {
+            ...event,
+            organizer: {
+                name: user?.name ?? "Unknown",
+                image: user?.image ?? null,
+            },
+        };
     },
 });
 
