@@ -6,6 +6,8 @@ import { Navbar } from "./components/Navbar";
 import { ArcadeBackground } from "./components/ArcadeBackground";
 import { Footer } from "./components/Footer";
 import { PwaRegister } from "./components/PwaRegister";
+import { ConvexClientProvider } from "@/app/components/ConvexClientProvider";
+import { getToken } from "./lib/auth/server";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -38,11 +40,12 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const token = await getToken();
   return (
     <html lang="en">
       <head>
@@ -56,13 +59,15 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} min-h-dvh bg-[#17061f] text-white antialiased`}
       >
-        <PwaRegister />
-        <ArcadeBackground />
-        <Navbar />
-        <div className="relative">
-          {children}
-        </div>
-        <Footer />
+        <ConvexClientProvider initialToken={token}>
+          <PwaRegister />
+          <ArcadeBackground />
+          <Navbar />
+          <div className="relative">
+            {children}
+          </div>
+          <Footer />
+        </ConvexClientProvider>
       </body>
     </html>
   );
