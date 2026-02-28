@@ -8,8 +8,8 @@ const __dirname = path.dirname(__filename);
 const projectRoot = path.resolve(__dirname, "..");
 
 async function main() {
-  const entry = path.join(projectRoot, "bookmarklets-src", "bookmarklet-maimai-export.v3.ts");
-  const out = path.join(projectRoot, "public", "bookmarklet-maimai-export.v3.js");
+  const entry = path.join(projectRoot, "bookmarklets-src", "bookmarklet-maimai-export.v2.ts");
+  const out = path.join(projectRoot, "public", "bookmarklet-maimai-export.v2.js");
 
   await esbuild.build({
     entryPoints: [entry],
