@@ -1,4 +1,3 @@
-import Image from "next/image";
 import Link from "next/link";
 
 const quickLinks = [
@@ -17,59 +16,57 @@ const menuLinks = [
 
 const thanksLinks = [
   { href: "https://maimai.sega.com/", label: "SEGA" },
-  // { href: "https://github.com/myjian/", label: "Ming-yuen Jien (bookmarklets)" },
-  // { href: "https://arcade-songs.zetaraku.dev/maimai/", label: "zetaraku.dev (arcade song list)" },
-  // { href: "https://github.com/rama-adi", label: "Rama Adi (motivates)" },
 ];
 
 export function Footer() {
   return (
-    <footer className="relative mt-16 border-t border-white/10 bg-[#12051a]/80">
-      <Image
-        src="/assets/images/3d_star_small.png"
-        alt=""
-        width={48}
-        height={48}
-        className="pointer-events-none absolute left-5 top-5 opacity-75"
-      />
+    <footer className="relative mt-16 border-t border-[#ff4fd8]/20 bg-white/80 backdrop-blur-xl">
+      {/* Decorative star */}
+      <div className="pointer-events-none absolute left-5 top-5 opacity-50 select-none">
+        <img
+          src="/assets/images/3d_star_small.png"
+          alt=""
+          width={40}
+          height={40}
+        />
+      </div>
 
+      {/* Main grid */}
       <div className="relative mx-auto grid w-full max-w-6xl gap-10 px-4 py-12 sm:px-6 lg:grid-cols-[2fr_1fr_1fr_1fr] lg:px-8">
-        <div className="space-y-4">
+        {/* Brand column */}
+        <div className="space-y-5">
           <div className="flex flex-wrap items-center gap-4">
-            <Image
+            <img
               src="/assets/images/Logo 04.png"
               alt="DMMC community logo"
-              width={180}
-              height={70}
-              className="h-auto w-32 sm:w-36"
+              className="h-auto w-28 sm:w-32"
             />
-            <Image
+            <img
               src="/assets/images/kv_logo_pc.png"
-              alt="maimai game logo"
-              width={300}
-              height={150}
-              className="h-auto w-36 sm:w-44"
+              alt="maimai DX logo"
+              className="h-auto w-32 sm:w-40"
             />
           </div>
-          <p className="max-w-md text-sm text-white/70">
+          <p className="max-w-md text-sm font-medium text-[#2f2461]/65 leading-relaxed">
             Denpasar Maimai Community is your local rhythm game circle for
             events, score sharing, and arcade vibes.
           </p>
-          <p className="text-xs text-white/45">
+          <p className="text-xs font-semibold text-[#2f2461]/40">
             © {new Date().getFullYear()} DMMC
           </p>
         </div>
 
+        {/* Quick Links */}
         <div>
-          <h3 className="text-sm font-extrabold uppercase tracking-wider text-[#ffb6ef]">
-            Quick Link
+          <h3 className="text-xs font-extrabold uppercase tracking-widest text-[#ff4fd8]">
+            Quick Links
           </h3>
           <ul className="mt-4 space-y-2">
             {quickLinks.map((link) => (
               <li key={link.href}>
                 <Link
                   href={link.href}
-                  className="text-sm text-white/80 hover:text-[#ff4fd8]"
+                  className="text-sm font-medium text-[#2f2461]/70 hover:text-[#ff4fd8] transition-colors"
                 >
                   {link.label}
                 </Link>
@@ -78,8 +75,9 @@ export function Footer() {
           </ul>
         </div>
 
+        {/* Menu */}
         <div>
-          <h3 className="text-sm font-extrabold uppercase tracking-wider text-[#9ce4ff]">
+          <h3 className="text-xs font-extrabold uppercase tracking-widest text-[#39b7ff]">
             Menu
           </h3>
           <ul className="mt-4 space-y-2">
@@ -87,7 +85,7 @@ export function Footer() {
               <li key={link.href}>
                 <Link
                   href={link.href}
-                  className="text-sm text-white/80 hover:text-[#ff4fd8]"
+                  className="text-sm font-medium text-[#2f2461]/70 hover:text-[#ff4fd8] transition-colors"
                 >
                   {link.label}
                 </Link>
@@ -96,8 +94,9 @@ export function Footer() {
           </ul>
         </div>
 
+        {/* Thanks */}
         <div>
-          <h3 className="text-sm font-extrabold uppercase tracking-wider text-[#c8ffd7]">
+          <h3 className="text-xs font-extrabold uppercase tracking-widest text-[#2cb869]">
             Thanks To
           </h3>
           <ul className="mt-4 space-y-2">
@@ -107,30 +106,22 @@ export function Footer() {
                   href={link.href}
                   target="_blank"
                   rel="noreferrer"
-                  className="text-sm text-white/80 hover:text-[#ff4fd8]"
+                  className="text-sm font-medium text-[#2f2461]/70 hover:text-[#ff4fd8] transition-colors"
                 >
                   {link.label}
                 </a>
               </li>
             ))}
-            <li className="text-sm text-white/80">DMMC</li>
-            <li className="text-sm text-white/80">DMMC Scammers</li>
+            <li className="text-sm font-medium text-[#2f2461]/70">DMMC</li>
+            <li className="text-sm font-medium text-[#2f2461]/70">DMMC Scammers</li>
           </ul>
         </div>
       </div>
 
-      <div className="border-t border-white/10 bg-black/25">
-        <div className="mx-auto flex w-full max-w-6xl text-center flex-col gap-4 px-4 py-5 text-xs text-white/70 sm:px-6 lg:px-8">
+      {/* Bottom bar */}
+      <div className="border-t border-[#ff4fd8]/15 bg-[#fdf0fb]/60">
+        <div className="mx-auto flex w-full max-w-6xl flex-col items-center gap-1 px-4 py-4 text-center text-xs text-[#2f2461]/50 sm:px-6 lg:px-8">
           <p>
-            {/* Author of This Project:{" "}
-            <a
-              href="https://github.com/radityaIch/"
-              target="_blank"
-              rel="noreferrer"
-              className="font-semibold text-white/90 hover:text-[#ff4fd8]"
-            >
-              JW:5173(Vite)
-            </a> */}
             DMMC is an unofficial, fan-made community project and is not
             affiliated with or endorsed by SEGA.
           </p>
