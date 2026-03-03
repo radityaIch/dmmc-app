@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useMemo, useState } from "react";
 
+import { DifficultyChip } from "../components/DifficultyChip";
 import { GlowButton } from "../components/GlowButton";
 import { PageCard } from "../components/PageCard";
 import { PageWrapper } from "../components/PageWrapper";
@@ -23,6 +24,7 @@ type SheetEntry = {
   imageName: string | null;
   regions: MaimaiRegions;
   sheetVersions: string[];
+  difficulties?: string[];
   status: "available" | "banned" | "picked";
 };
 
@@ -38,6 +40,7 @@ type RegionFilter = "all" | "jp" | "intl" | "usa" | "cn";
 type SheetVersionFilter = "all" | string;
 const ITEMS_PER_PAGE = 12;
 const REGION_KEYS = ["jp", "intl", "usa", "cn"] as const;
+const DIFFICULTY_ORDER = ["basic", "advanced", "expert", "master", "remaster"] as const;
 type RegionKey = (typeof REGION_KEYS)[number];
 
 function clamp(n: number, min: number, max: number) {
@@ -117,6 +120,12 @@ function getSongSheetVersions(song: Pick<MaimaiSong, "sheets">): string[] {
       .map((s) => (typeof s.version === "string" ? s.version.trim() : ""))
       .filter((v) => v.length > 0),
   );
+}
+
+function getSongDifficulties(song: Pick<MaimaiSong, "sheets">): string[] {
+  if (!Array.isArray(song.sheets)) return [];
+  const present = new Set(song.sheets.map((s) => s.difficulty));
+  return DIFFICULTY_ORDER.filter((d) => present.has(d));
 }
 
 function regionsEqual(a: MaimaiRegions, b: MaimaiRegions) {
@@ -325,8 +334,23 @@ export default function SongsPage() {
             : song
               ? getSongSheetVersions(song)
               : [];
+        const nextDifficulties =
+          Array.isArray(entry.difficulties) && entry.difficulties.length > 0
+            ? uniq(
+                entry.difficulties
+                  .filter((v): v is string => typeof v === "string")
+                  .map((v) => v.trim().toLowerCase())
+                  .filter((v) => v.length > 0),
+              )
+            : song
+              ? getSongDifficulties(song)
+              : [];
 
-        if (regionsEqual(entry.regions, nextRegions) && stringArrayEqual(entry.sheetVersions, nextSheetVersions)) {
+        if (
+          regionsEqual(entry.regions, nextRegions) &&
+          stringArrayEqual(entry.sheetVersions, nextSheetVersions) &&
+          stringArrayEqual(entry.difficulties ?? [], nextDifficulties)
+        ) {
           return entry;
         }
 
@@ -335,6 +359,7 @@ export default function SongsPage() {
           ...entry,
           regions: nextRegions,
           sheetVersions: nextSheetVersions,
+          difficulties: nextDifficulties,
         };
       });
 
@@ -377,6 +402,7 @@ export default function SongsPage() {
       imageName: s.imageName,
       regions: getSongRegions(s),
       sheetVersions: getSongSheetVersions(s),
+      difficulties: getSongDifficulties(s),
       status: "available",
     }));
   }, [filtered]);
@@ -523,6 +549,7 @@ export default function SongsPage() {
       imageName: s.imageName,
       regions: getSongRegions(s),
       sheetVersions: getSongSheetVersions(s),
+      difficulties: getSongDifficulties(s),
       status: "available" as const,
     }));
 
@@ -839,6 +866,13 @@ export default function SongsPage() {
                               {x.bpm} BPM
                             </span>
                           ) : null}
+                          {(Array.isArray(x.difficulties) ? x.difficulties : []).map((difficulty) => (
+                            <DifficultyChip
+                              key={`${x.id}-${difficulty}`}
+                              difficulty={difficulty}
+                              className="px-2 py-0.5 text-[9px]"
+                            />
+                          ))}
                           {x.status !== "available" ? (
                             <span className="rounded-full bg-[#2f2461]/5 px-3 py-1 ring-1 ring-[#2f2461]/10">
                               {x.status.toUpperCase()}
