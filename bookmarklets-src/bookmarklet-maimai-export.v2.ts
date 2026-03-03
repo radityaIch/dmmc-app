@@ -49,6 +49,7 @@ interface ExportPayload {
   schema: string;
   origin: string;
   exportedAt: number;
+  playerName: string | null;
   score: ScoreItem[];
   rating: RatingItem[];
 }
@@ -380,6 +381,12 @@ function parseSongIdx(row: HTMLElement): string | null {
   return null;
 }
 
+function extractPlayerNameFromDoc(doc: Document): string | null {
+  const nameEl = doc.querySelector<HTMLElement>(".name_block");
+  const name = parseText(nameEl);
+  return name || null;
+}
+
 async function fetchDoc(url: string): Promise<Document> {
   const response = await fetch(url, { credentials: "include" });
   if (!response.ok) {
@@ -520,6 +527,16 @@ function extractRatingFromDoc(doc: Document): RatingItem[] {
         setOverlay(overlay, "Fetching scores...", 0);
         const all: ScoreItem[] = [];
         const totalDiff = 5;
+        let playerName: string | null = null;
+
+        try {
+          setOverlay(overlay, "Fetching profile...", 0.05);
+          const profileDoc = await fetchDoc("/maimai-mobile/home/");
+          playerName = extractPlayerNameFromDoc(profileDoc);
+        } catch (err) {
+          console.warn("Failed to fetch profile page", err);
+          playerName = extractPlayerNameFromDoc(document);
+        }
 
         for (let diff = 0; diff <= 4; diff += 1) {
           setOverlay(overlay, `Fetching difficulty ${diff + 1}/${totalDiff}...`, diff / totalDiff);
@@ -544,6 +561,7 @@ function extractRatingFromDoc(doc: Document): RatingItem[] {
           schema,
           origin,
           exportedAt: Date.now(),
+          playerName,
           score: all,
           rating,
         };

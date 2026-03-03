@@ -71,7 +71,7 @@ export default function BookmarkletsPage() {
 
         <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
           <div className="rounded-2xl border border-[#2f2461]/10 bg-white/60 p-5">
-            <div className="text-xs font-bold tracking-widest text-[#2f2461]/50">MOBILE (RECOMMENDED)</div>
+            <div className="text-xs font-bold tracking-widest text-[#2f2461]/50">PC Desktop / Laptop</div>
             <div className="mt-3">
               <a
                 href="#"
@@ -79,11 +79,11 @@ export default function BookmarkletsPage() {
                 className="inline-flex w-full items-center justify-center rounded-full bg-[linear-gradient(180deg,#39b7ff,#1a93ff)] px-6 py-3 text-sm font-semibold text-black shadow-[0_0_0_1px_rgba(57,183,255,0.55),0_0_24px_rgba(57,183,255,0.25)] hover:shadow-[0_0_0_1px_rgba(57,183,255,0.75),0_0_34px_rgba(57,183,255,0.45)]"
                 onClick={(e) => e.preventDefault()}
               >
-                DMMC Export (Mobile)
+                DMMC Export (Drag this to bookmark bar)
               </a>
             </div>
             <p className="mt-3 text-sm leading-6 text-[#2f2461]/65">
-              Short bookmarklet that loads the exporter script from DMMC. Works better on mobile browsers.
+              Short bookmarklet that loads the exporter script from DMMC. Works better too on mobile browsers.
             </p>
           </div>
 
@@ -107,50 +107,11 @@ export default function BookmarkletsPage() {
               }}
               className="mt-4 w-full rounded-full border border-[#2f2461]/20 bg-[#2f2461]/5 px-6 py-3 text-sm font-semibold text-[#2f2461]/75 hover:bg-[#2f2461]/10 hover:text-[#2f2461]"
             >
-              {copiedMobile ? "Copied" : "Copy mobile bookmarklet"}
+              {copiedMobile ? "Copied" : "Copy bookmarklet"}
             </button>
           </div>
 
-          <div className="rounded-2xl border border-[#2f2461]/10 bg-white/60 p-5">
-            <div className="text-xs font-bold tracking-widest text-[#2f2461]/50">DESKTOP (INLINE)</div>
-            <div className="mt-3">
-              <a
-                href="#"
-                ref={dragLinkRef}
-                className="inline-flex w-full items-center justify-center rounded-full bg-[linear-gradient(180deg,#ff4fd8,#ff2fb1)] px-6 py-3 text-sm font-semibold text-black shadow-[0_0_0_1px_rgba(255,79,216,0.55),0_0_24px_rgba(255,79,216,0.25)] hover:shadow-[0_0_0_1px_rgba(255,79,216,0.75),0_0_34px_rgba(255,79,216,0.45)]"
-                onClick={(e) => e.preventDefault()}
-              >
-                DMMC Export (Desktop)
-              </a>
-            </div>
-            <p className="mt-3 text-sm leading-6 text-[#2f2461]/65">
-              Full exporter embedded inside the bookmarklet. Works on desktop, but can be too long for some mobile browsers.
-            </p>
-          </div>
-
-          <div className="rounded-2xl border border-[#2f2461]/10 bg-white/60 p-5">
-            <div className="text-xs font-bold tracking-widest text-[#2f2461]/50">COPY (DESKTOP)</div>
-            <textarea
-              readOnly
-              value={bookmarkletHref}
-              className="mt-4 h-40 w-full resize-none rounded-2xl border border-[#2f2461]/20 bg-[#17061f] p-4 font-mono text-xs text-white/80 outline-none"
-            />
-            <button
-              type="button"
-              onClick={async () => {
-                try {
-                  await navigator.clipboard.writeText(bookmarkletHref);
-                  setCopied(true);
-                  window.setTimeout(() => setCopied(false), 1500);
-                } catch {
-                  setCopied(false);
-                }
-              }}
-              className="mt-4 w-full rounded-full border border-[#2f2461]/20 bg-[#2f2461]/5 px-6 py-3 text-sm font-semibold text-[#2f2461]/75 hover:bg-[#2f2461]/10 hover:text-[#2f2461]"
-            >
-              {copied ? "Copied" : "Copy desktop bookmarklet"}
-            </button>
-          </div>
+          
         </div>
       </PageCard>
     </PageWrapper>
