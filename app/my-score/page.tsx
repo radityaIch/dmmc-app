@@ -1603,17 +1603,17 @@ export default function MyScorePage() {
           Keep this tab open. When you run the bookmarklet on maimaidx-eng.com, it will send your exported scores here.
         </p>
 
-        <div className="rounded-2xl border border-[#2f2461]/10 bg-white/60 p-4 flex items-center justify-between gap-3">
-          <div>
+        <div className="rounded-2xl border border-[#2f2461]/10 bg-white/60 p-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+          <div className="min-w-0">
             <div className="text-xs font-bold tracking-widest text-[#2f2461]/45 mb-1">STATUS</div>
-            <div className="text-sm font-semibold text-[#2f2461]/80">{status}</div>
+            <div className="text-sm font-semibold text-[#2f2461]/80 break-words">{status}</div>
           </div>
-          <div className="flex items-center gap-2">
+          <div className="grid grid-cols-2 gap-2 sm:flex sm:flex-wrap sm:items-center sm:justify-end">
             <button
               type="button"
               onClick={saveToJson}
               disabled={!payload}
-              className="rounded-full border border-[#2f2461]/20 bg-white/80 px-3 py-1 text-[11px] font-semibold tracking-wide text-[#2f2461]/70 hover:bg-white hover:text-[#2f2461] disabled:cursor-not-allowed disabled:opacity-50"
+              className="rounded-full border border-[#2f2461]/20 bg-white/80 px-3 py-2 text-[11px] font-semibold tracking-wide text-[#2f2461]/70 hover:bg-white hover:text-[#2f2461] disabled:cursor-not-allowed disabled:opacity-50"
             >
               Save JSON
             </button>
@@ -1621,7 +1621,7 @@ export default function MyScorePage() {
               type="button"
               onClick={() => exportTop50("png")}
               disabled={!payload || exporting != null}
-              className="rounded-full border border-[#2f2461]/20 bg-white/80 px-3 py-1 text-[11px] font-semibold tracking-wide text-[#2f2461]/70 hover:bg-white hover:text-[#2f2461] disabled:cursor-not-allowed disabled:opacity-50"
+              className="rounded-full border border-[#2f2461]/20 bg-white/80 px-3 py-2 text-[11px] font-semibold tracking-wide text-[#2f2461]/70 hover:bg-white hover:text-[#2f2461] disabled:cursor-not-allowed disabled:opacity-50"
             >
               {exporting === "png" ? "Rendering PNG..." : "Top 50 PNG"}
             </button>
@@ -1629,14 +1629,14 @@ export default function MyScorePage() {
               type="button"
               onClick={() => exportTop50("pdf")}
               disabled={!payload || exporting != null}
-              className="rounded-full border border-[#2f2461]/20 bg-white/80 px-3 py-1 text-[11px] font-semibold tracking-wide text-[#2f2461]/70 hover:bg-white hover:text-[#2f2461] disabled:cursor-not-allowed disabled:opacity-50"
+              className="rounded-full border border-[#2f2461]/20 bg-white/80 px-3 py-2 text-[11px] font-semibold tracking-wide text-[#2f2461]/70 hover:bg-white hover:text-[#2f2461] disabled:cursor-not-allowed disabled:opacity-50"
             >
               {exporting === "pdf" ? "Rendering PDF..." : "Top 50 PDF"}
             </button>
             <button
               type="button"
               onClick={clearSaved}
-              className="rounded-full border border-[#2f2461]/20 bg-white/80 px-3 py-1 text-[11px] font-semibold tracking-wide text-[#2f2461]/70 hover:bg-white hover:text-[#2f2461]"
+              className="rounded-full border border-[#2f2461]/20 bg-white/80 px-3 py-2 text-[11px] font-semibold tracking-wide text-[#2f2461]/70 hover:bg-white hover:text-[#2f2461]"
             >
               Clear Saved
             </button>
