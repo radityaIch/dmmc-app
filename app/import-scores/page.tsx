@@ -130,31 +130,31 @@ export default function ImportScoresPage() {
     <PageWrapper>
       <PageCard color="blue">
         <div className="mb-4 flex justify-center">
-          <div className="inline-flex items-center gap-2 rounded-full border border-[#39b7ff]/30 bg-[#39b7ff]/10 px-4 py-2 text-xs font-semibold tracking-wider text-[#2f2461]/70">
-            <span className="h-2 w-2 rounded-full bg-sky-400 shadow-[0_0_16px_rgba(57,183,255,0.6)]" />
+          <div className="inline-flex items-center gap-2 rounded-full border border-cyan-300/40 bg-[#22d3ee]/10 px-4 py-2 text-xs font-semibold tracking-wider text-slate-500">
+            <span className="h-2 w-2 rounded-full bg-sky-400 shadow-[0_0_16px_rgba(34,211,238,0.6)]" />
             SCORE IMPORT
           </div>
         </div>
 
         <SectionHeader color="blue">Import maimai DX NET JSON</SectionHeader>
 
-        <p className="mb-8 text-center text-sm font-medium leading-6 text-[#2f2461]/70 max-w-3xl mx-auto">
+        <p className="mb-8 text-center text-sm font-medium leading-6 text-slate-500 max-w-3xl mx-auto">
           Paste the exported JSON from your bookmarklet here to verify and preview the parsed scores.
         </p>
 
         <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
-          <div className="rounded-2xl border border-[#2f2461]/10 bg-white/60 p-5">
-            <div className="text-xs font-bold tracking-widest text-[#2f2461]/50">PASTE JSON</div>
+          <div className="rounded-2xl border border-slate-100 bg-white/60 p-5">
+            <div className="text-xs font-bold tracking-widest text-slate-400">PASTE JSON</div>
             <textarea
               value={raw}
               onChange={(e) => setRaw(e.target.value)}
               spellCheck={false}
               placeholder={`{\n  "schema": "..."\n}`}
-              className="mt-4 h-[420px] w-full resize-none rounded-2xl border border-[#2f2461]/20 bg-[#17061f] p-4 font-mono text-xs text-white/80 outline-none ring-1 ring-transparent focus:ring-sky-400/40"
+              className="mt-4 h-[420px] w-full resize-none rounded-2xl border border-slate-200 bg-[#17061f] p-4 font-mono text-xs text-white/80 outline-none ring-1 ring-transparent focus:ring-sky-400/40"
             />
 
             {!raw ? (
-              <div className="mt-3 text-xs text-[#2f2461]/45">Waiting for JSON…</div>
+              <div className="mt-3 text-xs text-slate-700/45">Waiting for JSON…</div>
             ) : parsed.ok ? null : (
               <div className="mt-3 rounded-xl border border-red-400/30 bg-red-50 p-3 text-xs text-red-600 ring-1 ring-red-400/20">
                 Invalid JSON: {parsed.error}
@@ -168,49 +168,49 @@ export default function ImportScoresPage() {
             ) : null}
           </div>
 
-          <div className="rounded-2xl border border-[#2f2461]/10 bg-white/60 p-5">
-            <div className="text-xs font-bold tracking-widest text-[#2f2461]/50">PREVIEW</div>
+          <div className="rounded-2xl border border-slate-100 bg-white/60 p-5">
+            <div className="text-xs font-bold tracking-widest text-slate-400">PREVIEW</div>
 
             {payload && summary ? (
               <div className="mt-4 space-y-4">
-                <div className="rounded-2xl border border-[#2f2461]/10 bg-white/80 p-4 space-y-3">
+                <div className="rounded-2xl border border-slate-100 bg-white/80 p-4 space-y-3">
                   <div>
-                    <div className="text-xs font-semibold text-[#2f2461]/55">Schema</div>
-                    <div className="mt-0.5 text-sm font-semibold text-[#2f2461]">{payload.schema}</div>
+                    <div className="text-xs font-semibold text-slate-400">Schema</div>
+                    <div className="mt-0.5 text-sm font-semibold text-slate-700">{payload.schema}</div>
                   </div>
                   <div>
-                    <div className="text-xs font-semibold text-[#2f2461]/55">Origin</div>
-                    <div className="mt-0.5 text-sm font-semibold text-[#2f2461]">{payload.origin}</div>
+                    <div className="text-xs font-semibold text-slate-400">Origin</div>
+                    <div className="mt-0.5 text-sm font-semibold text-slate-700">{payload.origin}</div>
                   </div>
                   <div>
-                    <div className="text-xs font-semibold text-[#2f2461]/55">Exported</div>
-                    <div className="mt-0.5 text-sm font-semibold text-[#2f2461]">
+                    <div className="text-xs font-semibold text-slate-400">Exported</div>
+                    <div className="mt-0.5 text-sm font-semibold text-slate-700">
                       {new Date(payload.exportedAt).toLocaleString()}
                     </div>
                   </div>
                 </div>
 
-                <div className="rounded-2xl border border-[#2f2461]/10 bg-white/80 p-4">
-                  <div className="text-sm font-semibold text-[#2f2461]">Total scores: {summary.total}</div>
+                <div className="rounded-2xl border border-slate-100 bg-white/80 p-4">
+                  <div className="text-sm font-semibold text-slate-700">Total scores: {summary.total}</div>
                   <div className="mt-3 grid grid-cols-2 gap-2 text-xs">
                     {Array.from(summary.byDiff.entries()).map(([k, v]) => (
                       <div
                         key={k}
-                        className="rounded-xl border border-[#2f2461]/10 bg-[#2f2461]/5 px-3 py-2"
+                        className="rounded-xl border border-slate-100 bg-slate-100 px-3 py-2"
                       >
-                        <div className="font-bold tracking-widest text-[#2f2461]/55">{k}</div>
-                        <div className="mt-1 text-sm font-semibold text-[#2f2461]">{v}</div>
+                        <div className="font-bold tracking-widest text-slate-400">{k}</div>
+                        <div className="mt-1 text-sm font-semibold text-slate-700">{v}</div>
                       </div>
                     ))}
                   </div>
                 </div>
 
-                <div className="h-40 overflow-y-auto rounded-2xl border border-[#2f2461]/10 bg-white/80 p-4">
-                  <div className="text-xs font-semibold text-[#2f2461]/55">Sample</div>
+                <div className="h-40 overflow-y-auto rounded-2xl border border-slate-100 bg-white/80 p-4">
+                  <div className="text-xs font-semibold text-slate-400">Sample</div>
                   <div className="mt-3 overflow-auto">
                     <table className="min-w-full border-collapse text-left text-xs">
                       <thead>
-                        <tr className="text-[#2f2461]/55">
+                        <tr className="text-slate-400">
                           <th className="px-2 py-2">Song</th>
                           <th className="px-2 py-2">Diff</th>
                           <th className="px-2 py-2">Type</th>
@@ -223,7 +223,7 @@ export default function ImportScoresPage() {
                           .filter((s) => s.achievement !== null)
                           .sort((a, b) => b.achievement! - a.achievement!)
                           .map((s, idx) => (
-                            <tr key={idx} className="border-t border-[#2f2461]/8 text-[#2f2461]/75">
+                            <tr key={idx} className="border-t border-[#334155]/8 text-slate-500">
                               <td className="max-w-[240px] truncate px-2 py-2" title={s.songName}>
                                 {s.songName}
                               </td>
@@ -241,7 +241,7 @@ export default function ImportScoresPage() {
                 </div>
               </div>
             ) : (
-              <div className="mt-4 text-sm text-[#2f2461]/50">Paste your exported JSON to see a preview.</div>
+              <div className="mt-4 text-sm text-slate-400">Paste your exported JSON to see a preview.</div>
             )}
           </div>
         </div>

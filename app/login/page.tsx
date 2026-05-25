@@ -19,13 +19,13 @@ export default function LoginPage() {
           <SectionHeader color="blue" className="mb-0 flex-1">Admin Login</SectionHeader>
           <Link
             href="/"
-            className="shrink-0 rounded-full border border-[#2f2461]/20 bg-[#2f2461]/5 px-3 py-1 text-xs font-semibold text-[#2f2461]/70 hover:bg-[#2f2461]/10 hover:text-[#2f2461]"
+            className="shrink-0 rounded-full border border-slate-200 bg-slate-100 px-3 py-1 text-xs font-semibold text-slate-500 hover:bg-slate-200/50 hover:text-slate-700"
           >
             Back
           </Link>
         </div>
 
-        <p className="mb-6 text-center text-sm font-medium leading-6 text-[#2f2461]/70">
+        <p className="mb-6 text-center text-sm font-medium leading-6 text-slate-500">
           This is a simple UI gate for now. Authentication will be wired later.
         </p>
 
@@ -37,31 +37,31 @@ export default function LoginPage() {
           }}
         >
           <label className="block">
-            <span className="text-xs font-bold tracking-widest text-[#2f2461]/60">EMAIL</span>
+            <span className="text-xs font-bold tracking-widest text-slate-400">EMAIL</span>
             <input
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               type="email"
               placeholder="admin@dmmc.local"
-              className="mt-2 w-full rounded-xl border border-[#2f2461]/20 bg-white/80 px-4 py-3 text-sm text-[#2f2461] placeholder:text-[#2f2461]/30 outline-none ring-1 ring-transparent focus:ring-[#39b7ff]/40"
+              className="mt-2 w-full rounded-xl border border-slate-200 bg-white/80 px-4 py-3 text-sm text-slate-700 placeholder:text-slate-300 outline-none ring-1 ring-transparent focus:ring-[#22d3ee]/40"
             />
           </label>
 
           <label className="block">
-            <span className="text-xs font-bold tracking-widest text-[#2f2461]/60">PASSWORD</span>
+            <span className="text-xs font-bold tracking-widest text-slate-400">PASSWORD</span>
             <input
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               type="password"
               placeholder="••••••••"
-              className="mt-2 w-full rounded-xl border border-[#2f2461]/20 bg-white/80 px-4 py-3 text-sm text-[#2f2461] placeholder:text-[#2f2461]/30 outline-none ring-1 ring-transparent focus:ring-[#ff4fd8]/40"
+              className="mt-2 w-full rounded-xl border border-slate-200 bg-white/80 px-4 py-3 text-sm text-slate-700 placeholder:text-slate-300 outline-none ring-1 ring-transparent focus:ring-[#f472b6]/40"
             />
           </label>
 
           <div className="pt-2">
             <button
               type="submit"
-              className="w-full rounded-full bg-[linear-gradient(180deg,#39b7ff,#168bff)] px-6 py-3 text-base font-semibold text-black shadow-[0_0_0_1px_rgba(57,183,255,0.55),0_0_24px_rgba(57,183,255,0.25)] transition-transform duration-150 hover:-translate-y-0.5 hover:shadow-[0_0_0_1px_rgba(57,183,255,0.75),0_0_34px_rgba(57,183,255,0.45)] active:translate-y-0"
+              className="w-full rounded-full bg-gradient-to-b from-cyan-400 to-cyan-600 px-6 py-3 text-base font-semibold text-black shadow-[0_0_0_1px_rgba(34,211,238,0.55),0_0_24px_rgba(34,211,238,0.25)] transition-transform duration-150 hover:-translate-y-0.5 hover:shadow-[0_0_0_1px_rgba(34,211,238,0.75),0_0_34px_rgba(34,211,238,0.45)] active:translate-y-0"
             >
               Sign In
             </button>

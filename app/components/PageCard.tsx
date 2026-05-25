@@ -1,10 +1,10 @@
 type PageCardColor = "pink" | "yellow" | "blue" | "green";
 
 const colorMap: Record<PageCardColor, string> = {
-  pink: "border-[#ff4fd8]/30 shadow-[0_8px_32px_rgba(255,79,216,0.18)]",
-  yellow: "border-[#ffbb33]/30 shadow-[0_8px_32px_rgba(255,187,51,0.18)]",
-  blue: "border-[#39b7ff]/30 shadow-[0_8px_32px_rgba(57,183,255,0.18)]",
-  green: "border-[#2cb869]/30 shadow-[0_8px_32px_rgba(44,184,105,0.18)]",
+  pink: "border-pink-300/40 shadow-[0_8px_32px_rgba(244,114,182,0.12)]",
+  yellow: "border-amber-300/40 shadow-[0_8px_32px_rgba(251,191,36,0.12)]",
+  blue: "border-cyan-300/40 shadow-[0_8px_32px_rgba(6,182,212,0.12)]",
+  green: "border-emerald-300/40 shadow-[0_8px_32px_rgba(52,211,153,0.12)]",
 };
 
 export function PageCard({
@@ -18,7 +18,7 @@ export function PageCard({
 }) {
   return (
     <div
-      className={`bg-white/90 backdrop-blur-xl rounded-3xl border ${colorMap[color]} p-8 md:p-10 w-full${className ? " " + className : ""}`}
+      className={`bg-white/70 backdrop-blur-xl rounded-[2.5rem] border-4 ${colorMap[color]} p-8 md:p-10 w-full${className ? " " + className : ""}`}
     >
       {children}
     </div>

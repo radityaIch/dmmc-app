@@ -13,7 +13,8 @@ import { SectionHeader } from "../components/SectionHeader";
 
 export default function EventsPage() {
   const [view, setView] = useState<"cards" | "calendar">("calendar");
-  const events = useQuery(api.handlers.event.listApproved) ?? [];
+  const rawEvents = useQuery(api.handlers.event.listApproved);
+  const events = useMemo(() => rawEvents ?? [], [rawEvents]);
 
   const focusDate = useMemo(() => {
     const sorted = [...events].sort((a, b) =>
@@ -31,7 +32,7 @@ export default function EventsPage() {
             <SectionHeader color="pink" className="mb-2 sm:text-left">
               Upcoming Arcade Meetups
             </SectionHeader>
-            <p className="text-center sm:text-left text-sm font-medium leading-6 text-[#2f2461]/70 max-w-2xl">
+            <p className="text-center sm:text-left text-sm font-medium leading-6 text-slate-500 max-w-2xl">
               Pull up for rhythm game nights, score attacks, and chill sessions. Bring gloves, bring vibes.
             </p>
           </div>
@@ -43,8 +44,8 @@ export default function EventsPage() {
               className={
                 "rounded-full px-4 py-2 text-sm font-semibold ring-1 transition " +
                 (view === "cards"
-                  ? "bg-[#ff4fd8]/20 text-[#2f2461] ring-[#ff4fd8]/40"
-                  : "bg-[#2f2461]/5 text-[#2f2461]/60 ring-[#2f2461]/15 hover:bg-[#ff4fd8]/10 hover:text-[#2f2461]")
+                  ? "bg-[#f472b6]/20 text-slate-700 ring-[#f472b6]/40"
+                  : "bg-slate-100 text-slate-400 ring-[#334155]/15 hover:bg-pink-50 hover:text-slate-700")
               }
             >
               Cards
@@ -55,8 +56,8 @@ export default function EventsPage() {
               className={
                 "rounded-full px-4 py-2 text-sm font-semibold ring-1 transition " +
                 (view === "calendar"
-                  ? "bg-[#ff4fd8]/20 text-[#2f2461] ring-[#ff4fd8]/40"
-                  : "bg-[#2f2461]/5 text-[#2f2461]/60 ring-[#2f2461]/15 hover:bg-[#ff4fd8]/10 hover:text-[#2f2461]")
+                  ? "bg-[#f472b6]/20 text-slate-700 ring-[#f472b6]/40"
+                  : "bg-slate-100 text-slate-400 ring-[#334155]/15 hover:bg-pink-50 hover:text-slate-700")
               }
             >
               Calendar
@@ -67,7 +68,7 @@ export default function EventsPage() {
 
       {events.length === 0 ? (
         <PageCard color="pink" className="text-center mb-12">
-          <p className="text-sm text-[#2f2461]/50">No upcoming events yet. Check back soon!</p>
+          <p className="text-sm text-slate-400">No upcoming events yet. Check back soon!</p>
         </PageCard>
       ) : view === "calendar" ? (
         <div className="mb-12">

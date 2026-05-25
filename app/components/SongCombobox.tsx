@@ -134,7 +134,7 @@ export function SongCombobox({
             }
           }}
           className={
-            "w-full rounded-lg border border-[#2f2461]/20 bg-white/80 px-3 py-2 pr-9 text-sm text-[#2f2461] outline-none placeholder:text-[#2f2461]/30 ring-1 ring-transparent focus:ring-[#ff4fd8]/40 " +
+            "w-full rounded-lg border border-slate-200 bg-white/80 px-3 py-2 pr-9 text-sm text-slate-700 outline-none placeholder:text-slate-300 ring-1 ring-transparent focus:ring-[#f472b6]/40 " +
             (disabled ? "opacity-60" : "")
           }
         />
@@ -151,16 +151,16 @@ export function SongCombobox({
               window.setTimeout(() => inputRef.current?.focus(), 0);
             }
           }}
-          className="absolute right-2 top-1/2 -translate-y-1/2 rounded-md border border-[#2f2461]/15 bg-[#2f2461]/5 px-2 py-1 text-[10px] font-black tracking-widest text-[#2f2461]/60 hover:bg-[#2f2461]/10"
+          className="absolute right-2 top-1/2 -translate-y-1/2 rounded-md border border-slate-200 bg-slate-100 px-2 py-1 text-[10px] font-black tracking-widest text-slate-400 hover:bg-slate-200/50"
         >
           {open ? "×" : "▾"}
         </button>
       </div>
 
       {open ? (
-        <div className="absolute z-50 mt-2 max-h-72 w-full overflow-auto rounded-xl border border-[#2f2461]/10 bg-white p-1 shadow-[0_4px_24px_rgba(47,36,97,0.12)]">
+        <div className="absolute z-50 mt-2 max-h-72 w-full overflow-auto rounded-xl border border-slate-100 bg-white p-1 shadow-[0_4px_24px_rgba(51,65,85,0.12)]">
           {filtered.length === 0 ? (
-            <div className="px-3 py-2 text-xs font-semibold text-[#2f2461]/50">No results</div>
+            <div className="px-3 py-2 text-xs font-semibold text-slate-400">No results</div>
           ) : (
             filtered.slice(0, 160).map((o, idx) => (
               <button
@@ -171,13 +171,13 @@ export function SongCombobox({
                 className={
                   "w-full rounded-lg px-3 py-2 text-left text-sm font-semibold transition " +
                   (idx === activeIndex
-                    ? "bg-[#ff4fd8]/10 text-[#2f2461] ring-1 ring-[#ff4fd8]/20"
-                    : "text-[#2f2461]/80 hover:bg-[#2f2461]/5")
+                    ? "bg-pink-50 text-slate-700 ring-1 ring-[#f472b6]/20"
+                    : "text-slate-600 hover:bg-slate-100")
                 }
               >
                 <div className="truncate">{o.label}</div>
                 {o.subLabel ? (
-                  <div className="mt-0.5 truncate text-xs font-semibold text-[#2f2461]/50">
+                  <div className="mt-0.5 truncate text-xs font-semibold text-slate-400">
                     {o.subLabel}
                   </div>
                 ) : null}

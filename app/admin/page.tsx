@@ -39,7 +39,8 @@ export default function AdminDashboardPage() {
   const [active, setActive] = useState<"overview" | "events">("overview");
   const [filter, setFilter] = useState<FilterStatus>("all");
 
-  const allEvents = useQuery(api.handlers.event.listAll) ?? [];
+  const rawEvents = useQuery(api.handlers.event.listAll);
+  const allEvents = useMemo(() => rawEvents ?? [], [rawEvents]);
   const approveEvent = useMutation(api.handlers.event.approve);
   const adminRemoveEvent = useMutation(api.handlers.event.adminRemove);
 
@@ -82,14 +83,14 @@ export default function AdminDashboardPage() {
         <PageCard color="yellow">
           <div className="mb-4 flex items-center justify-between">
             <div>
-              <div className="text-xs font-bold tracking-widest text-[#2f2461]/45">ADMIN</div>
-              <div className="text-base font-black tracking-tight text-[#2f2461]">
+              <div className="text-xs font-bold tracking-widest text-slate-700/45">ADMIN</div>
+              <div className="text-base font-black tracking-tight text-slate-700">
                 Dashboard
               </div>
             </div>
             <Link
               href="/"
-              className="rounded-full border border-[#2f2461]/20 bg-[#2f2461]/5 px-3 py-1 text-xs font-semibold text-[#2f2461]/70 hover:bg-[#2f2461]/10 hover:text-[#2f2461]"
+              className="rounded-full border border-slate-200 bg-slate-100 px-3 py-1 text-xs font-semibold text-slate-500 hover:bg-slate-200/50 hover:text-slate-700"
             >
               Site
             </Link>
@@ -102,8 +103,8 @@ export default function AdminDashboardPage() {
               className={
                 "w-full rounded-xl px-4 py-3 text-left text-sm font-semibold transition " +
                 (active === "overview"
-                  ? "bg-[#ff4fd8]/15 text-[#2f2461] ring-1 ring-[#ff4fd8]/25"
-                  : "bg-[#2f2461]/5 text-[#2f2461]/65 hover:bg-[#2f2461]/10 hover:text-[#2f2461]")
+                  ? "bg-pink-100 text-slate-700 ring-1 ring-[#f472b6]/25"
+                  : "bg-slate-100 text-slate-500 hover:bg-slate-200/50 hover:text-slate-700")
               }
             >
               Overview
@@ -114,8 +115,8 @@ export default function AdminDashboardPage() {
               className={
                 "w-full rounded-xl px-4 py-3 text-left text-sm font-semibold transition " +
                 (active === "events"
-                  ? "bg-[#ff4fd8]/15 text-[#2f2461] ring-1 ring-[#ff4fd8]/25"
-                  : "bg-[#2f2461]/5 text-[#2f2461]/65 hover:bg-[#2f2461]/10 hover:text-[#2f2461]")
+                  ? "bg-pink-100 text-slate-700 ring-1 ring-[#f472b6]/25"
+                  : "bg-slate-100 text-slate-500 hover:bg-slate-200/50 hover:text-slate-700")
               }
             >
               Manage Events
@@ -128,7 +129,7 @@ export default function AdminDashboardPage() {
 
             <Link
               href="/dashboard"
-              className="block w-full rounded-xl bg-[#2f2461]/5 px-4 py-3 text-left text-sm font-semibold text-[#2f2461]/65 hover:bg-[#2f2461]/10 hover:text-[#2f2461]"
+              className="block w-full rounded-xl bg-slate-100 px-4 py-3 text-left text-sm font-semibold text-slate-500 hover:bg-slate-200/50 hover:text-slate-700"
             >
               ← User Dashboard
             </Link>
@@ -140,13 +141,13 @@ export default function AdminDashboardPage() {
           {active === "overview" ? (
             <div>
               <SectionHeader color="blue">Overview</SectionHeader>
-              <p className="mb-6 text-center text-sm font-medium leading-6 text-[#2f2461]/70">
+              <p className="mb-6 text-center text-sm font-medium leading-6 text-slate-500">
                 Admin panel connected to Convex. All data is live and reactive.
               </p>
               <div className="grid grid-cols-1 gap-4 sm:grid-cols-4">
-                <div className="rounded-2xl border border-[#2f2461]/10 bg-white/60 p-4 text-center">
-                  <div className="text-xs font-bold tracking-widest text-[#2f2461]/45">TOTAL</div>
-                  <div className="mt-1 text-2xl font-black text-[#2f2461]">
+                <div className="rounded-2xl border border-slate-100 bg-white/60 p-4 text-center">
+                  <div className="text-xs font-bold tracking-widest text-slate-700/45">TOTAL</div>
+                  <div className="mt-1 text-2xl font-black text-slate-700">
                     {stats.total}
                   </div>
                 </div>
@@ -186,8 +187,8 @@ export default function AdminDashboardPage() {
                         className={
                           "rounded-full px-3 py-1.5 text-xs font-semibold ring-1 transition " +
                           (filter === f
-                            ? "bg-[#ff4fd8]/15 text-[#2f2461] ring-[#ff4fd8]/25"
-                            : "bg-[#2f2461]/5 text-[#2f2461]/55 ring-[#2f2461]/10 hover:bg-[#2f2461]/10 hover:text-[#2f2461]")
+                            ? "bg-pink-100 text-slate-700 ring-[#f472b6]/25"
+                            : "bg-slate-100 text-slate-400 ring-[#334155]/10 hover:bg-slate-200/50 hover:text-slate-700")
                         }
                       >
                         {f.charAt(0).toUpperCase() + f.slice(1)}
@@ -203,8 +204,8 @@ export default function AdminDashboardPage() {
               </div>
 
               {filtered.length === 0 ? (
-                <div className="rounded-2xl border border-[#2f2461]/10 bg-white/60 p-8 text-center">
-                  <p className="text-sm text-[#2f2461]/50">
+                <div className="rounded-2xl border border-slate-100 bg-white/60 p-8 text-center">
+                  <p className="text-sm text-slate-400">
                     No events match this filter.
                   </p>
                 </div>
@@ -225,25 +226,25 @@ export default function AdminDashboardPage() {
                       <div className="flex flex-wrap items-start justify-between gap-3">
                         <div className="min-w-0 flex-1">
                           <div className="flex items-center gap-2">
-                            <span className="text-sm font-bold text-[#2f2461]">
+                            <span className="text-sm font-bold text-slate-700">
                               {e.name}
                             </span>
                             {statusBadge(e.status)}
                           </div>
-                          <div className="mt-1 text-xs font-semibold text-[#2f2461]/45">
+                          <div className="mt-1 text-xs font-semibold text-slate-700/45">
                             {eventDate(e)} • {eventTime(e)} •{" "}
                             {e.location.name}
                           </div>
-                          <div className="mt-1 text-xs text-[#2f2461]/40 flex items-center gap-1.5">
+                          <div className="mt-1 text-xs text-slate-300 flex items-center gap-1.5">
                             {e.organizer?.image ? (
                               // eslint-disable-next-line @next/next/no-img-element
                               <img
                                 src={e.organizer.image}
                                 alt=""
-                                className="h-4 w-4 rounded-full object-cover ring-1 ring-[#2f2461]/15"
+                                className="h-4 w-4 rounded-full object-cover ring-1 ring-[#334155]/15"
                               />
                             ) : (
-                              <span className="flex h-4 w-4 items-center justify-center rounded-full bg-[#2f2461]/10 text-[8px] font-bold text-[#2f2461]/50 ring-1 ring-[#2f2461]/15">
+                              <span className="flex h-4 w-4 items-center justify-center rounded-full bg-slate-200/50 text-[8px] font-bold text-slate-400 ring-1 ring-[#334155]/15">
                                 ?
                               </span>
                             )}
@@ -275,12 +276,12 @@ export default function AdminDashboardPage() {
                         </div>
                       </div>
 
-                      <p className="mt-3 text-sm leading-6 text-[#2f2461]/60">
+                      <p className="mt-3 text-sm leading-6 text-slate-400">
                         {e.description}
                       </p>
 
                       {e.location.address && (
-                        <div className="mt-1 text-xs text-[#2f2461]/40">
+                        <div className="mt-1 text-xs text-slate-300">
                           📍 {e.location.address}
                         </div>
                       )}

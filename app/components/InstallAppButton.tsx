@@ -46,7 +46,7 @@ export function InstallAppButton() {
         await promptEvent.userChoice;
         setPromptEvent(null);
       }}
-      className="inline-flex items-center justify-center rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm font-semibold text-white/85 shadow-[0_0_0_1px_rgba(57,183,255,0.25),0_0_18px_rgba(57,183,255,0.18)] hover:bg-white/10 hover:text-white"
+      className="inline-flex items-center justify-center rounded-full border border-slate-300/50 bg-slate-100/50 px-4 py-2 text-sm font-semibold text-slate-700 shadow-[0_0_0_1px_rgba(34,211,238,0.25),0_0_18px_rgba(34,211,238,0.18)] hover:bg-slate-200/50 hover:text-slate-900"
     >
       Install App
     </button>

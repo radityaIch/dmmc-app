@@ -22,47 +22,47 @@ export function EventCard({ event }: { event: EventWithOrganizer }) {
   return (
     <Link
       href={`/events/${event._id}`}
-      className="group relative block overflow-hidden rounded-2xl border border-[#ff4fd8]/20 bg-white/90 backdrop-blur-sm p-5 shadow-[0_2px_12px_rgba(255,79,216,0.08)] transition-all hover:-translate-y-0.5 hover:border-[#ff4fd8]/35 hover:shadow-[0_6px_24px_rgba(255,79,216,0.15)]"
+      className="group relative block overflow-hidden rounded-2xl border border-pink-300/30 bg-white/90 backdrop-blur-sm p-5 shadow-[0_2px_12px_rgba(244,114,182,0.08)] transition-all hover:-translate-y-0.5 hover:border-pink-300/40 hover:shadow-[0_6px_24px_rgba(244,114,182,0.15)]"
     >
-      <div className="pointer-events-none absolute -top-16 left-1/2 h-32 w-32 -translate-x-1/2 rounded-full bg-[radial-gradient(circle,rgba(255,79,216,0.08),transparent_60%)]" />
+      <div className="pointer-events-none absolute -top-16 left-1/2 h-32 w-32 -translate-x-1/2 rounded-full bg-[radial-gradient(circle,rgba(244,114,182,0.08),transparent_60%)]" />
 
       <div className="relative flex flex-col gap-3">
         <div className="flex items-start justify-between gap-3">
-          <h3 className="text-base font-bold tracking-tight text-[#2f2461] transition group-hover:text-[#d63fb5]">
+          <h3 className="text-base font-bold tracking-tight text-slate-700 transition group-hover:text-[#e11d79]">
             {event.name}
           </h3>
-          <span className="shrink-0 text-[#2f2461]/25 transition group-hover:text-[#ff4fd8]/50">↗</span>
+          <span className="shrink-0 text-slate-700/25 transition group-hover:text-[#f472b6]/50">↗</span>
         </div>
 
-        <div className="flex flex-wrap items-center gap-2 text-sm text-[#2f2461]/65">
-          <span className="rounded-full bg-[#2f2461]/5 px-3 py-1 ring-1 ring-[#2f2461]/10">
+        <div className="flex flex-wrap items-center gap-2 text-sm text-slate-500">
+          <span className="rounded-full bg-slate-100 px-3 py-1 ring-1 ring-[#334155]/10">
             {formatDate(date)}
           </span>
-          <span className="rounded-full bg-[#2f2461]/5 px-3 py-1 ring-1 ring-[#2f2461]/10">
+          <span className="rounded-full bg-slate-100 px-3 py-1 ring-1 ring-[#334155]/10">
             {time}
           </span>
-          <span className="rounded-full bg-[#2f2461]/5 px-3 py-1 ring-1 ring-[#2f2461]/10">
+          <span className="rounded-full bg-slate-100 px-3 py-1 ring-1 ring-[#334155]/10">
             {event.location.name}
           </span>
         </div>
 
-        <p className="line-clamp-2 text-sm leading-6 text-[#2f2461]/65">{event.description}</p>
+        <p className="line-clamp-2 text-sm leading-6 text-slate-500">{event.description}</p>
 
         {event.organizer && (
-          <div className="flex items-center gap-2 border-t border-[#2f2461]/10 pt-1">
+          <div className="flex items-center gap-2 border-t border-slate-100 pt-1">
             {event.organizer.image ? (
               // eslint-disable-next-line @next/next/no-img-element
               <img
                 src={event.organizer.image}
                 alt=""
-                className="h-5 w-5 rounded-full object-cover ring-1 ring-[#ff4fd8]/20"
+                className="h-5 w-5 rounded-full object-cover ring-1 ring-[#f472b6]/20"
               />
             ) : (
-              <span className="flex h-5 w-5 items-center justify-center rounded-full bg-[#ff4fd8]/10 text-[9px] font-bold text-[#d63fb5] ring-1 ring-[#ff4fd8]/20">
+              <span className="flex h-5 w-5 items-center justify-center rounded-full bg-pink-50 text-[9px] font-bold text-[#e11d79] ring-1 ring-[#f472b6]/20">
                 {event.organizer.name.charAt(0).toUpperCase()}
               </span>
             )}
-            <span className="text-xs font-semibold text-[#2f2461]/50">
+            <span className="text-xs font-semibold text-slate-400">
               {event.organizer.name}
             </span>
           </div>

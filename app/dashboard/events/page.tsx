@@ -159,7 +159,7 @@ export default function DashboardEventsPage() {
 
                     <form className="space-y-3" onSubmit={handleSubmit}>
                         <label className="block">
-                            <span className="text-xs font-bold tracking-widest text-[#2f2461]/60">
+                            <span className="text-xs font-bold tracking-widest text-slate-400">
                                 EVENT NAME
                             </span>
                             <input
@@ -167,14 +167,14 @@ export default function DashboardEventsPage() {
                                 onChange={(e) =>
                                     setDraft((d) => ({ ...d, name: e.target.value }))
                                 }
-                                className="mt-2 w-full rounded-xl border border-[#2f2461]/20 bg-white/80 px-4 py-3 text-sm text-[#2f2461] placeholder:text-[#2f2461]/30 outline-none ring-1 ring-transparent focus:ring-[#ff4fd8]/30"
+                                className="mt-2 w-full rounded-xl border border-slate-200 bg-white/80 px-4 py-3 text-sm text-slate-700 placeholder:text-slate-300 outline-none ring-1 ring-transparent focus:ring-[#f472b6]/30"
                                 required
                                 placeholder="e.g. Weekend Grind & Chill"
                             />
                         </label>
 
                         <label className="block">
-                            <span className="text-xs font-bold tracking-widest text-[#2f2461]/60">
+                            <span className="text-xs font-bold tracking-widest text-slate-400">
                                 DATE & TIME
                             </span>
                             <input
@@ -183,14 +183,14 @@ export default function DashboardEventsPage() {
                                 onChange={(e) =>
                                     setDraft((d) => ({ ...d, datetime: e.target.value }))
                                 }
-                                className="mt-2 w-full rounded-xl border border-[#2f2461]/20 bg-white/80 px-4 py-3 text-sm text-[#2f2461] outline-none ring-1 ring-transparent focus:ring-emerald-400/40"
+                                className="mt-2 w-full rounded-xl border border-slate-200 bg-white/80 px-4 py-3 text-sm text-slate-700 outline-none ring-1 ring-transparent focus:ring-emerald-400/40"
                                 required
                             />
                         </label>
 
                         {/* ─── Location Picker ─── */}
                         <div>
-                            <span className="text-xs font-bold tracking-widest text-[#2f2461]/60">
+                            <span className="text-xs font-bold tracking-widest text-slate-400">
                                 LOCATION
                             </span>
                             <div className="mt-2 flex items-center gap-2">
@@ -202,8 +202,8 @@ export default function DashboardEventsPage() {
                                     className={
                                         "rounded-full px-3 py-1.5 text-xs font-semibold ring-1 transition " +
                                         (!isCustom
-                                            ? "bg-[#ff4fd8]/20 text-[#2f2461] ring-[#ff4fd8]/40"
-                                            : "bg-[#2f2461]/5 text-[#2f2461]/60 ring-[#2f2461]/15 hover:bg-[#ff4fd8]/10 hover:text-[#2f2461]")
+                                            ? "bg-[#f472b6]/20 text-slate-700 ring-[#f472b6]/40"
+                                            : "bg-slate-100 text-slate-400 ring-[#334155]/15 hover:bg-pink-50 hover:text-slate-700")
                                     }
                                 >
                                     maimai Arcade
@@ -216,8 +216,8 @@ export default function DashboardEventsPage() {
                                     className={
                                         "rounded-full px-3 py-1.5 text-xs font-semibold ring-1 transition " +
                                         (isCustom
-                                            ? "bg-[#ff4fd8]/20 text-[#2f2461] ring-[#ff4fd8]/40"
-                                            : "bg-[#2f2461]/5 text-[#2f2461]/60 ring-[#2f2461]/15 hover:bg-[#ff4fd8]/10 hover:text-[#2f2461]")
+                                            ? "bg-[#f472b6]/20 text-slate-700 ring-[#f472b6]/40"
+                                            : "bg-slate-100 text-slate-400 ring-[#334155]/15 hover:bg-pink-50 hover:text-slate-700")
                                     }
                                 >
                                     Custom Location
@@ -241,14 +241,14 @@ export default function DashboardEventsPage() {
                                                 className={
                                                     "w-full rounded-xl border px-4 py-3 text-left transition ring-1 " +
                                                     (selected
-                                                        ? "border-[#ff4fd8]/35 bg-[#ff4fd8]/10 ring-[#ff4fd8]/20 text-[#2f2461]"
-                                                        : "border-[#2f2461]/10 bg-white/60 ring-[#2f2461]/5 text-[#2f2461]/70 hover:bg-white/80 hover:text-[#2f2461]")
+                                                        ? "border-pink-300/40 bg-pink-50 ring-[#f472b6]/20 text-slate-700"
+                                                        : "border-slate-100 bg-white/60 ring-[#334155]/5 text-slate-500 hover:bg-white/80 hover:text-slate-700")
                                                 }
                                             >
                                                 <div className="text-sm font-bold">
                                                     {loc.name}
                                                 </div>
-                                                <div className="mt-0.5 text-xs text-[#2f2461]/45">
+                                                <div className="mt-0.5 text-xs text-slate-700/45">
                                                     {loc.address}
                                                 </div>
                                             </button>
@@ -262,7 +262,7 @@ export default function DashboardEventsPage() {
                                         onChange={(e) =>
                                             setDraft((d) => ({ ...d, customLocationName: e.target.value }))
                                         }
-                                        className="w-full rounded-xl border border-[#2f2461]/20 bg-white/80 px-4 py-3 text-sm text-[#2f2461] placeholder:text-[#2f2461]/30 outline-none ring-1 ring-transparent focus:ring-yellow-300/40"
+                                        className="w-full rounded-xl border border-slate-200 bg-white/80 px-4 py-3 text-sm text-slate-700 placeholder:text-slate-300 outline-none ring-1 ring-transparent focus:ring-yellow-300/40"
                                         required={isCustom}
                                         placeholder="Location name"
                                     />
@@ -271,7 +271,7 @@ export default function DashboardEventsPage() {
                                         onChange={(e) =>
                                             setDraft((d) => ({ ...d, customLocationAddress: e.target.value }))
                                         }
-                                        className="w-full rounded-xl border border-[#2f2461]/20 bg-white/80 px-4 py-3 text-sm text-[#2f2461] placeholder:text-[#2f2461]/30 outline-none ring-1 ring-transparent focus:ring-yellow-300/40"
+                                        className="w-full rounded-xl border border-slate-200 bg-white/80 px-4 py-3 text-sm text-slate-700 placeholder:text-slate-300 outline-none ring-1 ring-transparent focus:ring-yellow-300/40"
                                         required={isCustom}
                                         placeholder="Address"
                                     />
@@ -281,7 +281,7 @@ export default function DashboardEventsPage() {
                                         onChange={(e) =>
                                             setDraft((d) => ({ ...d, customLocationGoogleMapURL: e.target.value }))
                                         }
-                                        className="w-full rounded-xl border border-[#2f2461]/20 bg-white/80 px-4 py-3 text-sm text-[#2f2461] placeholder:text-[#2f2461]/30 outline-none ring-1 ring-transparent focus:ring-sky-400/40"
+                                        className="w-full rounded-xl border border-slate-200 bg-white/80 px-4 py-3 text-sm text-slate-700 placeholder:text-slate-300 outline-none ring-1 ring-transparent focus:ring-sky-400/40"
                                         required={isCustom}
                                         placeholder="Google Maps URL"
                                     />
@@ -290,7 +290,7 @@ export default function DashboardEventsPage() {
                         </div>
 
                         <label className="block">
-                            <span className="text-xs font-bold tracking-widest text-[#2f2461]/60">
+                            <span className="text-xs font-bold tracking-widest text-slate-400">
                                 DESCRIPTION
                             </span>
                             <textarea
@@ -299,7 +299,7 @@ export default function DashboardEventsPage() {
                                     setDraft((d) => ({ ...d, description: e.target.value }))
                                 }
                                 rows={4}
-                                className="mt-2 w-full resize-none rounded-xl border border-[#2f2461]/20 bg-white/80 px-4 py-3 text-sm text-[#2f2461] placeholder:text-[#2f2461]/30 outline-none ring-1 ring-transparent focus:ring-sky-400/40"
+                                className="mt-2 w-full resize-none rounded-xl border border-slate-200 bg-white/80 px-4 py-3 text-sm text-slate-700 placeholder:text-slate-300 outline-none ring-1 ring-transparent focus:ring-sky-400/40"
                                 required
                                 placeholder="Tell the community what to expect..."
                             />
@@ -309,7 +309,7 @@ export default function DashboardEventsPage() {
                             <button
                                 type="submit"
                                 disabled={saving}
-                                className="flex-1 rounded-full bg-[linear-gradient(180deg,#ff4fd8,#c026d3)] px-6 py-3 text-sm font-semibold text-white shadow-[0_0_0_1px_rgba(255,79,216,0.55),0_0_24px_rgba(255,79,216,0.25)] hover:shadow-[0_0_0_1px_rgba(255,79,216,0.75),0_0_34px_rgba(255,79,216,0.45)] disabled:opacity-50"
+                                className="flex-1 rounded-full bg-[linear-gradient(180deg,#f472b6,#a21caf)] px-6 py-3 text-sm font-semibold text-white shadow-[0_0_0_1px_rgba(244,114,182,0.55),0_0_24px_rgba(244,114,182,0.25)] hover:shadow-[0_0_0_1px_rgba(244,114,182,0.75),0_0_34px_rgba(244,114,182,0.45)] disabled:opacity-50"
                             >
                                 {saving
                                     ? "Saving..."
@@ -324,7 +324,7 @@ export default function DashboardEventsPage() {
                                         setEditingId(null);
                                         setDraft(emptyDraft);
                                     }}
-                                    className="rounded-full border border-[#2f2461]/20 bg-[#2f2461]/5 px-4 py-3 text-sm font-semibold text-[#2f2461]/70 hover:bg-[#2f2461]/10"
+                                    className="rounded-full border border-slate-200 bg-slate-100 px-4 py-3 text-sm font-semibold text-slate-500 hover:bg-slate-200/50"
                                 >
                                     Cancel
                                 </button>
@@ -338,8 +338,8 @@ export default function DashboardEventsPage() {
                     <SectionHeader color="yellow">My Events ({events.length})</SectionHeader>
 
                     {events.length === 0 ? (
-                        <div className="rounded-2xl border border-[#2f2461]/10 bg-white/60 p-8 text-center">
-                            <p className="text-sm text-[#2f2461]/50">
+                        <div className="rounded-2xl border border-slate-100 bg-white/60 p-8 text-center">
+                            <p className="text-sm text-slate-400">
                                 You haven&#39;t created any events yet.
                             </p>
                         </div>
@@ -348,17 +348,17 @@ export default function DashboardEventsPage() {
                             {events.map((e) => (
                                 <div
                                     key={e._id}
-                                    className="rounded-2xl border border-[#2f2461]/10 bg-white/60 p-4 ring-1 ring-[#2f2461]/5"
+                                    className="rounded-2xl border border-slate-100 bg-white/60 p-4 ring-1 ring-[#334155]/5"
                                 >
                                     <div className="flex flex-wrap items-start justify-between gap-3">
                                         <div>
                                             <div className="flex items-center gap-2">
-                                                <span className="text-sm font-bold text-[#2f2461]">
+                                                <span className="text-sm font-bold text-slate-700">
                                                     {e.name}
                                                 </span>
                                                 {statusBadge(e.status)}
                                             </div>
-                                            <div className="mt-1 text-xs font-semibold text-[#2f2461]/45">
+                                            <div className="mt-1 text-xs font-semibold text-slate-700/45">
                                                 {eventDate(e)} • {eventTime(e)} • {e.location.name}
                                             </div>
                                         </div>
@@ -367,7 +367,7 @@ export default function DashboardEventsPage() {
                                             <button
                                                 type="button"
                                                 onClick={() => startEdit(e)}
-                                                className="rounded-full border border-[#2f2461]/20 bg-[#2f2461]/5 px-3 py-1 text-xs font-semibold text-[#2f2461]/70 hover:bg-[#2f2461]/10 hover:text-[#2f2461]"
+                                                className="rounded-full border border-slate-200 bg-slate-100 px-3 py-1 text-xs font-semibold text-slate-500 hover:bg-slate-200/50 hover:text-slate-700"
                                             >
                                                 Edit
                                             </button>
@@ -382,7 +382,7 @@ export default function DashboardEventsPage() {
                                         </div>
                                     </div>
 
-                                    <p className="mt-3 text-sm leading-6 text-[#2f2461]/60">
+                                    <p className="mt-3 text-sm leading-6 text-slate-400">
                                         {e.description}
                                     </p>
                                 </div>

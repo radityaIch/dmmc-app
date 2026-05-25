@@ -13,6 +13,9 @@
 # testing
 /coverage
 
+# redesign
+/.redesign/
+
 # next.js
 /.next/
 /out/

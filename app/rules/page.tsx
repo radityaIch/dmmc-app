@@ -94,10 +94,10 @@ export default function RulesPage() {
                   >
                     {r.tag}
                   </span>
-                  <h2 className="text-2xl font-bold tracking-tight text-[#2f2461]">
+                  <h2 className="text-2xl font-bold tracking-tight text-slate-700">
                     {r.title}
                   </h2>
-                  <p className="mt-3 text-sm leading-7 text-[#2f2461]/60">
+                  <p className="mt-3 text-sm leading-7 text-slate-400">
                     {r.body}
                   </p>
                 </div>
@@ -107,7 +107,7 @@ export default function RulesPage() {
         </div>
 
         {/* Footer note */}
-        <p className="mt-10 text-center text-xs text-[#2f2461]/40 leading-6">
+        <p className="mt-10 text-center text-xs text-slate-300 leading-6">
           Questions or concerns? Reach out to any organizer or drop a message in
           the community group.
         </p>

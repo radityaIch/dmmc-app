@@ -1256,7 +1256,7 @@ export default function MyScorePage() {
         plugins: {
           legend: {
             position: "bottom",
-            labels: { color: "#2f2461", boxWidth: 12, font: { size: 11, weight: 700 } },
+            labels: { color: "#334155", boxWidth: 12, font: { size: 11, weight: 700 } },
           },
         },
       },
@@ -1270,7 +1270,7 @@ export default function MyScorePage() {
           {
             label: "Songs",
             data: analytics.achievementBandValues,
-            backgroundColor: "#39b7ff",
+            backgroundColor: "#22d3ee",
             borderRadius: 8,
             maxBarThickness: 48,
           },
@@ -1284,13 +1284,13 @@ export default function MyScorePage() {
         },
         scales: {
           x: {
-            ticks: { color: "#2f2461", font: { size: 10, weight: 700 } },
-            grid: { color: "rgba(47,36,97,0.08)" },
+            ticks: { color: "#334155", font: { size: 10, weight: 700 } },
+            grid: { color: "rgba(51,65,85,0.08)" },
           },
           y: {
             beginAtZero: true,
-            ticks: { color: "#2f2461", font: { size: 10, weight: 700 }, precision: 0 },
-            grid: { color: "rgba(47,36,97,0.08)" },
+            ticks: { color: "#334155", font: { size: 10, weight: 700 }, precision: 0 },
+            grid: { color: "rgba(51,65,85,0.08)" },
           },
         },
       },
@@ -1313,13 +1313,13 @@ export default function MyScorePage() {
         plugins: {
           legend: {
             position: "bottom",
-            labels: { color: "#2f2461", boxWidth: 12, font: { size: 11, weight: 700 } },
+            labels: { color: "#334155", boxWidth: 12, font: { size: 11, weight: 700 } },
           },
         },
         scales: {
           r: {
             ticks: { display: false },
-            grid: { color: "rgba(47,36,97,0.08)" },
+            grid: { color: "rgba(51,65,85,0.08)" },
           },
         },
       },
@@ -1333,7 +1333,7 @@ export default function MyScorePage() {
           {
             label: "Ratings",
             data: analytics.ratingSourceValues,
-            backgroundColor: ["#2cb869", "#39b7ff", "#ffb84d", "#94a3b8"],
+            backgroundColor: ["#34d399", "#22d3ee", "#ffb84d", "#94a3b8"],
             borderRadius: 8,
             maxBarThickness: 48,
           },
@@ -1349,11 +1349,11 @@ export default function MyScorePage() {
         scales: {
           x: {
             beginAtZero: true,
-            ticks: { color: "#2f2461", font: { size: 10, weight: 700 }, precision: 0 },
-            grid: { color: "rgba(47,36,97,0.08)" },
+            ticks: { color: "#334155", font: { size: 10, weight: 700 }, precision: 0 },
+            grid: { color: "rgba(51,65,85,0.08)" },
           },
           y: {
-            ticks: { color: "#2f2461", font: { size: 11, weight: 700 } },
+            ticks: { color: "#334155", font: { size: 11, weight: 700 } },
             grid: { display: false },
           },
         },
@@ -1379,7 +1379,7 @@ export default function MyScorePage() {
         plugins: {
           legend: {
             position: "bottom",
-            labels: { color: "#2f2461", boxWidth: 12, font: { size: 11, weight: 700 } },
+            labels: { color: "#334155", boxWidth: 12, font: { size: 11, weight: 700 } },
           },
         },
       },
@@ -1544,7 +1544,7 @@ export default function MyScorePage() {
       <PageWrapper>
         <PageCard color="green" className="mx-auto max-w-md mb-12">
           <div className="flex items-center justify-center py-8">
-            <div className="h-6 w-6 animate-spin rounded-full border-2 border-[#2cb869]/30 border-t-[#2cb869]" />
+            <div className="h-6 w-6 animate-spin rounded-full border-2 border-emerald-300/40 border-t-[#34d399]" />
           </div>
         </PageCard>
       </PageWrapper>
@@ -1562,7 +1562,7 @@ export default function MyScorePage() {
             <SectionHeader color="green" className="mb-0 flex-1">My Score</SectionHeader>
           </div>
 
-          <p className="mb-6 text-center text-sm font-medium leading-6 text-[#2f2461]/70">
+          <p className="mb-6 text-center text-sm font-medium leading-6 text-slate-500">
             Sign in with your Discord account to view your score.
           </p>
 
@@ -1591,7 +1591,7 @@ export default function MyScorePage() {
     <PageWrapper>
       <PageCard color="green">
         <div className="mb-4 flex justify-center">
-          <div className="inline-flex items-center gap-2 rounded-full border border-[#2cb869]/30 bg-[#2cb869]/10 px-4 py-2 text-xs font-semibold tracking-wider text-[#2f2461]/70">
+          <div className="inline-flex items-center gap-2 rounded-full border border-emerald-300/40 bg-[#34d399]/10 px-4 py-2 text-xs font-semibold tracking-wider text-slate-500">
             <span className="h-2 w-2 rounded-full bg-emerald-400 shadow-[0_0_16px_rgba(52,211,153,0.6)]" />
             MY SCORE
           </div>
@@ -1599,21 +1599,21 @@ export default function MyScorePage() {
 
         <SectionHeader color="green">maimai DX NET Import Receiver</SectionHeader>
 
-        <p className="mb-6 text-center text-sm font-medium leading-6 text-[#2f2461]/70 max-w-3xl mx-auto">
+        <p className="mb-6 text-center text-sm font-medium leading-6 text-slate-500 max-w-3xl mx-auto">
           Keep this tab open. When you run the bookmarklet on maimaidx-eng.com, it will send your exported scores here.
         </p>
 
-        <div className="rounded-2xl border border-[#2f2461]/10 bg-white/60 p-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+        <div className="rounded-2xl border border-slate-100 bg-white/60 p-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
           <div className="min-w-0">
-            <div className="text-xs font-bold tracking-widest text-[#2f2461]/45 mb-1">STATUS</div>
-            <div className="text-sm font-semibold text-[#2f2461]/80 break-words">{status}</div>
+            <div className="text-xs font-bold tracking-widest text-slate-700/45 mb-1">STATUS</div>
+            <div className="text-sm font-semibold text-slate-600 break-words">{status}</div>
           </div>
           <div className="grid grid-cols-2 gap-2 sm:flex sm:flex-wrap sm:items-center sm:justify-end">
             <button
               type="button"
               onClick={saveToJson}
               disabled={!payload}
-              className="rounded-full border border-[#2f2461]/20 bg-white/80 px-3 py-2 text-[11px] font-semibold tracking-wide text-[#2f2461]/70 hover:bg-white hover:text-[#2f2461] disabled:cursor-not-allowed disabled:opacity-50"
+              className="rounded-full border border-slate-200 bg-white/80 px-3 py-2 text-[11px] font-semibold tracking-wide text-slate-500 hover:bg-white hover:text-slate-700 disabled:cursor-not-allowed disabled:opacity-50"
             >
               Save JSON
             </button>
@@ -1621,7 +1621,7 @@ export default function MyScorePage() {
               type="button"
               onClick={() => exportTop50("png")}
               disabled={!payload || exporting != null}
-              className="rounded-full border border-[#2f2461]/20 bg-white/80 px-3 py-2 text-[11px] font-semibold tracking-wide text-[#2f2461]/70 hover:bg-white hover:text-[#2f2461] disabled:cursor-not-allowed disabled:opacity-50"
+              className="rounded-full border border-slate-200 bg-white/80 px-3 py-2 text-[11px] font-semibold tracking-wide text-slate-500 hover:bg-white hover:text-slate-700 disabled:cursor-not-allowed disabled:opacity-50"
             >
               {exporting === "png" ? "Rendering PNG..." : "Top 50 PNG"}
             </button>
@@ -1629,14 +1629,14 @@ export default function MyScorePage() {
               type="button"
               onClick={() => exportTop50("pdf")}
               disabled={!payload || exporting != null}
-              className="rounded-full border border-[#2f2461]/20 bg-white/80 px-3 py-2 text-[11px] font-semibold tracking-wide text-[#2f2461]/70 hover:bg-white hover:text-[#2f2461] disabled:cursor-not-allowed disabled:opacity-50"
+              className="rounded-full border border-slate-200 bg-white/80 px-3 py-2 text-[11px] font-semibold tracking-wide text-slate-500 hover:bg-white hover:text-slate-700 disabled:cursor-not-allowed disabled:opacity-50"
             >
               {exporting === "pdf" ? "Rendering PDF..." : "Top 50 PDF"}
             </button>
             <button
               type="button"
               onClick={clearSaved}
-              className="rounded-full border border-[#2f2461]/20 bg-white/80 px-3 py-2 text-[11px] font-semibold tracking-wide text-[#2f2461]/70 hover:bg-white hover:text-[#2f2461]"
+              className="rounded-full border border-slate-200 bg-white/80 px-3 py-2 text-[11px] font-semibold tracking-wide text-slate-500 hover:bg-white hover:text-slate-700"
             >
               Clear Saved
             </button>
@@ -1648,46 +1648,46 @@ export default function MyScorePage() {
         <>
           <PageCard color="blue">
             <SectionHeader color="blue">Import Meta</SectionHeader>
-            <div className="mx-auto max-w-sm rounded-2xl border border-[#2f2461]/10 bg-white/60 p-4 space-y-3">
+            <div className="mx-auto max-w-sm rounded-2xl border border-slate-100 bg-white/60 p-4 space-y-3">
               <div>
-                <div className="text-xs font-semibold text-[#2f2461]/55">Schema</div>
-                <div className="mt-0.5 text-sm font-semibold text-[#2f2461]">{payload.schema}</div>
+                <div className="text-xs font-semibold text-slate-400">Schema</div>
+                <div className="mt-0.5 text-sm font-semibold text-slate-700">{payload.schema}</div>
               </div>
               <div>
-                <div className="text-xs font-semibold text-[#2f2461]/55">Origin</div>
-                <div className="mt-0.5 text-sm font-semibold text-[#2f2461]">{payload.origin}</div>
+                <div className="text-xs font-semibold text-slate-400">Origin</div>
+                <div className="mt-0.5 text-sm font-semibold text-slate-700">{payload.origin}</div>
               </div>
               <div>
-                <div className="text-xs font-semibold text-[#2f2461]/55">Exported</div>
-                <div className="mt-0.5 text-sm font-semibold text-[#2f2461]">
+                <div className="text-xs font-semibold text-slate-400">Exported</div>
+                <div className="mt-0.5 text-sm font-semibold text-slate-700">
                   {new Date(payload.exportedAt).toLocaleString()}
                 </div>
               </div>
             </div>
 
             <div className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-2">
-              <div className="rounded-2xl border border-[#2f2461]/10 bg-white/60 p-4">
-                <div className="text-sm font-semibold text-[#2f2461]/80">Scores: {summary.scoreTotal}</div>
+              <div className="rounded-2xl border border-slate-100 bg-white/60 p-4">
+                <div className="text-sm font-semibold text-slate-600">Scores: {summary.scoreTotal}</div>
                 <div className="mt-3 grid grid-cols-2 gap-2 text-xs">
                   {Array.from(summary.scoreByDiff.entries()).map(([k, v]) => (
-                    <div key={k} className="rounded-xl border border-[#2f2461]/10 bg-white/80 px-3 py-2">
+                    <div key={k} className="rounded-xl border border-slate-100 bg-white/80 px-3 py-2">
                       <div>
                         <DifficultyChip difficulty={k} showIcon={false} />
                       </div>
-                      <div className="mt-1 text-sm font-semibold text-[#2f2461]/80">{v}</div>
+                      <div className="mt-1 text-sm font-semibold text-slate-600">{v}</div>
                     </div>
                   ))}
                 </div>
               </div>
 
-              <div className="rounded-2xl border border-[#2f2461]/10 bg-white/60 p-4">
-                <div className="text-sm font-semibold text-[#2f2461]/80">PROFILE</div>
-                <div className="mt-1 text-xs font-semibold tracking-wide text-[#2f2461]/65">
+              <div className="rounded-2xl border border-slate-100 bg-white/60 p-4">
+                <div className="text-sm font-semibold text-slate-600">PROFILE</div>
+                <div className="mt-1 text-xs font-semibold tracking-wide text-slate-500">
                   PLAYER: {payload.playerName ?? "Unknown"}
                 </div>
                 <div className="mt-3">
                   <div
-                    className={`relative overflow-hidden rounded-2xl border p-3 shadow-[0_6px_18px_rgba(47,36,97,0.14)] ${ratingTier.chipClassName}`}
+                    className={`relative overflow-hidden rounded-2xl border p-3 shadow-[0_6px_18px_rgba(51,65,85,0.14)] ${ratingTier.chipClassName}`}
                   >
                     <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_85%_20%,rgba(255,255,255,0.45),transparent_48%)]" />
                     <div className="relative flex items-center justify-between gap-3">
@@ -1703,7 +1703,7 @@ export default function MyScorePage() {
                     </div>
                   </div>
                 </div>
-                {/* <div className="mt-2 text-xs font-semibold text-[#2f2461]/65">Tier Range: {ratingTier.rangeLabel}</div> */}
+                {/* <div className="mt-2 text-xs font-semibold text-slate-500">Tier Range: {ratingTier.rangeLabel}</div> */}
               </div>
             </div>
           </PageCard>
@@ -1713,63 +1713,63 @@ export default function MyScorePage() {
               <SectionHeader color="blue">Performance Analytics</SectionHeader>
 
               <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
-                <div className="rounded-xl border border-[#2f2461]/10 bg-white/70 p-3">
-                  <div className="text-[10px] font-bold tracking-widest text-[#2f2461]/50">AVG ACHV</div>
-                  <div className="mt-1 text-lg font-black text-[#2f2461]">
+                <div className="rounded-xl border border-slate-100 bg-white/70 p-3">
+                  <div className="text-[10px] font-bold tracking-widest text-slate-400">AVG ACHV</div>
+                  <div className="mt-1 text-lg font-black text-slate-700">
                     {analytics.averageAchievement != null ? `${analytics.averageAchievement.toFixed(4)}%` : "-"}
                   </div>
                 </div>
-                <div className="rounded-xl border border-[#2f2461]/10 bg-white/70 p-3">
-                  <div className="text-[10px] font-bold tracking-widest text-[#2f2461]/50">MAX ACHV</div>
-                  <div className="mt-1 text-lg font-black text-[#2f2461]">
+                <div className="rounded-xl border border-slate-100 bg-white/70 p-3">
+                  <div className="text-[10px] font-bold tracking-widest text-slate-400">MAX ACHV</div>
+                  <div className="mt-1 text-lg font-black text-slate-700">
                     {analytics.maxAchievement != null ? `${analytics.maxAchievement.toFixed(4)}%` : "-"}
                   </div>
                 </div>
-                <div className="rounded-xl border border-[#2f2461]/10 bg-white/70 p-3">
-                  <div className="text-[10px] font-bold tracking-widest text-[#2f2461]/50">AP / FC</div>
-                  <div className="mt-1 text-lg font-black text-[#2f2461]">
+                <div className="rounded-xl border border-slate-100 bg-white/70 p-3">
+                  <div className="text-[10px] font-bold tracking-widest text-slate-400">AP / FC</div>
+                  <div className="mt-1 text-lg font-black text-slate-700">
                     {analytics.apCount} / {analytics.fcCount}
                   </div>
                 </div>
-                <div className="rounded-xl border border-[#2f2461]/10 bg-white/70 p-3">
-                  <div className="text-[10px] font-bold tracking-widest text-[#2f2461]/50">FSD / FS</div>
-                  <div className="mt-1 text-lg font-black text-[#2f2461]">
+                <div className="rounded-xl border border-slate-100 bg-white/70 p-3">
+                  <div className="text-[10px] font-bold tracking-widest text-slate-400">FSD / FS</div>
+                  <div className="mt-1 text-lg font-black text-slate-700">
                     {analytics.fsdCount} / {analytics.fsCount}
                   </div>
                 </div>
               </div>
 
               <div className="mt-4 grid grid-cols-1 gap-4 lg:grid-cols-2">
-                <div className="rounded-2xl border border-[#2f2461]/10 bg-white/70 p-4">
-                  <div className="text-xs font-bold tracking-widest text-[#2f2461]/55">DIFFICULTY SPREAD</div>
+                <div className="rounded-2xl border border-slate-100 bg-white/70 p-4">
+                  <div className="text-xs font-bold tracking-widest text-slate-400">DIFFICULTY SPREAD</div>
                   <div className="mt-2 h-56">
                     <canvas ref={difficultyChartCanvasRef} />
                   </div>
                 </div>
 
-                <div className="rounded-2xl border border-[#2f2461]/10 bg-white/70 p-4">
-                  <div className="text-xs font-bold tracking-widest text-[#2f2461]/55">ACHIEVEMENT BANDS</div>
+                <div className="rounded-2xl border border-slate-100 bg-white/70 p-4">
+                  <div className="text-xs font-bold tracking-widest text-slate-400">ACHIEVEMENT BANDS</div>
                   <div className="mt-2 h-56">
                     <canvas ref={achievementBandCanvasRef} />
                   </div>
                 </div>
 
-                <div className="rounded-2xl border border-[#2f2461]/10 bg-white/70 p-4">
-                  <div className="text-xs font-bold tracking-widest text-[#2f2461]/55">CHART TYPE SPLIT</div>
+                <div className="rounded-2xl border border-slate-100 bg-white/70 p-4">
+                  <div className="text-xs font-bold tracking-widest text-slate-400">CHART TYPE SPLIT</div>
                   <div className="mt-2 h-56">
                     <canvas ref={chartTypeCanvasRef} />
                   </div>
                 </div>
 
-                <div className="rounded-2xl border border-[#2f2461]/10 bg-white/70 p-4">
-                  <div className="text-xs font-bold tracking-widest text-[#2f2461]/55">RATING SOURCE</div>
+                <div className="rounded-2xl border border-slate-100 bg-white/70 p-4">
+                  <div className="text-xs font-bold tracking-widest text-slate-400">RATING SOURCE</div>
                   <div className="mt-2 h-56">
                     <canvas ref={ratingSourceCanvasRef} />
                   </div>
                 </div>
 
-                <div className="rounded-2xl border border-[#2f2461]/10 bg-white/70 p-4 lg:col-span-2">
-                  <div className="text-xs font-bold tracking-widest text-[#2f2461]/55">TOP 50 CONTRIBUTION</div>
+                <div className="rounded-2xl border border-slate-100 bg-white/70 p-4 lg:col-span-2">
+                  <div className="text-xs font-bold tracking-widest text-slate-400">TOP 50 CONTRIBUTION</div>
                   <div className="mt-2 h-56">
                     <canvas ref={top50ContributionCanvasRef} />
                   </div>
@@ -1780,8 +1780,8 @@ export default function MyScorePage() {
 
           <PageCard color="pink">
             <SectionHeader color="pink">Top Scores (Highest to Lowest)</SectionHeader>
-            <div className="h-96 overflow-y-auto rounded-2xl border border-[#2f2461]/10 bg-white/60 ring-1 ring-[#2f2461]/5">
-              <div className="divide-y divide-[#2f2461]/8">
+            <div className="h-96 overflow-y-auto rounded-2xl border border-slate-100 bg-white/60 ring-1 ring-[#334155]/5">
+              <div className="divide-y divide-[#334155]/8">
                 {sortedScores.slice(0, 50).map((s, idx) => {
                   const rankCls =
                     s.rank === "SSS+" ? "bg-[linear-gradient(135deg,#ffd95f_0%,#ff9de2_50%,#a78eff_100%)] text-white border-transparent" :
@@ -1793,7 +1793,7 @@ export default function MyScorePage() {
                     s.rank === "AAA"  ? "bg-purple-100 text-purple-700 border-purple-200/60" :
                     (s.rank?.startsWith("AA") ?? false) ? "bg-blue-100 text-blue-700 border-blue-200/60" :
                     (s.rank?.startsWith("A") ?? false)  ? "bg-sky-100 text-sky-600 border-sky-200/60" :
-                    "bg-[#2f2461]/5 text-[#2f2461]/55 border-[#2f2461]/15";
+                    "bg-slate-100 text-slate-400 border-slate-200";
                   const fcapCls =
                     (s.fcap?.startsWith("AP+") ?? false) ? "bg-[linear-gradient(135deg,#ffd95f_0%,#ff9de2_50%,#a78eff_100%)] text-white" :
                     (s.fcap?.startsWith("AP") ?? false)  ? "bg-[linear-gradient(135deg,#ffd95f_0%,#ffb830_100%)] text-[#5c3300]" :
@@ -1804,7 +1804,7 @@ export default function MyScorePage() {
                     (s.sync?.startsWith("FSD") ?? false) ? "bg-[linear-gradient(135deg,#ffd95f_0%,#40e0ff_100%)] text-[#0d3d5c]" :
                     (s.sync?.startsWith("FS+") ?? false) ? "bg-[linear-gradient(135deg,#40c8ff_0%,#a78eff_100%)] text-white" :
                     (s.sync?.startsWith("FS") ?? false)  ? "bg-sky-100 text-sky-700" :
-                    s.sync === "SYNC" ? "bg-[#2f2461]/8 text-[#2f2461]/50" :
+                    s.sync === "SYNC" ? "bg-[#334155]/8 text-slate-400" :
                     null;
                   const typeIcon = chartTypeIcon(s.chartType);
                   return (
@@ -1813,17 +1813,17 @@ export default function MyScorePage() {
                         <div className={`inline-flex items-center justify-center rounded-lg border px-2 py-0.5 text-xs font-black ${rankCls}`}>
                           {s.rank ?? "-"}
                         </div>
-                        <div className="mt-1 text-[12px] font-black leading-none text-[#2f2461]">
+                        <div className="mt-1 text-[12px] font-black leading-none text-slate-700">
                           {typeof s.achievement === "number" ? `${s.achievement.toFixed(2)}%` : "-"}
                         </div>
                       </div>
                       <div className="min-w-0 flex-1">
-                        <div className="truncate text-sm font-bold text-[#2f2461]" title={s.songName}>
+                        <div className="truncate text-sm font-bold text-slate-700" title={s.songName}>
                           {s.songName}
                         </div>
                         <div className="mt-0.5 flex flex-wrap items-center gap-1.5">
                           <DifficultyChip difficulty={s.difficulty} className="px-2 py-0.5 text-[9px]" />
-                          <span className="text-[11px] font-semibold text-[#2f2461]/60">Lv {s.levelText ?? "-"}</span>
+                          <span className="text-[11px] font-semibold text-slate-400">Lv {s.levelText ?? "-"}</span>
                           {typeIcon && (
                             <Image src={typeIcon} alt={s.chartType} width={28} height={14} className="h-3.5 w-auto" />
                           )}
@@ -1865,7 +1865,7 @@ export default function MyScorePage() {
                       {bucket} CHARTS
                     </span>
                     <div className={`flex-1 border-t ${isNew ? "border-[#4f9cff]/20" : "border-[#ff67b9]/20"}`} />
-                    <span className="shrink-0 text-[11px] font-bold text-[#2f2461]/40">{cards.length} songs</span>
+                    <span className="shrink-0 text-[11px] font-bold text-slate-300">{cards.length} songs</span>
                   </div>
                   <div className="grid grid-cols-1 gap-3 lg:grid-cols-2">
                     {cards.map((item, idx) => {
@@ -1881,14 +1881,14 @@ export default function MyScorePage() {
                         r.rank === "AAA"  ? "bg-purple-100 text-purple-700 border-purple-200/60" :
                         (r.rank?.startsWith("AA") ?? false) ? "bg-blue-100 text-blue-700 border-blue-200/60" :
                         (r.rank?.startsWith("A") ?? false)  ? "bg-sky-100 text-sky-600 border-sky-200/60" :
-                        "bg-[#2f2461]/5 text-[#2f2461]/55 border-[#2f2461]/15";
+                        "bg-slate-100 text-slate-400 border-slate-200";
                       return (
                         <div
                           key={`${item.bucket}-${r.songIdx ?? "no-idx"}-${r.songName}-${idx}`}
-                          className="rounded-2xl border border-[#2f2461]/10 bg-white/80 p-3 ring-1 ring-[#2f2461]/5"
+                          className="rounded-2xl border border-slate-100 bg-white/80 p-3 ring-1 ring-[#334155]/5"
                         >
                           <div className="flex items-start gap-3">
-                            <div className="relative h-16 w-16 shrink-0 overflow-hidden rounded-xl border border-[#2f2461]/10 bg-[#2f2461]/5 ring-1 ring-[#2f2461]/5">
+                            <div className="relative h-16 w-16 shrink-0 overflow-hidden rounded-xl border border-slate-100 bg-slate-100 ring-1 ring-[#334155]/5">
                               {r.resolvedCoverUrl ? (
                                 // eslint-disable-next-line @next/next/no-img-element
                                 <img
@@ -1898,27 +1898,27 @@ export default function MyScorePage() {
                                   loading="lazy"
                                 />
                               ) : (
-                                <div className="grid h-full w-full place-items-center text-[10px] font-black tracking-widest text-[#2f2461]/40">
+                                <div className="grid h-full w-full place-items-center text-[10px] font-black tracking-widest text-slate-300">
                                   DMMC
                                 </div>
                               )}
-                              <div className="pointer-events-none absolute inset-0 shadow-[inset_0_0_0_1px_rgba(47,36,97,0.06)]" />
+                              <div className="pointer-events-none absolute inset-0 shadow-[inset_0_0_0_1px_rgba(51,65,85,0.06)]" />
                             </div>
 
                             <div className="min-w-0 flex-1">
                               <div className="flex items-start justify-between gap-2">
                                 <div className="min-w-0">
-                                  <div className="text-[10px] font-bold tracking-widest text-[#2f2461]/50">#{item.bucketRank}</div>
-                                  <div className="truncate text-sm font-black text-[#2f2461]" title={r.songName}>
+                                  <div className="text-[10px] font-bold tracking-widest text-slate-400">#{item.bucketRank}</div>
+                                  <div className="truncate text-sm font-black text-slate-700" title={r.songName}>
                                     {r.songName}
                                   </div>
-                                  <div className="mt-0.5 truncate text-[11px] font-semibold text-[#2f2461]/60">
+                                  <div className="mt-0.5 truncate text-[11px] font-semibold text-slate-400">
                                     {r.genre ?? "-"}
                                   </div>
                                 </div>
                                 <div className="text-right">
-                                  <div className="text-[10px] font-bold tracking-widest text-[#2f2461]/45">RATING</div>
-                                  <div className="text-lg font-black leading-none text-[#2f2461]">
+                                  <div className="text-[10px] font-bold tracking-widest text-slate-700/45">RATING</div>
+                                  <div className="text-lg font-black leading-none text-slate-700">
                                     {typeof r.finalRating === "number" ? r.finalRating : "-"}
                                   </div>
                                 </div>
@@ -1928,21 +1928,21 @@ export default function MyScorePage() {
                                 {typeIcon ? (
                                   <Image quality={100} src={typeIcon} alt={r.chartType} width={30} height={14} className="h-4 w-auto" />
                                 ) : (
-                                  <span className="rounded-full border border-[#2f2461]/20 bg-[#2f2461]/5 px-2 py-0.5 text-[10px] font-bold text-[#2f2461]/70">
+                                  <span className="rounded-full border border-slate-200 bg-slate-100 px-2 py-0.5 text-[10px] font-bold text-slate-500">
                                     {r.chartType}
                                   </span>
                                 )}
                                 <DifficultyChip difficulty={r.difficulty} className="px-2 py-0.5 text-[9px]" />
-                                <span className="rounded-full border border-[#2f2461]/15 bg-[#2f2461]/5 px-2 py-0.5 text-[10px] font-bold text-[#2f2461]/70">
+                                <span className="rounded-full border border-slate-200 bg-slate-100 px-2 py-0.5 text-[10px] font-bold text-slate-500">
                                   Lv {r.levelText ?? "-"}
                                 </span>
-                                <span className="rounded-full border border-[#2f2461]/15 bg-[#2f2461]/5 px-2 py-0.5 text-[10px] font-bold text-[#2f2461]/70">
+                                <span className="rounded-full border border-slate-200 bg-slate-100 px-2 py-0.5 text-[10px] font-bold text-slate-500">
                                   Const {formatInternalLevel(r.resolvedInternalLevel)}
                                 </span>
                               </div>
 
                               <div className="mt-2 flex flex-wrap items-center gap-1.5">
-                                <span className="text-[12px] font-black text-[#2f2461]">
+                                <span className="text-[12px] font-black text-slate-700">
                                   {typeof r.achievement === "number" ? `${r.achievement.toFixed(2)}%` : "-"}
                                 </span>
                                 {r.rank && (

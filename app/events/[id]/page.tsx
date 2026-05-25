@@ -29,7 +29,7 @@ export default function EventDetailPage() {
         return (
             <PageWrapper>
                 <div className="flex items-center justify-center py-10">
-                    <div className="h-6 w-6 animate-spin rounded-full border-2 border-[#ff4fd8]/30 border-t-[#ff4fd8]" />
+                    <div className="h-6 w-6 animate-spin rounded-full border-2 border-pink-300/40 border-t-[#f472b6]" />
                     <span className="ml-3 text-sm font-semibold text-white/50">
                         Loading event…
                     </span>
@@ -43,12 +43,12 @@ export default function EventDetailPage() {
             <PageWrapper>
                 <PageCard color="pink" className="text-center mb-12">
                     <h1 className="text-xl font-black text-red-500">Event Not Found</h1>
-                    <p className="mt-2 text-sm text-[#2f2461]/60">
+                    <p className="mt-2 text-sm text-slate-400">
                         This event may have been removed or doesn&apos;t exist.
                     </p>
                     <Link
                         href="/events"
-                        className="mt-4 inline-block rounded-full border border-[#2f2461]/20 bg-[#2f2461]/5 px-4 py-2 text-sm font-semibold text-[#2f2461]/70 hover:bg-[#2f2461]/10"
+                        className="mt-4 inline-block rounded-full border border-slate-200 bg-slate-100 px-4 py-2 text-sm font-semibold text-slate-500 hover:bg-slate-200/50"
                     >
                         ← Back to Events
                     </Link>
@@ -79,18 +79,18 @@ export default function EventDetailPage() {
                             <img
                                 src={event.organizer.image}
                                 alt=""
-                                className="h-7 w-7 rounded-full object-cover ring-2 ring-[#ff4fd8]/30"
+                                className="h-7 w-7 rounded-full object-cover ring-2 ring-[#f472b6]/30"
                             />
                         ) : (
-                            <span className="flex h-7 w-7 items-center justify-center rounded-full bg-[#ff4fd8]/10 text-xs font-bold text-[#d63fb5] ring-2 ring-[#ff4fd8]/30">
+                            <span className="flex h-7 w-7 items-center justify-center rounded-full bg-pink-50 text-xs font-bold text-[#e11d79] ring-2 ring-[#f472b6]/30">
                                 {event.organizer.name.charAt(0).toUpperCase()}
                             </span>
                         )}
                         <div className="text-center">
-                            <div className="text-sm font-semibold text-[#2f2461]">
+                            <div className="text-sm font-semibold text-slate-700">
                                 {event.organizer.name}
                             </div>
-                            <div className="text-[11px] font-medium text-[#2f2461]/45">
+                            <div className="text-[11px] font-medium text-slate-700/45">
                                 Organizer
                             </div>
                         </div>
@@ -99,35 +99,35 @@ export default function EventDetailPage() {
 
                 {/* Date / Time pills */}
                 <div className="flex flex-wrap items-center justify-center gap-2 mb-6">
-                    <span className="inline-flex items-center gap-1.5 rounded-full bg-[#2f2461]/5 px-3.5 py-1.5 text-sm font-semibold text-[#2f2461]/75 ring-1 ring-[#2f2461]/10">
-                        <span className="text-[#2f2461]/40">📅</span>{" "}
+                    <span className="inline-flex items-center gap-1.5 rounded-full bg-slate-100 px-3.5 py-1.5 text-sm font-semibold text-slate-500 ring-1 ring-[#334155]/10">
+                        <span className="text-slate-300">📅</span>{" "}
                         {formatFullDate(date)}
                     </span>
-                    <span className="inline-flex items-center gap-1.5 rounded-full bg-[#2f2461]/5 px-3.5 py-1.5 text-sm font-semibold text-[#2f2461]/75 ring-1 ring-[#2f2461]/10">
-                        <span className="text-[#2f2461]/40">🕐</span> {time}
+                    <span className="inline-flex items-center gap-1.5 rounded-full bg-slate-100 px-3.5 py-1.5 text-sm font-semibold text-slate-500 ring-1 ring-[#334155]/10">
+                        <span className="text-slate-300">🕐</span> {time}
                     </span>
                 </div>
 
                 {/* Description */}
-                <div className="mb-6 border-t border-[#ff4fd8]/15 pt-6">
-                    <div className="text-xs font-bold tracking-widest text-[#2f2461]/45 text-center mb-3">
+                <div className="mb-6 border-t border-pink-200/30 pt-6">
+                    <div className="text-xs font-bold tracking-widest text-slate-700/45 text-center mb-3">
                         ABOUT THIS EVENT
                     </div>
-                    <p className="whitespace-pre-line text-sm leading-7 text-[#2f2461]/70 text-center max-w-2xl mx-auto">
+                    <p className="whitespace-pre-line text-sm leading-7 text-slate-500 text-center max-w-2xl mx-auto">
                         {event.description}
                     </p>
                 </div>
 
                 {/* Location card */}
-                <div className="rounded-2xl border border-[#2f2461]/10 bg-white/60 p-4">
-                    <div className="text-xs font-bold tracking-widest text-[#2f2461]/45 text-center mb-2">
+                <div className="rounded-2xl border border-slate-100 bg-white/60 p-4">
+                    <div className="text-xs font-bold tracking-widest text-slate-700/45 text-center mb-2">
                         LOCATION
                     </div>
-                    <div className="text-sm font-bold text-[#2f2461] text-center">
+                    <div className="text-sm font-bold text-slate-700 text-center">
                         {event.location.name}
                     </div>
                     {event.location.address && (
-                        <div className="mt-1 text-xs text-[#2f2461]/50 text-center">
+                        <div className="mt-1 text-xs text-slate-400 text-center">
                             📍 {event.location.address}
                         </div>
                     )}
@@ -137,7 +137,7 @@ export default function EventDetailPage() {
                                 href={event.location.googleMapURL}
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="inline-flex items-center gap-1.5 rounded-full border border-[#ff4fd8]/30 bg-[#ff4fd8]/10 px-4 py-2 text-xs font-semibold text-[#d63fb5] transition hover:bg-[#ff4fd8]/20 hover:text-[#2f2461]"
+                                className="inline-flex items-center gap-1.5 rounded-full border border-pink-300/40 bg-pink-50 px-4 py-2 text-xs font-semibold text-[#e11d79] transition hover:bg-[#f472b6]/20 hover:text-slate-700"
                             >
                                 Open in Google Maps
                                 <span>↗</span>

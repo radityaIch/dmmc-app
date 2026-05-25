@@ -7,7 +7,7 @@ export default function AboutPage() {
     <PageWrapper>
       <PageCard color="pink">
         <SectionHeader color="pink">About DMMC</SectionHeader>
-        <p className="mx-auto max-w-3xl text-center font-medium leading-relaxed text-[#2f2461]/75 md:text-lg">
+        <p className="mx-auto max-w-3xl text-center font-medium leading-relaxed text-slate-500 md:text-lg">
           We are a passionate collective of rhythm game enthusiasts based right here in Denpasar, Bali.
           Brought together by the flashing lights and high-BPM beats of maimai, DMMC was created to
           connect local players of all skill levels. We are an independent community with no official
@@ -18,7 +18,7 @@ export default function AboutPage() {
 
       <PageCard color="blue" className="mb-12">
         <SectionHeader color="blue">Notice &amp; Terms</SectionHeader>
-        <div className="mx-auto max-w-3xl space-y-3 text-sm font-medium leading-7 text-[#2f2461]/75">
+        <div className="mx-auto max-w-3xl space-y-3 text-sm font-medium leading-7 text-slate-500">
           <p>
             DMMC is an unofficial, fan-made community project and is not affiliated with or endorsed by
             SEGA.
@@ -33,7 +33,7 @@ export default function AboutPage() {
             Takedown contact:{" "}
             <a
               href="mailto:ichinomiya.mori@gmail.com"
-              className="font-bold text-[#ff4fd8] hover:underline"
+              className="font-bold text-[#f472b6] hover:underline"
             >
               ichinomiya.mori@gmail.com
             </a>

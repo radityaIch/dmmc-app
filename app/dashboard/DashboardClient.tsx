@@ -27,18 +27,18 @@ export function DashboardClient({ preloadedUser }: DashboardClientProps) {
                         <img
                             src={user.image}
                             alt={user.name ?? "Avatar"}
-                            className="h-14 w-14 rounded-full border-2 border-[#ff4fd8]/40 object-cover"
+                            className="h-14 w-14 rounded-full border-2 border-[#f472b6]/40 object-cover"
                         />
                     ) : (
-                        <div className="flex h-14 w-14 items-center justify-center rounded-full border-2 border-[#ff4fd8]/30 bg-[#ff4fd8]/10 text-xl font-black text-[#d63fb5]">
+                        <div className="flex h-14 w-14 items-center justify-center rounded-full border-2 border-pink-300/40 bg-pink-50 text-xl font-black text-[#e11d79]">
                             {(user.name ?? "?")[0].toUpperCase()}
                         </div>
                     )}
                     <div>
-                        <h1 className="text-2xl font-black tracking-tight text-[#2f2461]">
+                        <h1 className="text-2xl font-black tracking-tight text-slate-700">
                             {user.name ?? "Player"}
                         </h1>
-                        <p className="text-sm text-[#2f2461]/50">{user.email ?? ""}</p>
+                        <p className="text-sm text-slate-400">{user.email ?? ""}</p>
                     </div>
                 </div>
 
@@ -68,12 +68,12 @@ function DashCard({
     return (
         <Link
             href={href}
-            className="group flex flex-col gap-2 rounded-2xl border border-[#ff4fd8]/15 bg-white/80 p-5 shadow-[0_2px_8px_rgba(255,79,216,0.06)] transition-all duration-150 hover:-translate-y-0.5 hover:border-[#ff4fd8]/30 hover:shadow-[0_6px_20px_rgba(255,79,216,0.12)]"
+            className="group flex flex-col gap-2 rounded-2xl border border-pink-200/30 bg-white/80 p-5 shadow-[0_2px_8px_rgba(244,114,182,0.06)] transition-all duration-150 hover:-translate-y-0.5 hover:border-pink-300/40 hover:shadow-[0_6px_20px_rgba(244,114,182,0.12)]"
         >
-            <span className="text-base font-bold text-[#2f2461] transition-colors group-hover:text-[#d63fb5]">
+            <span className="text-base font-bold text-slate-700 transition-colors group-hover:text-[#e11d79]">
                 {title}
             </span>
-            <span className="text-sm text-[#2f2461]/55">{description}</span>
+            <span className="text-sm text-slate-400">{description}</span>
         </Link>
     );
 }

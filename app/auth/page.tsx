@@ -20,13 +20,13 @@ export default function AuthPage() {
                     <SectionHeader color="blue" className="mb-0 flex-1">Sign In</SectionHeader>
                     <Link
                         href="/"
-                        className="shrink-0 rounded-full border border-[#2f2461]/20 bg-[#2f2461]/5 px-3 py-1 text-xs font-semibold text-[#2f2461]/70 hover:bg-[#2f2461]/10 hover:text-[#2f2461]"
+                        className="shrink-0 rounded-full border border-slate-200 bg-slate-100 px-3 py-1 text-xs font-semibold text-slate-500 hover:bg-slate-200/50 hover:text-slate-700"
                     >
                         Back
                     </Link>
                 </div>
 
-                <p className="mb-6 text-center text-sm font-medium leading-6 text-[#2f2461]/70">
+                <p className="mb-6 text-center text-sm font-medium leading-6 text-slate-500">
                     Sign in with your Discord account to continue.
                 </p>
 
