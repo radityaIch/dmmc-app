@@ -4,9 +4,27 @@ on:
   push:
     branches:
       - main
+      - concept
 
 jobs:
-  trigger-deployment:
+  trigger-production:
+    if: github.ref_name == 'main'
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+        with: 
+          fetch-depth: 0
+
+      - name: Trigger Vercel Production Deployment
+        env:
+          VERCEL_DEPLOY_HOOK: ${{ secrets.VERCEL_DEPLOY_HOOK }}
+        run: |
+          curl "${VERCEL_DEPLOY_HOOK}"
+
+  trigger-concept:
+    if: github.ref_name == 'concept'
     runs-on: ubuntu-latest
 
     steps:
@@ -15,8 +33,8 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Trigger Vercel Deployment
+      - name: Trigger Vercel Concept Deployment
         env:
-          VERCEL_DEPLOY_HOOK: ${{ secrets.VERCEL_DEPLOY_HOOK }}
+          VERCEL_CONCEPT_DEPLOY_HOOK: ${{ secrets.VERCEL_CONCEPT_DEPLOY_HOOK }}
         run: |
-          curl "${VERCEL_DEPLOY_HOOK}"
+          curl "${VERCEL_CONCEPT_DEPLOY_HOOK}"
