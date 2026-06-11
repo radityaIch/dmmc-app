@@ -9,6 +9,9 @@ export type MaimaiLocation = {
         bg: string;
         ring: string;
     };
+    image?: string;
+    price?: string;
+    popular?: boolean;
 };
 
 /**
@@ -28,6 +31,9 @@ export const MAIMAI_LOCATIONS: MaimaiLocation[] = [
             bg: "bg-[linear-gradient(180deg,rgba(57,183,255,0.18),rgba(8,19,39,0.88))]",
             ring: "ring-sky-200/20",
         },
+        image: "/images/cabs/mbg.webp",
+        price: "12 Tizo / 13 Tizo",
+        popular: true,
     },
     {
         id: "timezone-trans-studio",
@@ -40,6 +46,8 @@ export const MAIMAI_LOCATIONS: MaimaiLocation[] = [
             bg: "bg-[linear-gradient(180deg,rgba(255,79,216,0.2),rgba(40,9,42,0.9))]",
             ring: "ring-fuchsia-200/20",
         },
+        image: "/images/cabs/tsm.webp",
+        price: "15 Tizo / 16 Tizo",
     },
     {
         id: "timezone-level21",
@@ -52,6 +60,8 @@ export const MAIMAI_LOCATIONS: MaimaiLocation[] = [
             bg: "bg-[linear-gradient(180deg,rgba(213,255,99,0.2),rgba(30,36,8,0.9))]",
             ring: "ring-lime-100/20",
         },
+        image: "/images/cabs/level.webp",
+        price: "13 Tizo / 14 Tizo",
     },
 ];
 

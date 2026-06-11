@@ -1,6 +1,8 @@
+import { Camera } from "lucide-react";
 import { PageCard } from "../components/PageCard";
 import { PageWrapper } from "../components/PageWrapper";
 import { SectionHeader } from "../components/SectionHeader";
+import { ElfsightInstagram } from "../components/ElfsightInstagram";
 
 export default function AboutPage() {
   return (
@@ -14,6 +16,27 @@ export default function AboutPage() {
           partnership. We know that grinding for that SSS+ rank is always better with friends cheering
           you on.
         </p>
+      </PageCard>
+
+      <PageCard color="pink" className="mb-12">
+        <div className="relative">
+          <div className="absolute -top-16 left-1/2 -translate-x-1/2 select-none">
+            <span className="inline-flex items-center gap-1.5 rounded-full border border-pink-200/60 bg-pink-50/90 px-4 py-1.5 text-[11px] font-bold uppercase tracking-[0.2em] text-pink-400 backdrop-blur-sm">
+              <Camera className="h-3.5 w-3.5" /> Instagram
+            </span>
+          </div>
+
+          <SectionHeader color="pink">Follow Our Journey</SectionHeader>
+
+          <p className="mx-auto mb-8 max-w-xl text-center text-sm font-medium leading-relaxed text-slate-500">
+            Catch arcade highlights, tournament brackets, meetup selfies, and the chaos between songs.
+            Tag <span className="font-bold text-pink-500">@dmmc.official</span> to get featured on our page.
+          </p>
+
+          <div className="mx-auto max-w-2xl">
+            <ElfsightInstagram />
+          </div>
+        </div>
       </PageCard>
 
       <PageCard color="blue" className="mb-12">

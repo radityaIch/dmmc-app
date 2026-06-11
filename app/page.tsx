@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 
 import { GlowButton } from "./components/GlowButton";
@@ -121,19 +122,51 @@ export default function Home() {
             Where We Play
           </SectionHeader>
 
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-10">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-5 mb-10">
             {MAIMAI_LOCATIONS.map(loc => (
               <a
                 key={loc.id}
                 href={loc.googleMapURL}
                 target="_blank"
                 rel="noreferrer"
-                className="group block bg-white/90 border-2 border-cyan-300/30 shadow-[0_2px_12px_rgba(6,182,212,0.06)] rounded-2xl p-4 transition-all hover:-translate-y-0.5 hover:shadow-[0_6px_24px_rgba(6,182,212,0.12)]"
+                className="group relative flex flex-col overflow-hidden rounded-2xl border-2 border-cyan-300/30 bg-white/90 shadow-[0_4px_20px_rgba(6,182,212,0.08)] transition-all hover:-translate-y-1 hover:shadow-[0_8px_32px_rgba(6,182,212,0.15)]"
               >
-                <div className="text-sm font-bold text-cyan-600">{loc.name}</div>
-                <div className="mt-1 text-xs font-medium text-slate-400">{loc.address}</div>
-                <div className="mt-3 text-xs font-bold text-cyan-400/70 group-hover:text-cyan-600 flex justify-end transition-colors">
-                  Open in Maps &rarr;
+                {loc.popular && (
+                  <div className="absolute top-3 right-3 z-10 rounded-full bg-gradient-to-r from-pink-400 to-pink-500 px-3 py-1 text-[10px] font-extrabold uppercase tracking-wider text-white shadow-lg">
+                    Most visited
+                  </div>
+                )}
+
+                {loc.image && (
+                  <div className="relative h-48 w-full overflow-hidden bg-slate-100">
+                    <Image
+                      src={loc.image}
+                      alt={loc.name}
+                      fill
+                      className="object-cover transition-transform duration-500 group-hover:scale-105"
+                      sizes="(max-width: 768px) 100vw, 33vw"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent" />
+                  </div>
+                )}
+
+                <div className="flex flex-1 flex-col gap-3 p-5">
+                  <div>
+                    <div className="text-base font-extrabold text-slate-800">{loc.name}</div>
+                    <div className="mt-0.5 text-xs font-semibold text-slate-400">{loc.address}</div>
+                  </div>
+
+                  {loc.price && (
+                    <div className="flex items-center gap-2 rounded-xl bg-cyan-50/80 px-3 py-2">
+                      <span className="text-[10px] font-bold uppercase tracking-wider text-cyan-500">Price</span>
+                      <span className="text-sm font-extrabold text-cyan-700">{loc.price}</span>
+                      <span className="ml-auto text-[10px] font-medium text-cyan-400">1 Tizo = Rp1000</span>
+                    </div>
+                  )}
+
+                  <div className="mt-auto pt-2 text-xs font-bold text-cyan-400/70 group-hover:text-cyan-600 transition-colors">
+                    Open in Maps &rarr;
+                  </div>
                 </div>
               </a>
             ))}
