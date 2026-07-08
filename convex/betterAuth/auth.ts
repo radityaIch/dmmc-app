@@ -12,9 +12,6 @@ import schema from "./schema";
 const whatsappDiscoveryUrl =
     "https://wahost-api.zeabur.app/.well-known/openid-configuration";
 
-const whatsappEmail = (sub: string) =>
-    `${encodeURIComponent(sub)}@whatsapp.dmmc.local`;
-
 // Better Auth Component
 export const authComponent = createClient<DataModel, typeof schema>(
     components.betterAuth,
@@ -77,7 +74,7 @@ export const createAuthOptions = (ctx: GenericCtx<DataModel>) => {
                             return {
                                 id: sub,
                                 name: String(profile.name ?? sub),
-                                email: whatsappEmail(sub),
+                                email: sub,
                                 emailVerified: true,
                                 whatsappSub: sub,
                                 waGroupId:

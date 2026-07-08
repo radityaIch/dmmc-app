@@ -17,6 +17,8 @@ export function DashboardClient({ preloadedUser }: DashboardClientProps) {
 
     if (!user) return null;
 
+    const secondaryLabel = user.waGroupName ?? user.email ?? user.whatsappSub ?? "";
+
     return (
         <PageWrapper>
             <PageCard color="pink">
@@ -38,7 +40,9 @@ export function DashboardClient({ preloadedUser }: DashboardClientProps) {
                         <h1 className="text-2xl font-black tracking-tight text-[#2f2461]">
                             {user.name ?? "Player"}
                         </h1>
-                        <p className="text-sm text-[#2f2461]/50">{user.email ?? ""}</p>
+                        {secondaryLabel ? (
+                            <p className="text-sm text-[#2f2461]/50">{secondaryLabel}</p>
+                        ) : null}
                     </div>
                 </div>
 
