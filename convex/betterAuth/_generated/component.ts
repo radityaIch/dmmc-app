@@ -42,6 +42,10 @@ export type ComponentApi<Name extends string | undefined = string | undefined> =
                   role?: null | string;
                   updatedAt: number;
                   userId?: null | string;
+                  waGroupId?: null | string;
+                  waGroupName?: null | string;
+                  waGroupVerified?: null | boolean;
+                  whatsappSub?: null | string;
                 };
                 model: "user";
               }
@@ -121,7 +125,12 @@ export type ComponentApi<Name extends string | undefined = string | undefined> =
                     | "banned"
                     | "banReason"
                     | "banExpires"
+                    | "whatsappSub"
+                    | "waGroupId"
+                    | "waGroupName"
+                    | "waGroupVerified"
                     | "_id";
+                  mode?: "sensitive" | "insensitive";
                   operator?:
                     | "lt"
                     | "lte"
@@ -157,6 +166,7 @@ export type ComponentApi<Name extends string | undefined = string | undefined> =
                     | "userId"
                     | "impersonatedBy"
                     | "_id";
+                  mode?: "sensitive" | "insensitive";
                   operator?:
                     | "lt"
                     | "lte"
@@ -196,6 +206,7 @@ export type ComponentApi<Name extends string | undefined = string | undefined> =
                     | "createdAt"
                     | "updatedAt"
                     | "_id";
+                  mode?: "sensitive" | "insensitive";
                   operator?:
                     | "lt"
                     | "lte"
@@ -228,6 +239,7 @@ export type ComponentApi<Name extends string | undefined = string | undefined> =
                     | "createdAt"
                     | "updatedAt"
                     | "_id";
+                  mode?: "sensitive" | "insensitive";
                   operator?:
                     | "lt"
                     | "lte"
@@ -259,6 +271,7 @@ export type ComponentApi<Name extends string | undefined = string | undefined> =
                     | "createdAt"
                     | "expiresAt"
                     | "_id";
+                  mode?: "sensitive" | "insensitive";
                   operator?:
                     | "lt"
                     | "lte"
@@ -314,7 +327,12 @@ export type ComponentApi<Name extends string | undefined = string | undefined> =
                     | "banned"
                     | "banReason"
                     | "banExpires"
+                    | "whatsappSub"
+                    | "waGroupId"
+                    | "waGroupName"
+                    | "waGroupVerified"
                     | "_id";
+                  mode?: "sensitive" | "insensitive";
                   operator?:
                     | "lt"
                     | "lte"
@@ -350,6 +368,7 @@ export type ComponentApi<Name extends string | undefined = string | undefined> =
                     | "userId"
                     | "impersonatedBy"
                     | "_id";
+                  mode?: "sensitive" | "insensitive";
                   operator?:
                     | "lt"
                     | "lte"
@@ -389,6 +408,7 @@ export type ComponentApi<Name extends string | undefined = string | undefined> =
                     | "createdAt"
                     | "updatedAt"
                     | "_id";
+                  mode?: "sensitive" | "insensitive";
                   operator?:
                     | "lt"
                     | "lte"
@@ -421,6 +441,7 @@ export type ComponentApi<Name extends string | undefined = string | undefined> =
                     | "createdAt"
                     | "updatedAt"
                     | "_id";
+                  mode?: "sensitive" | "insensitive";
                   operator?:
                     | "lt"
                     | "lte"
@@ -452,6 +473,7 @@ export type ComponentApi<Name extends string | undefined = string | undefined> =
                     | "createdAt"
                     | "expiresAt"
                     | "_id";
+                  mode?: "sensitive" | "insensitive";
                   operator?:
                     | "lt"
                     | "lte"
@@ -494,10 +516,12 @@ export type ComponentApi<Name extends string | undefined = string | undefined> =
             maximumRowsRead?: number;
             numItems: number;
           };
+          select?: Array<string>;
           sortBy?: { direction: "asc" | "desc"; field: string };
           where?: Array<{
             connector?: "AND" | "OR";
             field: string;
+            mode?: "sensitive" | "insensitive";
             operator?:
               | "lt"
               | "lte"
@@ -532,6 +556,7 @@ export type ComponentApi<Name extends string | undefined = string | undefined> =
           where?: Array<{
             connector?: "AND" | "OR";
             field: string;
+            mode?: "sensitive" | "insensitive";
             operator?:
               | "lt"
               | "lte"
@@ -575,6 +600,10 @@ export type ComponentApi<Name extends string | undefined = string | undefined> =
                   role?: null | string;
                   updatedAt?: number;
                   userId?: null | string;
+                  waGroupId?: null | string;
+                  waGroupName?: null | string;
+                  waGroupVerified?: null | boolean;
+                  whatsappSub?: null | string;
                 };
                 where?: Array<{
                   connector?: "AND" | "OR";
@@ -590,7 +619,12 @@ export type ComponentApi<Name extends string | undefined = string | undefined> =
                     | "banned"
                     | "banReason"
                     | "banExpires"
+                    | "whatsappSub"
+                    | "waGroupId"
+                    | "waGroupName"
+                    | "waGroupVerified"
                     | "_id";
+                  mode?: "sensitive" | "insensitive";
                   operator?:
                     | "lt"
                     | "lte"
@@ -636,6 +670,7 @@ export type ComponentApi<Name extends string | undefined = string | undefined> =
                     | "userId"
                     | "impersonatedBy"
                     | "_id";
+                  mode?: "sensitive" | "insensitive";
                   operator?:
                     | "lt"
                     | "lte"
@@ -689,6 +724,7 @@ export type ComponentApi<Name extends string | undefined = string | undefined> =
                     | "createdAt"
                     | "updatedAt"
                     | "_id";
+                  mode?: "sensitive" | "insensitive";
                   operator?:
                     | "lt"
                     | "lte"
@@ -728,6 +764,7 @@ export type ComponentApi<Name extends string | undefined = string | undefined> =
                     | "createdAt"
                     | "updatedAt"
                     | "_id";
+                  mode?: "sensitive" | "insensitive";
                   operator?:
                     | "lt"
                     | "lte"
@@ -765,6 +802,7 @@ export type ComponentApi<Name extends string | undefined = string | undefined> =
                     | "createdAt"
                     | "expiresAt"
                     | "_id";
+                  mode?: "sensitive" | "insensitive";
                   operator?:
                     | "lt"
                     | "lte"
@@ -818,6 +856,10 @@ export type ComponentApi<Name extends string | undefined = string | undefined> =
                   role?: null | string;
                   updatedAt?: number;
                   userId?: null | string;
+                  waGroupId?: null | string;
+                  waGroupName?: null | string;
+                  waGroupVerified?: null | boolean;
+                  whatsappSub?: null | string;
                 };
                 where?: Array<{
                   connector?: "AND" | "OR";
@@ -833,7 +875,12 @@ export type ComponentApi<Name extends string | undefined = string | undefined> =
                     | "banned"
                     | "banReason"
                     | "banExpires"
+                    | "whatsappSub"
+                    | "waGroupId"
+                    | "waGroupName"
+                    | "waGroupVerified"
                     | "_id";
+                  mode?: "sensitive" | "insensitive";
                   operator?:
                     | "lt"
                     | "lte"
@@ -879,6 +926,7 @@ export type ComponentApi<Name extends string | undefined = string | undefined> =
                     | "userId"
                     | "impersonatedBy"
                     | "_id";
+                  mode?: "sensitive" | "insensitive";
                   operator?:
                     | "lt"
                     | "lte"
@@ -932,6 +980,7 @@ export type ComponentApi<Name extends string | undefined = string | undefined> =
                     | "createdAt"
                     | "updatedAt"
                     | "_id";
+                  mode?: "sensitive" | "insensitive";
                   operator?:
                     | "lt"
                     | "lte"
@@ -971,6 +1020,7 @@ export type ComponentApi<Name extends string | undefined = string | undefined> =
                     | "createdAt"
                     | "updatedAt"
                     | "_id";
+                  mode?: "sensitive" | "insensitive";
                   operator?:
                     | "lt"
                     | "lte"
@@ -1008,6 +1058,7 @@ export type ComponentApi<Name extends string | undefined = string | undefined> =
                     | "createdAt"
                     | "expiresAt"
                     | "_id";
+                  mode?: "sensitive" | "insensitive";
                   operator?:
                     | "lt"
                     | "lte"

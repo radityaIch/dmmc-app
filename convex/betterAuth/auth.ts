@@ -3,11 +3,17 @@ import { convex } from "@convex-dev/better-auth/plugins";
 import type { GenericCtx } from "@convex-dev/better-auth/utils";
 import type { BetterAuthOptions } from "better-auth";
 import { betterAuth } from "better-auth";
+import { admin, genericOAuth } from "better-auth/plugins";
 import { components } from "../_generated/api";
 import type { DataModel } from "../_generated/dataModel";
 import authConfig from "../auth.config";
 import schema from "./schema";
-import { admin } from "better-auth/plugins"
+
+const whatsappDiscoveryUrl =
+    "https://wahost-api.zeabur.app/.well-known/openid-configuration";
+
+const whatsappEmail = (sub: string) =>
+    `${encodeURIComponent(sub)}@whatsapp.dmmc.local`;
 
 // Better Auth Component
 export const authComponent = createClient<DataModel, typeof schema>(
@@ -28,15 +34,69 @@ export const createAuthOptions = (ctx: GenericCtx<DataModel>) => {
         emailAndPassword: {
             enabled: false,
         },
-        socialProviders: {
-            discord: {
-                clientId: process.env.DISCORD_CLIENT_ID as string,
-                clientSecret: process.env.DISCORD_CLIENT_SECRET as string,
+        user: {
+            additionalFields: {
+                whatsappSub: {
+                    type: "string",
+                    required: false,
+                    input: false,
+                },
+                waGroupId: {
+                    type: "string",
+                    required: false,
+                    input: false,
+                },
+                waGroupName: {
+                    type: "string",
+                    required: false,
+                    input: false,
+                },
+                waGroupVerified: {
+                    type: "boolean",
+                    required: false,
+                    input: false,
+                },
             },
         },
         plugins: [
             convex({ authConfig }),
-            admin()
+            admin(),
+            genericOAuth({
+                config: [
+                    {
+                        providerId: "whatsapp",
+                        discoveryUrl: whatsappDiscoveryUrl,
+                        issuer: "https://wahost-api.zeabur.app",
+                        clientId: process.env.WHATSAPP_OAUTH_CLIENT as string,
+                        clientSecret: process.env.WHATSAPP_OAUTH_SECRET as string,
+                        scopes: ["offline_access", "openid", "profile", "wa:group"],
+                        pkce: true,
+                        overrideUserInfo: true,
+                        mapProfileToUser: (profile) => {
+                            const sub = String(profile.sub ?? profile.id ?? "");
+                            return {
+                                id: sub,
+                                name: String(profile.name ?? sub),
+                                email: whatsappEmail(sub),
+                                emailVerified: true,
+                                whatsappSub: sub,
+                                waGroupId:
+                                    typeof profile.wa_group_id === "string"
+                                        ? profile.wa_group_id
+                                        : undefined,
+                                waGroupName:
+                                    typeof profile.wa_group_name === "string"
+                                        ? profile.wa_group_name
+                                        : undefined,
+                                waGroupVerified:
+                                    typeof profile.wa_group_verified === "boolean"
+                                        ? profile.wa_group_verified
+                                        : undefined,
+                            };
+                        },
+                    },
+                ],
+            }),
         ],
     } satisfies BetterAuthOptions;
 };

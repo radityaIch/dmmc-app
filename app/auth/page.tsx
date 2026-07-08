@@ -8,8 +8,8 @@ import { SectionHeader } from "../components/SectionHeader";
 
 export default function AuthPage() {
     const signIn = async () => {
-        await authClient.signIn.social({
-            provider: "discord",
+        await authClient.signIn.oauth2({
+            providerId: "whatsapp",
         });
     };
 
@@ -27,16 +27,15 @@ export default function AuthPage() {
                 </div>
 
                 <p className="mb-6 text-center text-sm font-medium leading-6 text-[#2f2461]/70">
-                    Sign in with your Discord account to continue.
+                    Sign in with WhatsApp to continue.
                 </p>
 
                 <button
-                    id="discord-signin-btn"
+                    id="whatsapp-signin-btn"
                     type="button"
                     onClick={signIn}
-                    className="flex w-full items-center justify-center gap-3 rounded-full bg-[#5865F2] px-6 py-3 text-base font-semibold text-white shadow-[0_0_0_1px_rgba(88,101,242,0.55),0_0_24px_rgba(88,101,242,0.25)] transition-transform duration-150 hover:-translate-y-0.5 hover:shadow-[0_0_0_1px_rgba(88,101,242,0.75),0_0_34px_rgba(88,101,242,0.45)] active:translate-y-0"
+                    className="flex w-full items-center justify-center gap-3 rounded-full bg-[#25D366] px-6 py-3 text-base font-semibold text-white shadow-[0_0_0_1px_rgba(37,211,102,0.55),0_0_24px_rgba(37,211,102,0.25)] transition-transform duration-150 hover:-translate-y-0.5 hover:shadow-[0_0_0_1px_rgba(37,211,102,0.75),0_0_34px_rgba(37,211,102,0.45)] active:translate-y-0"
                 >
-                    {/* Discord icon */}
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
                         viewBox="0 0 24 24"
@@ -44,9 +43,9 @@ export default function AuthPage() {
                         className="h-5 w-5"
                         aria-hidden="true"
                     >
-                        <path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057c.002.022.015.043.03.056a19.9 19.9 0 0 0 5.993 3.03.077.077 0 0 0 .084-.028 14.09 14.09 0 0 0 1.226-1.994.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03ZM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418Zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418Z" />
+                        <path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.34 4.95L2 22l5.28-1.38a9.9 9.9 0 0 0 4.76 1.21h.01c5.46 0 9.91-4.45 9.91-9.91C21.96 6.46 17.51 2 12.04 2Zm0 18.16h-.01a8.22 8.22 0 0 1-4.19-1.15l-.3-.18-3.13.82.84-3.05-.2-.31a8.18 8.18 0 0 1-1.25-4.38c0-4.54 3.7-8.24 8.25-8.24a8.25 8.25 0 0 1 0 16.49Zm4.52-6.17c-.25-.12-1.46-.72-1.69-.8-.23-.08-.39-.12-.56.12-.16.25-.64.8-.78.96-.14.17-.29.19-.53.06-.25-.12-1.05-.39-2-1.23-.74-.66-1.24-1.48-1.39-1.73-.14-.25-.02-.38.11-.5.11-.11.25-.29.37-.43.12-.15.16-.25.25-.42.08-.16.04-.31-.02-.43-.06-.12-.56-1.35-.77-1.85-.2-.48-.41-.42-.56-.43h-.48c-.17 0-.43.06-.66.31-.23.25-.86.84-.86 2.05s.88 2.38 1 2.54c.12.17 1.73 2.64 4.2 3.7.59.25 1.04.4 1.4.52.59.19 1.12.16 1.54.1.47-.07 1.46-.6 1.67-1.17.2-.58.2-1.07.14-1.17-.06-.1-.22-.16-.47-.28Z" />
                     </svg>
-                    Sign in with Discord
+                    Sign in with WhatsApp
                 </button>
             </PageCard>
         </PageWrapper>
