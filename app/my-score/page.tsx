@@ -477,7 +477,7 @@ function isNewSongLabel(label: string | null): boolean {
   return (
     l.includes("new") ||
     l.includes("new songs") ||
-    l.includes("prism") ||
+    l.includes("prism plus") ||
     l.includes("circle") ||
     l.includes("新")
   );
